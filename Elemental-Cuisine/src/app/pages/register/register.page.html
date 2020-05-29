@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registro de {{object}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-user-form *ngIf="(object == 'cliente' || object == 'usuario' )" [isClient]="object == 'cliente'"></app-user-form>
+
+  <app-table-form *ngIf="object == 'mesa'"></app-table-form>
+
+  <app-product-form *ngIf="object == 'producto'"></app-product-form>
+</ion-content>

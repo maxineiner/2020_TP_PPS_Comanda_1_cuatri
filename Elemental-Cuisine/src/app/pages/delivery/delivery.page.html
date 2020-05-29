@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Delivery</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="directionForm" (ngSubmit)="calculateAndDisplayRoute(directionForm.value)">
+    <ion-item>
+      <ion-label position="floating">Partida</ion-label>
+      <ion-input formControlName="source" #startLocationSearch></ion-input>
+      <ion-icon name="compass" slot="end" (click)="fillWithLocation()"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Destino</ion-label>
+      <ion-input formControlName="destination" #endLocationSearch></ion-input>
+    </ion-item>
+
+    <ion-button expand="full" type="submit" [disabled]="directionForm.invalid">Obtener ruta</ion-button>
+  </form>
+    
+  <div #mapElement id="map"></div>
+</ion-content>

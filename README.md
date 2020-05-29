@@ -1,9 +1,11 @@
-<h1>2020 - 1 cuatrimestre - PPS -- La Comanda</h1>
+<h1>
+2020 - 1 cuatrimestre - PPS -- La Comanda
+</h1>
+Para registrarse: https://forms.gle/n5rUakcPKSywgFGU8
 
-Para registrar el <strong>grupo completo</strong> con todos sus integrantes: https://forms.gle/yaGSdKiuaoR4iMWJ9
+<h2>Estructura de Git</h2>
 
-<br>
+<h2>Base de Datos: </h2> Firebase
 
-Grupos:<br>
-<h4>Máximo 3 integrantes</h4>
-<h4>Mínimo 2 integrantes</h4>
+<h2>Funcionalidades por colaborador: </h2>
+Ver planilla de Drive (agregar imagen)

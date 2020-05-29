@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Encuesta</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content>
+    <!-- <ion-button color="medium" (click)="scan()">Escanear QR</ion-button> -->
+    <form class="form">
+      <ion-list lines="full" class="ion-no-margin ion-no-padding">
+        <ion-item class="group">
+          <ion-label for="pregunta1" class="label" position="floating">{{poll.pregunta1}}</ion-label>
+          <ion-input type="text" class="input" [(ngModel)]="poll.respuesta1" name="number" required></ion-input>
+        </ion-item>  
+        <ion-item class="group">
+            <ion-label for="pregunta2" class="label" position="floating">{{poll.pregunta2}}</ion-label>
+            <ion-input type="text" class="input" [(ngModel)]="poll.respuesta2" name="number" required></ion-input>
+        </ion-item>  
+        <ion-item class="group">
+            <ion-label for="user" class="label" position="floating">{{poll.pregunta3}}</ion-label>
+            <ion-input type="text" class="input" [(ngModel)]="poll.respuesta3" name="number" required></ion-input>
+        </ion-item>  
+        <ion-item class="group">
+            <ion-label for="user" class="label" position="floating">{{poll.pregunta4}}</ion-label>
+            <ion-input type="text" class="input" [(ngModel)]="poll.respuesta4" name="number" required></ion-input>
+        </ion-item>  
+        <ion-item class="group">
+            <ion-label for="user" class="label" position="floating">{{poll.pregunta5}}</ion-label>
+            <ion-input type="text" class="input" [(ngModel)]="poll.respuesta5" name="number" required></ion-input>
+        </ion-item>  
+        <ion-item class="group">
+        <ion-label for="user" class="label" position="floating">{{poll.pregunta6}}</ion-label>
+            <ion-input type="text" class="input" [(ngModel)]="poll.respuesta6" name="number" required></ion-input>
+        </ion-item>    
+      </ion-list>
+      <ion-button color="medium" (click)="takePhoto()">Sacar Foto</ion-button>
+      <ion-button color="medium" (click)="register()">Enviar</ion-button>
+    </form>
+</ion-content>
