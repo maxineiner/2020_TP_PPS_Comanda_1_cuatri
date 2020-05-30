@@ -2,7 +2,7 @@
   <ion-grid>
     <ion-row>
       <ion-col col-6 *ngIf="(currentUser?.status == undefined || currentUser?.status == 'sinAtender')">
-        <ion-card (click)="addToWaitList()" class="ion-text-center ion-padding" color="danger">
+        <ion-card (click)="scanQr()" class="ion-text-center ion-padding" color="danger">
           <ion-icon name="list"></ion-icon>
           <h2 class="long-name">Anotarse en Lista de Espera</h2>
         </ion-card>
@@ -36,7 +36,7 @@
       <ion-col col-6>
         <ion-card routerLink="/delivery" class="ion-text-center ion-padding" color="danger">
           <ion-icon name="timer"></ion-icon>          
-          <h2 class="long-name">Realizar Pedido</h2>
+          <h2 class="long-name">Envío a domicilio</h2>
         </ion-card>
       </ion-col>
     </ion-row>

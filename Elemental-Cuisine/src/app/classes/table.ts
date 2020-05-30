@@ -1,8 +1,8 @@
 export class Table {
     id:string;
     number:number;
-    dinerQuantity:number;
+    capacity:number;
     type:string;
     photo:string;
-    isBusy:boolean;
+    status:string;
 }

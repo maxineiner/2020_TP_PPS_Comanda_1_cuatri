@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
-import { Collections } from 'src/app/classes/enums/Collections';
+import { Collections } from 'src/app/classes/enums/collections';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-user-list',
@@ -13,7 +14,8 @@ export class UserListPage implements OnInit {
   users:Array<User>;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private dataService: DataService
   ) { }
 
   ngOnInit() {
@@ -28,6 +30,6 @@ export class UserListPage implements OnInit {
   }
 
   deleteEmployee(user){
-    this.userService.deleteDocument(Collections.Users , user);
+    this.dataService.deleteDocument(Collections.Users , user);
   }
 }

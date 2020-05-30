@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { DataService } from './data.service';
 import { NotificationService } from './notification.service';
-import { Collections } from 'src/app/classes/enums/Collections';
+import { Collections } from 'src/app/classes/enums/collections';
 import { User } from '../classes/user';
 import { SmartAudioService } from './smart-audio.service';
 

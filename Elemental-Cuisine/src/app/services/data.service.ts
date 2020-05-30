@@ -34,8 +34,8 @@ export class DataService {
   setData(collection, data){
     return this.db.collection(collection).doc(data.userId).set(data);
   }
-
-  getByQuery(collection, query){
-
+ 
+  setStatus(collection, id, status){
+    return this.update(collection, id, { 'status': status });
   }
 }

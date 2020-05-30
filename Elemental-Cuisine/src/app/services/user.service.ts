@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { User } from '../classes/user';
 import { Observable } from 'rxjs/internal/Observable';
-import { Collections } from 'src/app/classes/enums/Collections';
+import { Collections } from 'src/app/classes/enums/collections';
 
 @Injectable({
   providedIn: 'root'
@@ -38,14 +38,6 @@ export class UserService {
 
   getAllUsers(collection): Observable<DocumentChangeAction<User>[]> {
     return this.dataService.getAll(collection);
-  }
-
-  update(collection: string, id: string, object: any) {
-    return this.dataService.update(collection, id, object);
-  }
-
-  deleteDocument(collection:string, user: any) {
-    return this.dataService.deleteDocument(collection, user.id);
   }
 
 }

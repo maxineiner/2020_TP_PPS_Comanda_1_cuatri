@@ -6,6 +6,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 })
 export class QrscannerService {
 
+  device = "web";
+
   constructor(
     private scanner: BarcodeScanner, 
 
