@@ -1,0 +1,64 @@
+<ion-content>
+  <div class="login-wrap">
+    <div class="login-html">
+      <span class="tab">Iniciar Sesión</span>
+      <form class="form" [formGroup]="form" (ngSubmit)="onSubmitLogin(form.value)">
+        <div class="group">
+          <ion-label for="user" class="label" position="floating">Correo electrónico</ion-label>
+          <input type="text" class="input" formControlName="email" required>
+        </div>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.email">
+            <div class="error-message"
+              *ngIf="form.get('email').hasError(validation.type) && (form.get('email').dirty || form.get('email').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <div class="group">
+          <ion-label for="pass" class="label" position="floating">Contraseña</ion-label>
+          <input type="password" class="input" formControlName="password" data-type="password" required>
+        </div>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div class="error-message"
+              *ngIf="form.get('password').hasError(validation.type) && (form.get('password').dirty || form.get('password').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <br>
+        <div class="group">
+          <ion-button shape="round" type="submit" [disabled]="!form.valid">Ingresar</ion-button>
+          
+          <!--ion-row>
+            <ion-icon slot="start" name="logo-google"></ion-icon>	            
+                      
+            <ion-col col-2>
+              <ion-fab-button class="ion-float-right" size="small" color="danger" (click)="googleLogin()">
+                <ion-icon name="logo-google"></ion-icon>
+              </ion-fab-button>
+            </ion-col>
+
+            <ion-col col-2>
+              <ion-fab-button size="small" style="--background:#3b5998" (click)="facebookLogin()">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </ion-fab-button>
+            </ion-col>
+            
+          </ion-row-->
+        </div>
+      </form>
+      <div class="hr"></div>
+      <div class="group">
+        <ion-button shape="round" routerLink="/registro/cliente">Registrarse</ion-button>
+      </div>
+      <ion-item id="defaultUsers">
+        <ion-label>Usuarios</ion-label>
+        <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="user" (ionChange)="setDefaultUser()">
+          <ion-select-option *ngFor="let user of defaultUsers" [value]="user">{{user.email}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </div>
+  </div>
+</ion-content>

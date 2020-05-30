@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "898640537441",
+    "firebase_url": "https://elementales-4394b.firebaseio.com",
+    "project_id": "elementales-4394b",
+    "storage_bucket": "elementales-4394b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898640537441:android:5b4e10aa2a0cc49efc8720",
+        "android_client_info": {
+          "package_name": "com.elementales.elemental_cuisine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898640537441-vtvt4594qrkhnv6a8isvp2nmfko1m96m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPTwz1K3HpogsJXT4HgvxokFFlc1t_ef4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898640537441-vtvt4594qrkhnv6a8isvp2nmfko1m96m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

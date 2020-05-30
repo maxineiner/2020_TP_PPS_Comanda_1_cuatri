@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Configuración</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label>Sonidos</ion-label>
+    <ion-toggle (ionChange)="activateSounds()" [(ngModel)]="isActive" checked="{{isActive}}"></ion-toggle>
+  </ion-item>
+</ion-content>

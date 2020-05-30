@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="dark">
+      <ion-buttons slot="primary">
+        <ion-button  routerLink="/configuracion">
+          <ion-icon size="large" name="settings"></ion-icon>
+        </ion-button>
+        <ion-button (click)="logout()">
+          <ion-icon size="large" name="exit"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    <ion-title>Menú Principal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="background">
+    <img class="brand-icon" src="assets/images/brand.png" alt="">
+    <section class="ion-text-center ion-margin-bottom" *ngIf="currentUser?.profile == 'admin'">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+            <ion-card (click)="showAlert()" class="ion-text-center ion-padding" color="dark">
+              <ion-icon name="star"></ion-icon>
+              <h2>Hola</h2>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6>
+            <ion-card routerLink="/listado" class="ion-text-center ion-padding" color="dark">
+              <ion-icon name="list"></ion-icon>
+              <h2>Listado</h2>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6>
+            <ion-card (click)="showAlert()" class="ion-text-center ion-padding" color="dark">
+              <ion-icon name="star"></ion-icon>
+              <h2>Hola</h2>
+            </ion-card>
+          </ion-col>
+          <ion-col col-6>
+              <ion-card routerLink="/encuestas" class="ion-text-center ion-padding" color="dark">
+                <ion-icon name="clipboard"></ion-icon>          
+                <h2>Encuestas</h2>
+              </ion-card>
+            </ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+
+    <app-client-home *ngIf="currentUser?.profile == 'cliente'"></app-client-home>
+
+    <app-waiter-home *ngIf="currentUser?.profile == 'mozo'"></app-waiter-home>
+
+  </div>
+</ion-content>

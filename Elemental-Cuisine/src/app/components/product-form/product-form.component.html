@@ -1,0 +1,23 @@
+<ion-button color="medium" (click)="scan()">Escanear QR</ion-button>
+<form class="form">
+  <ion-list lines="full" class="ion-no-margin ion-no-padding">
+    <ion-item class="group">
+      <ion-label for="user" class="label" position="floating">Nombre</ion-label>
+      <ion-input type="text" class="input" [(ngModel)]="product.name" name="name" required></ion-input>
+    </ion-item>
+    <ion-item class="group">
+      <ion-label for="pass" class="label" position="floating">Descripción</ion-label>
+      <ion-input type="text" class="input" [(ngModel)]="product.description" name="description" required></ion-input>
+    </ion-item>
+    <ion-item class="group">
+      <ion-label for="pass" class="label" position="floating">Tiempo Promedio de Elaboración</ion-label>
+      <ion-input type="number" class="input" [(ngModel)]="product.preparationTime" name="preparationTime" required></ion-input>
+    </ion-item>
+    <ion-item class="group">
+      <ion-label for="pass" class="label" position="floating">Precio</ion-label>
+      <ion-input type="number" class="input" [(ngModel)]="product.value" name="value" required></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-button color="medium" (click)="takePhoto()">Sacar Foto</ion-button>
+  <ion-button color="medium" (click)="register()">Registrar</ion-button>
+</form>
