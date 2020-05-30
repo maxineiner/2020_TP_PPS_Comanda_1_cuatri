@@ -25,9 +25,9 @@ export class AppComponent {
   }
 
   initializeApp() {
-    //this.smartAudioService.preload('login', 'assets/sounds/login.mp3');
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
+      this.smartAudioService.preload('login', 'assets/sounds/login.mp3');
       //this.smartAudioService.play("login")
       timer(5000).subscribe( () => {
         this.showSplash = false;

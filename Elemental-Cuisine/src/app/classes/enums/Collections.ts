@@ -1,4 +1,5 @@
 export enum Collections {
     WaitingList = 'listaDeEspera',
-    Users = 'usuarios'
+    Users = 'usuarios',
+    Devices = 'dispositivos'
 }

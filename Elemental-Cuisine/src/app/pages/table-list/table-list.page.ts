@@ -15,12 +15,7 @@ export class TableListPage implements OnInit {
     private tableService: TableService
   ) { 
     this.tableService.getAllTables('mesas').subscribe(tables => {
-      this.tables = new Array<Table>();
-      tables.forEach(document => {
-        const table = document.payload.doc.data() as Table;
-        table.id = document.payload.doc.id;
-        this.tables.push(table); 
-      })
+      this.tables = tables.map(table => table.payload.doc.data() as Table);
     });
   }
 

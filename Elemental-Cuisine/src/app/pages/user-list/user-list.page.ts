@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
+import { Collections } from 'src/app/classes/enums/Collections';
 
 @Component({
   selector: 'app-user-list',
@@ -16,15 +17,9 @@ export class UserListPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userService.getAllUsers('usuarios').subscribe(users => {
-      this.users = new Array<User>();
-      users.forEach(document => {
-        const user = document.payload.doc.data() as User;
-        if(user.profile != null && user.profile != "cliente"){
-          user.id = document.payload.doc.id;
-          this.users.push(user);
-        } 
-      })
+    this.userService.getAllUsers(Collections.Users).subscribe(users => {
+      this.users = users.map(user => user.payload.doc.data() as User)
+                        .filter(user => user.profile && user.profile != "cliente");
     });
   }
 
@@ -33,6 +28,6 @@ export class UserListPage implements OnInit {
   }
 
   deleteEmployee(user){
-    this.userService.deleteDocument('usuarios', user);
+    this.userService.deleteDocument(Collections.Users , user);
   }
 }

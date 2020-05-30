@@ -14,13 +14,7 @@ export class PollEmployeeListPage implements OnInit {
   constructor(private pollService: PollService) { 
 
     this.pollService.getAllPollsEmployee('encuestas_empleados').subscribe(polls => {
-      this.polls = new Array<Poll>();
-      console.log(this.polls);
-      polls.forEach(document => {
-        const poll = document.payload.doc.data() as Poll;
-        poll.id = document.payload.doc.id;
-        this.polls.push(poll); 
-      })
+      this.polls = polls.map(poll => poll.payload.doc.data() as Poll);
     });
 
   }

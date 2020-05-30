@@ -17,12 +17,7 @@ export class ProductListPage implements OnInit {
     //public popoverController: PopoverController
   ) { 
     this.productService.getAllProducts('productos').subscribe(products => {
-      this.products = new Array<Product>();
-      products.forEach(document => {
-        const product = document.payload.doc.data() as Product;
-        product.id = document.payload.doc.id;
-        this.products.push(product); 
-      })
+      this.products = products.map(product => product.payload.doc.data() as Product);
     });
   }
 

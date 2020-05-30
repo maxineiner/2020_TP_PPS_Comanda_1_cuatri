@@ -23,19 +23,9 @@ export class WaitListPage implements OnInit {
 
   ngOnInit() {
     this.userService.getAllUsers('listaDeEspera').subscribe(clients => {
-      this.users = new Array<Object>();
-      clients.forEach(document => {
-        const user = document.payload.doc.data() as any;
-        user.id = document.payload.doc.id;
-        
-        let userEntryDay = new Date(user.date).getDay();
-        let actualDay = new Date().getDay();
-        
-        if(actualDay == userEntryDay)
-          this.users.push(user); 
-      })
-      console.log(this.users)
-      this.users.sort((a:any,b:any) => (a.date > b.date) ? -1 : 1);
+      this.users = clients.map(client => client.payload.doc.data() as any)
+                          .filter(client => new Date(client.date).getDay() == new Date().getDay())
+                          .sort((a:any,b:any) => (a.date > b.date) ? -1 : 1);
     });
   }
 

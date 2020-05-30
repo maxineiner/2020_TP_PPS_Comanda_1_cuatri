@@ -8,20 +8,14 @@ import { PollService } from 'src/app/services/poll.service';
   styleUrls: ['./poll-client-list.page.scss'],
 })
 export class PollClientListPage implements OnInit {
+  
   private polls: Array<Poll>;
 
   constructor(
     private pollService: PollService) { 
     this.pollService.getAllPollsClient('encuestas_clientes').subscribe(polls => {
-      this.polls = new Array<Poll>();
-      console.log(this.polls);
-      polls.forEach(document => {
-        const poll = document.payload.doc.data() as Poll;
-        poll.id = document.payload.doc.id;
-        this.polls.push(poll); 
-      })
+      this.polls = polls.map(poll => poll.payload.doc.data() as Poll);
     });
-    console.log(this.polls);
   }
 
   ngOnInit() {

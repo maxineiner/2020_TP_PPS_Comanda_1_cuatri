@@ -48,12 +48,13 @@ export class ClientHomeComponent implements OnInit {
           this.userService.getUserById(this.currentUser.id.toString()).then(user => {
             this.currentUser = Object.assign(new User, user.data());
           });
-          //this.fcmService.getTokensByProfile("mozo");
-          this.fcmService.sendNotification(
-            "Nuevo cliente en lista de espera",
-            "El cliente " + this.currentUser.name + " " + this.currentUser.surname + " está esperando a ser atendido",
-            "lista-de-espera",
-            "emQWw_RbSMY:APA91bG3e6Kv3i08PZoP2cRFSp4xbjBPrNfmt6I6qA44ePezcfblBA4yCBkhGN787illbpVzIW5xDUgZuRL5X4crwdTqni7222PcH87R3h0miLaXj6dqijOwAAT94oEk9mIdHYzTTgmI");
+          this.fcmService.getTokensByProfile("mozo").then(waiterDevices => {
+            this.fcmService.sendNotification(
+              "Nuevo cliente en lista de espera",
+              "El cliente " + this.currentUser.name + " " + this.currentUser.surname + " está esperando a ser atendido",
+              "lista-de-espera",
+              waiterDevices);
+          })
         })
       }
     });

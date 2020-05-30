@@ -4,6 +4,7 @@ import { AuthService } from './auth.service';
 import { DataService } from './data.service';
 import { User } from '../classes/user';
 import { Observable } from 'rxjs/internal/Observable';
+import { Collections } from 'src/app/classes/enums/Collections';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class UserService {
   }
 
   saveUser(user) {
-    this.db.collection('usuarios').doc(user.id).set(Object.assign({}, user));
+    this.db.collection(Collections.Users).doc(user.id).set(Object.assign({}, user));
   }
 
   setDocument(collection: string, id: string, object: object): void {
@@ -32,7 +33,7 @@ export class UserService {
   }
 
   getUserById(userId) {
-    return this.dataService.getOne('usuarios', userId);
+    return this.dataService.getOne(Collections.Users, userId);
   }
 
   getAllUsers(collection): Observable<DocumentChangeAction<User>[]> {
@@ -46,4 +47,5 @@ export class UserService {
   deleteDocument(collection:string, user: any) {
     return this.dataService.deleteDocument(collection, user.id);
   }
+
 }

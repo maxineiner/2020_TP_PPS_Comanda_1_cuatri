@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, DocumentChangeAction, QueryFn } from '@angular/fire/firestore';
+import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,8 +11,8 @@ export class DataService {
     private db: AngularFirestore
   ) { }
 
-  getAll(collection, queryFn?:QueryFn):Observable<DocumentChangeAction<any>[]>{
-    return this.db.collection(collection, queryFn).snapshotChanges();
+  getAll(collection):Observable<DocumentChangeAction<any>[]>{
+    return this.db.collection(collection).snapshotChanges();
   }
 
   update(collection: string, id:string, objeto:any) {

@@ -4,6 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { DataService } from './data.service';
 import { NotificationService } from './notification.service';
+import { Collections } from 'src/app/classes/enums/Collections';
+import { User } from '../classes/user';
+import { SmartAudioService } from './smart-audio.service';
 
 @Injectable()
 export class FcmService {
@@ -16,6 +19,7 @@ export class FcmService {
   constructor(private dataService: DataService,
               private authService: AuthService,
               private notificationService: NotificationService,
+              private smartAudioService: SmartAudioService,
               private http: HttpClient,
               private fcm: FCM) {}
 
@@ -46,6 +50,7 @@ export class FcmService {
       });*/
 
       this.fcm.onNotification().subscribe(data => {
+        this.smartAudioService.play("login")
         if(data.wasTapped){
           console.log("Segundo plano: " + JSON.stringify(data))
         }
@@ -58,7 +63,22 @@ export class FcmService {
       })
   }
 
+  getTokensByProfile(userProfile){
+      return new Promise((resolve) => { 
+        this.dataService.getAll(Collections.Users).subscribe(users => {
+        let usersByProfile = users.map(user => user.payload.doc.data() as User).filter(user => user.profile == userProfile)
+        this.dataService.getAll(Collections.Devices).subscribe(devices => {
+          let devicesByProfile = devices.map(device => device.payload.doc.data() as any)
+                                        .filter(device => usersByProfile.some(user => user.id == device.userId))
+                                        .map(device => device.token);
+          resolve(devicesByProfile);
+        });
+      });
+    });
+  }
+
   sendNotification(title, message, redirectTo, to) {
+    console.log(to);
     let body = {
       "notification":{
         "title": title,
@@ -71,18 +91,13 @@ export class FcmService {
         "redirectTo": redirectTo
       },
         //Un solo ID, topico o grupo
-        "to": to,
+        //"to": to,
         // Multiples IDs
-        //"registration_ids": [],
+        "registration_ids": to,
         "priority":"high"
     }
-    return this.http.post("https://fcm.googleapis.com/fcm/send", body, { headers: this.headers }).subscribe(response => {
-      console.log(response);
-    });
+
+    return this.http.post("https://fcm.googleapis.com/fcm/send", body, { headers: this.headers }).subscribe();
   }
 
-  //TODO Hacer metodo para buscar tokens del tipo de usuario
-  getTokensByProfile(userProfile){
-    this.dataService.getByQuery('dispositivos', userProfile)
-  }
 }
