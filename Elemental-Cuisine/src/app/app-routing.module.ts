@@ -10,6 +10,7 @@ const routes: Routes = [
   //{ path: 'modificar/:object/:id', loadChildren: './pages/add/add.module#AddPageModule' },
   { path: 'configuracion', loadChildren: './pages/configuration/configuration.module#ConfigurationPageModule' },
   { path: 'lista-de-espera', loadChildren: './pages/wait-list/wait-list.module#WaitListPageModule' },
+  { path: 'lista-de-atendidos', loadChildren: './pages/attended-list/attended-list.module#AttendedListPageModule' },
   { path: 'reservar', loadChildren: './pages/book/book.module#BookPageModule' },
   { path: 'delivery', loadChildren: './pages/delivery/delivery.module#DeliveryPageModule' },
   { path: 'encuestas', loadChildren: './pages/poll/poll.module#PollPageModule' },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'juego-cliente', loadChildren: './pages/play-client/play-client.module#PlayClientPageModule' },
   { path: 'hacer-encuesta-cliente', loadChildren: './pages/poll-cliente/poll-cliente.module#PollClientePageModule' },
   { path: 'hacer-encuesta-empleado', loadChildren: './pages/poll-empleoyee/poll-empleoyee.module#PollEmpleoyeePageModule' },
-  { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' }
+  { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' },
+
 ]
 
 @NgModule({

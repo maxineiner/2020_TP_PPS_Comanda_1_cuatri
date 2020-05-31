@@ -77,7 +77,7 @@ export class FcmService {
     });
   }
 
-  sendNotification(title, message, redirectTo, to) {
+  sendNotification(title: string, message: string, to: unknown, redirectTo?: string) {
     console.log(to);
     let body = {
       "notification":{
