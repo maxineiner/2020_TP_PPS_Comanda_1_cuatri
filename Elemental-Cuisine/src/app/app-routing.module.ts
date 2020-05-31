@@ -20,7 +20,6 @@ const routes: Routes = [
   { path: 'hacer-encuesta-cliente', loadChildren: './pages/poll-cliente/poll-cliente.module#PollClientePageModule' },
   { path: 'hacer-encuesta-empleado', loadChildren: './pages/poll-empleoyee/poll-empleoyee.module#PollEmpleoyeePageModule' },
   { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' },
-
 ]
 
 @NgModule({
