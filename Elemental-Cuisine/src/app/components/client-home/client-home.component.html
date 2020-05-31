@@ -1,7 +1,7 @@
 <section class="ion-text-center ion-margin-bottom">
   <ion-grid>
     <ion-row>
-      <ion-col col-6 *ngIf="(currentUser?.status == undefined || currentUser?.status == 'sinAtender')">
+      <ion-col col-6 *ngIf="(currentUser?.status == 'sinAtender')">
         <ion-card (click)="scanQr()" class="ion-text-center ion-padding" color="danger">
           <ion-icon name="list"></ion-icon>
           <h2 class="long-name">Anotarse en Lista de Espera</h2>

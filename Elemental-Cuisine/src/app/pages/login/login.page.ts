@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'; import { Router } from '@angular/router';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'; 
+import { Router } from '@angular/router';
 import { User } from 'src/app/classes/user';
 import { UserService } from 'src/app/services/user.service';
 
@@ -65,7 +66,7 @@ export class LoginPage implements OnInit {
   }
 
   onSubmitLogin(form) {
-    this.loadingService.showLoading("Espere..");
+    this.loadingService.showLoading("Espere...");
 
     this.authService.logIn(form.email, form.password)
       .then(res => {

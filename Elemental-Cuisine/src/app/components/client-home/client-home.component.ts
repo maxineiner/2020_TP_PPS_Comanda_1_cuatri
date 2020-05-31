@@ -66,8 +66,8 @@ export class ClientHomeComponent implements OnInit {
         this.fcmService.sendNotification(
           "Nuevo cliente en lista de espera",
           "El cliente " + this.currentUser.name + " " + this.currentUser.surname + " está esperando a ser atendido",
-          "lista-de-espera",
-          waiterDevices);
+          waiterDevices,
+          "lista-de-espera");
       })
     })
   }

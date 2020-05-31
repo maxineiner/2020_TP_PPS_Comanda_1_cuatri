@@ -8,6 +8,8 @@ import { Collections } from 'src/app/classes/enums/collections';
 import { Status } from 'src/app/classes/enums/status';
 import { DataService } from 'src/app/services/data.service';
 import { User } from 'src/app/classes/user';
+import { FcmService } from 'src/app/services/FcmService';
+import { Profiles } from 'src/app/classes/enums/profiles';
 
 @Component({
   selector: 'app-wait-list',
@@ -23,7 +25,8 @@ export class WaitListPage implements OnInit {
     private qrscannerService: QrscannerService,
     private notificationService: NotificationService,
     private tableService: TableService,
-    private dataService: DataService
+    private dataService: DataService,
+    private fcmService: FcmService
   ) { }
 
   ngOnInit() {
@@ -55,6 +58,9 @@ export class WaitListPage implements OnInit {
         this.dataService.setStatus(Collections.Tables, tableId, Status.Busy);
         this.dataService.setStatus(Collections.Users, userId, Status.Attended);
         this.dataService.deleteDocument(Collections.WaitList, userId);
+        this.fcmService.getTokensByProfile(Profiles.Client).then(clients => {
+          this.fcmService.sendNotification("Su mesa ha sido asignada", "Se le ha asignado la mesa N.° " + currentTable.number, clients, "menu");
+        })
       }
     });
   }
