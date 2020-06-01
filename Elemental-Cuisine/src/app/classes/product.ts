@@ -3,6 +3,6 @@ export class Product {
     name:string;
     description:string;
     preparationTime:number;
-    value:number;
-    photo:Array<string>;
+    price:number;
+    photos:Array<string>;
 }
