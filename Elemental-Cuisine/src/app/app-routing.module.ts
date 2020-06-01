@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'juego-cliente', loadChildren: './pages/play-client/play-client.module#PlayClientPageModule' },
   { path: 'hacer-encuesta-cliente', loadChildren: './pages/poll-cliente/poll-cliente.module#PollClientePageModule' },
   { path: 'hacer-encuesta-empleado', loadChildren: './pages/poll-empleoyee/poll-empleoyee.module#PollEmpleoyeePageModule' },
-  { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' },
+  { path: 'menu', loadChildren: './pages/menu/menu.module#MenuPageModule' }
 ]
 
 @NgModule({
