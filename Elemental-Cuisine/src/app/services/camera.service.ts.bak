@@ -34,17 +34,8 @@ export class CameraService {
           return url;
         });
       });
-    } 
-    catch (error) {
+    } catch (error) {
       alert(error);
     }
-  }
-
-  getImageByName(collection, imageName) {
-    return firebase.storage().ref(`${collection}/${imageName}`).getDownloadURL();
-  }
-
-  deleteImage(collection, imageName) {
-    return firebase.storage().ref(`${collection}/${imageName}`).delete();
   }
 }

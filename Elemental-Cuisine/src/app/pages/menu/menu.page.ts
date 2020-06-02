@@ -3,6 +3,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/classes/product';
 import { Collections } from 'src/app/classes/enums/collections';
 import { AlertController } from '@ionic/angular';
+import { CameraService } from 'src/app/services/camera.service';
 
 @Component({
   selector: 'app-menu',
@@ -15,7 +16,8 @@ export class MenuPage implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private cameraService: CameraService
   ) { 
     this.productService.getAllProducts(Collections.Products).subscribe(products => {
       this.products = products.map(product => product.payload.doc.data() as Product);
@@ -39,7 +41,7 @@ export class MenuPage implements OnInit {
   async showAlert(product:Product) {
     let message = "<div>" +
                     `<span>${product.description}</span>`;
-    message += (product.photos.length > 0) ? `<img src="${product.photos[0]}" style="border-radius: 2px">` : "" + "</div>"
+    message += (product.photos.length > 0) ? `<img src="${await this.cameraService.getImageByName('productos', product.photos[0])}" style="border-radius: 2px">` : "" + "</div>"
 
     const alert = await this.alertController.create({
       header: product.name,

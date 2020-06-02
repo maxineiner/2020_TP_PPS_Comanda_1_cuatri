@@ -14,7 +14,6 @@
       <ion-input type="text" class="input" [(ngModel)]="table.type" name="type" required></ion-input>
     </ion-item>
   </ion-list>
-  <br>
   <ion-button color="medium" (click)="takePhoto()">Sacar Foto</ion-button>
   <ion-button color="medium" (click)="register()">Registrar</ion-button>
 </form>

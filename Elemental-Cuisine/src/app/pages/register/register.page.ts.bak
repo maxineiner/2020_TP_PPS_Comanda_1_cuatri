@@ -16,7 +16,7 @@ export class RegisterPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.type = this.activatedRoute.snapshot.paramMap.get('type');
-    this.idObject = this.activatedRoute.snapshot.paramMap.get('id');
+    this.object = this.activatedRoute.snapshot.paramMap.get('object');
   }
+
 }

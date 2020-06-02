@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Product } from 'src/app/classes/product';
 import { CameraService } from 'src/app/services/camera.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -13,7 +13,10 @@ import { Router } from '@angular/router';
 })
 export class ProductFormComponent implements OnInit {
 
-  private product:Product;
+  @Input() idObject: string = "";
+  private product: Product;
+  private images: Array<any>;
+  private modification: boolean;
 
   constructor(
     private cameraService: CameraService,
@@ -21,25 +24,66 @@ export class ProductFormComponent implements OnInit {
     private qrscannerService: QrscannerService,
     private notificationService: NotificationService,
     private router: Router
-  ) { 
+  ) {
+    this.images = new Array<object>();
     this.product = new Product();
+    this.modification = false;
   }
 
-  ngOnInit() {}
-
-  register(){ 
-    this.productService.saveProduct(this.product).then(() => {
-      this.notificationService.presentToast("Producto creado", "success", "bottom", false);
-      this.router.navigateByUrl('/listado/productos');
-    });
-  }  
-
-  takePhoto(){
-    //Cambiar nombre de la foto (segundo parametro)
-    this.cameraService.takePhoto('productos', Date.now());
+  ngOnInit() {
+    if (this.idObject) {
+      this.modification = true;
+      this.productService.getProduct(this.idObject).then(prod => {
+        this.product = prod.data() as Product;
+        this.product.photos.forEach(photo => {
+          this.loadPhoto(photo);
+        })
+      });
+    }
   }
 
-  scan(){
+  register() {
+    this.product.photos = this.images.map(x => x.name);
+    if (this.modification) {
+      this.productService.modifyProduct(this.idObject, this.product).then(() => {
+        this.notificationService.presentToast("Producto modificado", "success", "bottom", false);
+        this.router.navigateByUrl('/listado/productos');
+      });
+    }
+    else {
+      this.productService.saveProduct(this.product).then(() => {
+        this.notificationService.presentToast("Producto creado", "success", "bottom", false);
+        this.router.navigateByUrl('/listado/productos');
+      });
+    }
+  }
+
+  async takePhoto() {
+    if (this.images.length < 3) {
+      let imgName = `${this.product.name}-${Date.now()}`;
+      this.loadPhoto(imgName);
+    }
+    else {
+      this.notificationService.presentToast("Solo se pueden subir 3 fotos.", "danger", "bottom", false);
+    }
+  }
+
+  deletePhoto(imgName) {
+    this.cameraService.deleteImage('productos', imgName).then(
+      resp => {
+        this.images = this.images.filter(x => x.name != imgName);
+      },
+      err => {
+        this.notificationService.presentToast("Error al eliminar la foto.", "danger", "bottom", false);
+      })
+  }
+
+  async loadPhoto(imgName) {
+    let imgUrl = await this.cameraService.getImageByName('productos', imgName);
+    this.images.push({ "url": imgUrl, "name": imgName });
+  }
+
+  scan() {
     let data = this.qrscannerService.scanDni();
     alert(data);
   }

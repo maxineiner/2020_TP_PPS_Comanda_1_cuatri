@@ -11,10 +11,9 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let product of products" (click)="showDetails(product)">
+    <ion-item *ngFor="let product of products" (click)="showDetails($event)">
       <ion-icon name="pizza"></ion-icon>
       <ion-label>{{product.name}}</ion-label>
       <ion-button color="medium" (click)="modifyProduct($event)" routerLink="/modificar/producto/{{product.id}}">

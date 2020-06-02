@@ -21,7 +21,7 @@ export class ProductService {
   getAllProducts(collection){
     return this.dataService.getAll(collection);
   }
-
+  
   modifyProduct(productId, product) {
     return this.dataService.update('productos', productId, product);
   }

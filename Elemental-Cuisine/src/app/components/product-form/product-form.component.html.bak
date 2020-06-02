@@ -18,12 +18,8 @@
       <ion-input type="number" class="input" [(ngModel)]="product.price" name="price" required></ion-input>
     </ion-item>
   </ion-list>
-  <br>
-  <ion-button color="medium" (click)="takePhoto()" [disabled]="product.name == undefined || product.name == ''">Sacar
-    Foto</ion-button>
-
-  <ion-button color="medium" (click)="register()" *ngIf="!modification">Registrar</ion-button>
-  <ion-button color="medium" (click)="register()" *ngIf="modification">Modificar</ion-button>
+  <ion-button color="medium" (click)="takePhoto()">Sacar Foto</ion-button>
+  <ion-button color="medium" (click)="register()">Registrar</ion-button>
 
   <br>
 
