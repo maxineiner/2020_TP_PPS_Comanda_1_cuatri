@@ -11,15 +11,18 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let product of products" (click)="showDetails($event)">
+    <ion-item *ngFor="let product of products" (click)="showDetails(product)">
       <ion-icon name="pizza"></ion-icon>
       <ion-label>{{product.name}}</ion-label>
-      <ion-button color="medium" (click)="modifyProduct($event, product)"><ion-icon name="create"></ion-icon></ion-button>
-      <ion-button color="danger" (click)="deleteProduct($event, product.id)"><ion-icon name="trash"></ion-icon></ion-button>
+      <ion-button color="medium" (click)="modifyProduct($event)" routerLink="/modificar/producto/{{product.id}}">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" (click)="deleteProduct($event, product.id)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

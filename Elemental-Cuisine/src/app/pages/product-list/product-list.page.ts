@@ -29,16 +29,11 @@ export class ProductListPage implements OnInit {
     this.productService.deleteProduct(productId);
   }
 
-  modifyProduct(product){
+  modifyProduct(event){
     event.stopPropagation();
   }
 
-  /*async showDetails(ev){
-    const popover = await this.popoverController.create({
-      component: "",
-      event: ev,
-      translucent: true
-    });
-    return await popover.present();
-  }*/
+  showDetails(product){
+    console.log(product);
+  }
 }

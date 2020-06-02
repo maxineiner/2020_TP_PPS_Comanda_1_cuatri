@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Camera, CameraOptions} from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import * as firebase from "firebase";
 
 @Injectable({
@@ -7,8 +7,9 @@ import * as firebase from "firebase";
 })
 export class CameraService {
 
+  private image: string;
   constructor(
-    private camera: Camera, 
+    private camera: Camera,
   ) { }
 
   async takePhoto(collection, imageName) {
@@ -18,7 +19,8 @@ export class CameraService {
       targetWidth: 600,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true
     };
     try {
       let result = await this.camera.getPicture(options);
@@ -26,14 +28,23 @@ export class CameraService {
       //guardo en Firebase Storage
       let pictures = firebase.storage().ref(`${collection}/${imageName}`);
       //tomo url de foto en Firebase Storage
-      pictures.putString(image, "data_url").then(() => {
-        pictures.getDownloadURL().then((url) => {
-          alert("Foto guardada con éxito: " + url );
+      return pictures.putString(image, "data_url").then(() => {
+        return pictures.getDownloadURL().then((url) => {
+          alert("Foto guardada con éxito: " + url);
           return url;
-        });  
+        });
       });
-    } catch (error) {
+    } 
+    catch (error) {
       alert(error);
     }
+  }
+
+  getImageByName(collection, imageName) {
+    return firebase.storage().ref(`${collection}/${imageName}`).getDownloadURL();
+  }
+
+  deleteImage(collection, imageName) {
+    return firebase.storage().ref(`${collection}/${imageName}`).delete();
   }
 }

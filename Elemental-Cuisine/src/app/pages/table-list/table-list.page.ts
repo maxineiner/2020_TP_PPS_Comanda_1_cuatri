@@ -29,5 +29,4 @@ export class TableListPage implements OnInit {
   modifyTable(table){
     
   }
-
 }
