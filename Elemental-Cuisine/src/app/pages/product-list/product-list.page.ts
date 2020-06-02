@@ -17,7 +17,11 @@ export class ProductListPage implements OnInit {
     //public popoverController: PopoverController
   ) { 
     this.productService.getAllProducts('productos').subscribe(products => {
-      this.products = products.map(product => product.payload.doc.data() as Product);
+      this.products = products.map(productAux => {
+        let product = productAux.payload.doc.data() as Product;
+        product.id = productAux.payload.doc.id;
+        return product;
+      });
     });
   }
 

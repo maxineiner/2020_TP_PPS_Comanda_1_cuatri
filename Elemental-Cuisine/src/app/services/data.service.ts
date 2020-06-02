@@ -39,7 +39,4 @@ export class DataService {
     return this.update(collection, id, { 'status': status });
   }
 
-  setId(collection, id){
-    return this.update(collection, id, { 'id': id });
-  }
 }

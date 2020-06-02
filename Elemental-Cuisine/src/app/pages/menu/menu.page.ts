@@ -13,6 +13,8 @@ import { CameraService } from 'src/app/services/camera.service';
 export class MenuPage implements OnInit {
 
   private products: Array<Product>;
+  private total: number = 0;
+  private order: Array<Product> = new Array<Product>();
 
   constructor(
     private productService: ProductService,
@@ -28,17 +30,21 @@ export class MenuPage implements OnInit {
   ngOnInit() {
   }
 
-  showDetails(product){
-    console.log(product);
+  showDetails(product: Product){
     this.showAlert(product).then(response => {
-      let quantity = response.data.quantity;
+      var quantity = (response.data) ? response.data.quantity : "";
       if(quantity){
-        console.log(quantity);
+        for(let i = 0; i < quantity; i++){
+          this.order.push(product);
+        }
+        let reducer = ( accumulator, currentProduct ) => accumulator + currentProduct.price;
+
+        this.total = this.order.reduce(reducer, 0)
       }
     });
   }
 
-  async showAlert(product:Product) {
+  async showAlert(product: Product) {
     let message = "<div>" +
                     `<span>${product.description}</span>`;
     message += (product.photos.length > 0) ? `<img src="${await this.cameraService.getImageByName('productos', product.photos[0])}" style="border-radius: 2px">` : "" + "</div>"

@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, ViewChildren, 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { NotificationService } from 'src/app/services/notification.service';
+import { HttpClient } from '@angular/common/http';
 declare var google:any;
 
 @Component({
@@ -23,7 +24,9 @@ export class DeliveryPage implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private geolocation: Geolocation,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    private http: HttpClient
+  ) {
     this.createDirectionForm();
   }
 
@@ -39,9 +42,11 @@ export class DeliveryPage implements OnInit, AfterViewInit {
     });
 
     this.geolocation.getCurrentPosition().then((resp) => {
-      console.log("Latitude: " + resp.coords.latitude + " - Longitude: " + resp.coords.longitude);
-      this.map.setCenter({ lat: resp.coords.latitude, lng: resp.coords.longitude });
-      latLng = { lat: resp.coords.latitude, lng: resp.coords.longitude };
+      let latitude = resp.coords.latitude;
+      let longitude = resp.coords.longitude;
+      this.fillWithLocation(latitude, longitude);
+      this.map.setCenter({ lat: latitude, lng: longitude });
+      latLng = { lat: latitude, lng: longitude };
      }).catch((error) => {
        console.log('Error getting location', error);
      }).finally(() => {
@@ -50,44 +55,49 @@ export class DeliveryPage implements OnInit, AfterViewInit {
           map: this.map
         });
      }); 
-     
-
     this.locationAutocomplete();
     this.directionsDisplay.setMap(this.map);
   }
 
   createDirectionForm() {
     this.directionForm = this.fb.group({
-      source: ['', Validators.required],
+      source: [Validators.required],
       destination: ['', Validators.required]
     });
   }
 
+  // Calcula el tiempo del trayecto y lo despliega en el mapa
   calculateAndDisplayRoute(formValues) {
+    console.log(formValues)
     const that = this;
     this.directionsService.route({
       origin: formValues.source,
       destination: formValues.destination,
-      travelMode: 'DRIVING'
+      travelMode: 'DRIVING',
+      region: 'ar'
     }, (response, status) => {
-      console.log(status)
       if (status === 'OK') {
         that.directionsDisplay.setDirections(response);
-        var time = response.routes[0].legs[0].duration.text
-        console.log(time);
-        this.notificationService.presentToast(time, "black","bottom", false)
+        let time = response.routes[0].legs[0].duration.text;
       } 
     });
   }
 
-  fillWithLocation(){
-    this.geolocation.getCurrentPosition().then((resp) => {
-      console.log("Latitude: " + resp.coords.latitude + " - Longitude: " + resp.coords.longitude);
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     })
+  // Completa el campo de "Partida" con la dirección tomada del GPS
+  fillWithLocation(latitude, longitude){
+    this.geocode(latitude, longitude).subscribe((response:any) => {
+      if(response.status === "OK") {
+        this.endLocationElement.nativeElement.value = response.results[0].formatted_address;
+      }
+      this.startLocationElement.nativeElement.value = "Avenida Bartolomé Mitre 750, Avellaneda";
+    });
   }
 
+  geocode(latitude, longitude){
+    return this.http.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyAGS1es2kjUoVdPlWCg3WGQ21iWxKufGXA`);
+  }
+
+  // Permite tener un buscado de direcciones correspondientes a Argentina
   locationAutocomplete(){
     var options = {
       componentRestrictions: {country: 'ar'}
