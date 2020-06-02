@@ -9,10 +9,10 @@ export class NotificationService {
 
   constructor(
     private toastController: ToastController,
-    private router: Router 
+    private router: Router
   ) { }
 
-  async presentToast(message, color, position, closeButton: boolean) {
+  async presentToast(message, color, position, closeButton: boolean = false) {
     const toast = await this.toastController.create({
       message: message,
       duration: (closeButton) ? 0 : 3000,
@@ -22,11 +22,11 @@ export class NotificationService {
       closeButtonText: "Ok"
     });
 
-    if(closeButton == true){
+    if (closeButton == true) {
       toast.onDidDismiss().then(() => {
         //this.router.navigateByUrl(url)
-     });
-   
+      });
+
     }
     toast.present();
   }

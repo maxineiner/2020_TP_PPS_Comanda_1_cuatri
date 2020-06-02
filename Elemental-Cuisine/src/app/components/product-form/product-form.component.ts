@@ -5,6 +5,8 @@ import { ProductService } from 'src/app/services/product.service';
 import { QrscannerService } from 'src/app/services/qrscanner.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/services/data.service';
+import { Collections } from 'src/app/classes/enums/collections';
 
 @Component({
   selector: 'app-product-form',
@@ -23,6 +25,7 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductService,
     private qrscannerService: QrscannerService,
     private notificationService: NotificationService,
+    private dataService: DataService,
     private router: Router
   ) {
     this.images = new Array<object>();
@@ -51,7 +54,8 @@ export class ProductFormComponent implements OnInit {
       });
     }
     else {
-      this.productService.saveProduct(this.product).then(() => {
+      this.productService.saveProduct(this.product).then(product => {
+        this.dataService.setId(Collections.Products, product.id)
         this.notificationService.presentToast("Producto creado", "success", "bottom", false);
         this.router.navigateByUrl('/listado/productos');
       });

@@ -38,4 +38,8 @@ export class DataService {
   setStatus(collection, id, status){
     return this.update(collection, id, { 'status': status });
   }
+
+  setId(collection, id){
+    return this.update(collection, id, { 'id': id });
+  }
 }
