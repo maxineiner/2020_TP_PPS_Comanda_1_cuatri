@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { DeliveryRouteComponent } from 'src/app/components/delivery-route/delivery-route.component';
 
 import { IonicModule } from '@ionic/angular';
 
 import { DeliveryPage } from './delivery.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 const routes: Routes = [
   {
@@ -19,9 +21,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule
+    ComponentsModule,
+    RouterModule.forChild(routes)
   ],
-  declarations: [DeliveryPage]
+  declarations: [DeliveryPage, DeliveryRouteComponent]
 })
 export class DeliveryPageModule { }

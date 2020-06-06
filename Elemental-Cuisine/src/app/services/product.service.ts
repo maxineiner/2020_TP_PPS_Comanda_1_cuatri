@@ -1,32 +1,35 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
+import { Collections } from '../classes/enums/collections';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
+  private productCollection = Collections.Products;
+
   constructor(
     private dataService: DataService
   ) { }
 
   getProduct(productId) {
-    return this.dataService.getOne('productos', productId);
+    return this.dataService.getOne(this.productCollection, productId);
   }
   
   saveProduct(product){
-    return this.dataService.add('productos', product);
+    return this.dataService.add(this.productCollection, product);
   }
 
-  getAllProducts(collection){
-    return this.dataService.getAll(collection);
+  getAllProducts(){
+    return this.dataService.getAll(this.productCollection);
   }
 
   modifyProduct(productId, product) {
-    return this.dataService.update('productos', productId, product);
+    return this.dataService.update(this.productCollection, productId, product);
   }
 
   deleteProduct(productId){
-    this.dataService.deleteDocument('productos', productId);
+    this.dataService.deleteDocument(this.productCollection, productId);
   }
 }

@@ -1,28 +1,31 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
+import { Collections } from '../classes/enums/collections';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TableService {
 
+  private tableCollection = Collections.Tables;
+
   constructor(
     private dataService: DataService
   ) { }
 
   saveTable(table){
-    return this.dataService.add('mesas', table);
+    return this.dataService.add(this.tableCollection, table);
   }
 
-  getAllTables(collection){
-    return this.dataService.getAll(collection);
+  getAllTables(){
+    return this.dataService.getAll(this.tableCollection);
   }
 
   deleteTable(tableId){
-    this.dataService.deleteDocument('mesas', tableId);
+    this.dataService.deleteDocument(this.tableCollection, tableId);
   }
 
   getTableById(tableId){
-    return this.dataService.getOne('mesas', tableId);
+    return this.dataService.getOne(this.tableCollection, tableId);
   }
 }

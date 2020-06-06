@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { isNullOrUndefined } from 'util';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Poll } from 'src/app/classes/poll';
+import { Collections } from 'src/app/classes/enums/collections';
 
 @Component({
   selector: 'app-poll-cliente',
@@ -77,7 +78,7 @@ export class PollClientePage implements OnInit {
     } 
 
   register(){ 
-      this.pollService.savePollClient(this.poll).then(() => {
+      this.pollService.savePoll(Collections.ClientPolls, this.poll).then(() => {
         this.notificationService.presentToast("Encuesta creada", "success", "top", false);
         // this.router.navigateByUrl('/listado/encu');
       });

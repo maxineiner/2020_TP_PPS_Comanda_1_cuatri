@@ -3,5 +3,8 @@ export enum Collections {
     Users = 'usuarios',
     Devices = 'dispositivos',
     Tables = 'mesas',
-    Products = 'productos'
+    Products = 'productos',
+    EmployeePolls = 'encuestas_empleados',
+    ClientPolls = 'encuestas_clientes',
+    Orders = 'pedidos'
 }

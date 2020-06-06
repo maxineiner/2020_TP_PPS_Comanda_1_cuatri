@@ -16,7 +16,7 @@ export class ProductListPage implements OnInit {
     private productService: ProductService,
     //public popoverController: PopoverController
   ) { 
-    this.productService.getAllProducts('productos').subscribe(products => {
+    this.productService.getAllProducts().subscribe(products => {
       this.products = products.map(productAux => {
         let product = productAux.payload.doc.data() as Product;
         product.id = productAux.payload.doc.id;

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Poll } from 'src/app/classes/poll';
 import { PollService } from 'src/app/services/poll.service';
+import { Collections } from 'src/app/classes/enums/collections';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class PollEmployeeListPage implements OnInit {
 
   constructor(private pollService: PollService) { 
 
-    this.pollService.getAllPollsEmployee('encuestas_empleados').subscribe(polls => {
+    this.pollService.getAllPolls(Collections.EmployeePolls).subscribe(polls => {
       this.polls = polls.map(poll => poll.payload.doc.data() as Poll);
     });
 
@@ -23,7 +24,7 @@ export class PollEmployeeListPage implements OnInit {
   }
 
   deletePoll(poll){
-    this.pollService.deletePollEmployee(poll.id);
+    this.pollService.deletePoll(Collections.EmployeePolls ,poll.id);
   }
 
   modifyPoll(poll){

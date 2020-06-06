@@ -31,8 +31,9 @@ export class DataService {
     return this.db.collection(collection).doc(id).get().toPromise();
   }
 
-  setData(collection, data){
-    return this.db.collection(collection).doc(data.userId).set(data);
+  setData(collection, id, data){
+    console.log(collection, id, data)
+    return this.db.collection(collection).doc(id).set(data);
   }
  
   setStatus(collection, id, status){
