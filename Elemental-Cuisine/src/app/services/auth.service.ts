@@ -32,22 +32,10 @@ export class AuthService {
   }
 
   createUser(user) {
-    var actionCodeSettings = {
-      url: '/login',
-      handleCodeInApp: true
-    };
-
-    this.AFauth.auth.sendSignInLinkToEmail(user.email, actionCodeSettings)
-      .then(function() {
-        // The link was successfully sent. Inform the user.
-        // Save the email locally so you don't need to ask the user for it again
-        // if they open the link on the same device.
-        window.localStorage.setItem('emailForSignIn', user.email);
-      })
-      .catch(function(error) {
-        // Some error occurred, you can inspect the code: error.code
-      });
     return this.AFauth.auth.createUserWithEmailAndPassword(user.email, user.password);
+  }
+
+  disableUser(){
   }
 
   async googleSignIn() {

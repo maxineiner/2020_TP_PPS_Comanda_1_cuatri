@@ -49,14 +49,13 @@ export class ProductFormComponent implements OnInit {
     this.product.photos = this.images.map(x => x.name);
     if (this.modification) {
       this.productService.modifyProduct(this.idObject, this.product).then(() => {
-        this.notificationService.presentToast("Producto modificado", "success", "bottom", false);
+        this.notificationService.presentToast("Producto modificado", "success", "middle");
         this.router.navigateByUrl('/listado/productos');
       });
     }
     else {
       this.productService.saveProduct(this.product).then(product => {
-        this.dataService.setId(Collections.Products, product.id)
-        this.notificationService.presentToast("Producto creado", "success", "bottom", false);
+        this.notificationService.presentToast("Producto creado", "success", "middle");
         this.router.navigateByUrl('/listado/productos');
       });
     }
@@ -68,7 +67,7 @@ export class ProductFormComponent implements OnInit {
       this.loadPhoto(imgName);
     }
     else {
-      this.notificationService.presentToast("Solo se pueden subir 3 fotos.", "danger", "bottom", false);
+      this.notificationService.presentToast("Solo se pueden subir 3 fotos.", "danger", "middle");
     }
   }
 

@@ -14,8 +14,12 @@ export class TableListPage implements OnInit {
   constructor(
     private tableService: TableService
   ) { 
-    this.tableService.getAllTables('mesas').subscribe(tables => {
-      this.tables = tables.map(table => table.payload.doc.data() as Table);
+    this.tableService.getAllTables().subscribe(tables => {
+      this.tables = tables.map(tableAux => {
+          let table = tableAux.payload.doc.data() as Table
+          table.id = tableAux.payload.doc.id;
+          return table;
+        });
     });
   }
 

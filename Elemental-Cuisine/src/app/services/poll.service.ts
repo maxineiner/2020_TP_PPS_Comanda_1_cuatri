@@ -10,34 +10,20 @@ export class PollService {
     private dataService: DataService
   ) { }
 
-  savePollEmployee(poll){
-    return this.dataService.add('encuestas_empleados', poll);
-  }
-  savePollClient(poll){
-    return this.dataService.add('encuestas_clientes', poll);
+  savePoll(collection, poll){
+    return this.dataService.add(collection, poll);
   }
 
-
-  getAllPollsEmployee(collection){
-    return this.dataService.getAll(collection);
-  }
-  getAllPollsClient(collection){
+  getAllPolls(collection){
     return this.dataService.getAll(collection);
   }
 
-
-  deletePollEmployee(pollId){
-    this.dataService.deleteDocument('encuestas_empleados', pollId);
-  }
-  deletePollClient(pollId){
-    this.dataService.deleteDocument('encuestas_clientes', pollId);
+  deletePoll(collection, pollId){
+    this.dataService.deleteDocument(collection, pollId);
   }
 
+  getPollById(collection, pollId){
+    return this.dataService.getOne(collection, pollId);
+  }
 
-  getPollEmployeeById(pollId){
-    return this.dataService.getOne('encuestas_empleados', pollId);
-  }
-  getPollClientById(pollId){
-    return this.dataService.getOne('encuestas_clientes', pollId);
-  }
 }
