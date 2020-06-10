@@ -32,7 +32,6 @@ export class DataService {
   }
 
   setData(collection, id, data){
-    console.log(collection, id, data)
     return this.db.collection(collection).doc(id).set(data);
   }
  

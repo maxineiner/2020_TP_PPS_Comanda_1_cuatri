@@ -98,7 +98,7 @@ export class LoginPage implements OnInit {
           this.userService.saveUser(newUser);
         }
 
-        this.router.navigate(['/home']);
+        this.router.navigateByUrl('/inicio');
       })
     }).catch(error => {
       console.log(error);

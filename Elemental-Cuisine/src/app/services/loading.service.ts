@@ -48,7 +48,7 @@ export class LoadingService {
   closeLoadingAndRedirect(route: string) {
     setTimeout(() => {
       this.loading.dismiss();
-      this.router.navigate(['/home']);
+      this.router.navigateByUrl('/inicio');
     }, 2000);
   }
 }

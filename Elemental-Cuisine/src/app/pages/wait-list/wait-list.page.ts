@@ -37,32 +37,8 @@ export class WaitListPage implements OnInit {
     });
   }
 
-  scanQr(user: User){
-    if(this.qrscannerService.device == "mobile"){
-      this.qrscannerService.scanQr().then(tableId => {
-        this.assignTableToUser(tableId, user.id);
-      })
-    }
-    else{
-      this.assignTableToUser("uOqKTtmz8nbCEGsXT5CB", user.id);
-    }
-  }
+//TODO
+  removeClient(user: User){
 
-  assignTableToUser(tableId, userId){
-    this.tableService.getTableById(tableId).then(table => {
-      let currentTable = Object.assign(new Table, table.data());
-      if (currentTable.status != Status.Available) {
-        this.notificationService.presentToast("Mesa " + currentTable.status, "danger", "top", false);
-      }
-      else{
-        this.dataService.setStatus(Collections.Tables, tableId, Status.Busy);
-        this.dataService.setStatus(Collections.Users, userId, Status.Attended);
-        this.dataService.deleteDocument(Collections.WaitList, userId);
-        this.fcmService.getTokensByProfile(Profiles.Client).then(clients => {
-          this.fcmService.sendNotification("Su mesa ha sido asignada", "Se le ha asignado la mesa N.° " + currentTable.number, clients, "menu");
-        })
-      }
-    });
   }
-
 }
