@@ -3,6 +3,7 @@ export enum Status {
     OnHold = 'enEspera',
     Attended = 'atendido',
     Ordered = 'esperandoOrden',
+    Ended = 'finalizado',
 
     Available = 'disponible',
     Busy = 'ocupada',

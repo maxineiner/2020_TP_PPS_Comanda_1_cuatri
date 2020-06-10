@@ -8,13 +8,13 @@
         </ion-card>
       </ion-col>
       <ion-col col-6 *ngIf="currentUser?.status == 'enEspera'">
-        <ion-card (click)="removeFromWaitList()" class="ion-text-center ion-padding" color="danger">
+        <ion-card (click)="scanTableQR()" class="ion-text-center ion-padding" color="danger">
           <ion-icon name="list"></ion-icon>
-          <h2 class="long-name">Abandonar Lista de Espera</h2>
+          <h2 class="long-name">Escanear Mesa</h2>
         </ion-card>
       </ion-col>
       <ion-col col-6 *ngIf="currentUser?.status == 'atendido'">
-        <ion-card routerLink="/order" class="ion-text-center ion-padding" color="danger">
+        <ion-card routerLink="/pedido" class="ion-text-center ion-padding" color="danger">
           <ion-icon name="list"></ion-icon>
           <h2 class="long-name">Ver Menu</h2>
         </ion-card>
@@ -26,7 +26,7 @@
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-row>
+    <!--ion-row>
       <ion-col col-6>
         <ion-card routerLink="/reservar" class="ion-text-center ion-padding" color="danger">
           <ion-icon name="bookmarks"></ion-icon>          
@@ -39,16 +39,22 @@
           <h2 class="long-name">Envío a domicilio</h2>
         </ion-card>
       </ion-col>
-    </ion-row>
+    </ion-row-->
 
     <ion-row>
-        <ion-col col-6  *ngIf="currentUser?.status == 'atendido'">
+        <ion-col col-6 *ngIf="currentUser?.status == 'finalizado'">
           <ion-card routerLink="/hacer-encuesta-cliente" class="ion-text-center ion-padding" color="danger">
             <ion-icon name="bookmarks"></ion-icon>          
             <h2 class="long-name">Realizar Encuesta</h2>
           </ion-card>
         </ion-col>
         <ion-col col-6 *ngIf="currentUser?.status == 'enEspera'">
+          <ion-card (click)="removeFromWaitList()" class="ion-text-center ion-padding" color="danger">
+            <ion-icon name="list"></ion-icon>
+            <h2 class="long-name">Abandonar Lista de Espera</h2>
+          </ion-card>
+        </ion-col>
+        <ion-col col-6 *ngIf="currentUser?.status == 'atendido'">
           <ion-card routerLink="/juego-cliente" class="ion-text-center ion-padding" color="danger">
             <ion-icon name="timer"></ion-icon>          
             <h2 class="long-name">Jugar</h2>

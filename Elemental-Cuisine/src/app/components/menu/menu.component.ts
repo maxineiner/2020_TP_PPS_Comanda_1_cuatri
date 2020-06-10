@@ -17,6 +17,12 @@ export class MenuComponent implements OnInit {
   private menu: Array<Product> = new Array<Product>();
   @Output() sendOrder: EventEmitter<object> = new EventEmitter<object>();
 
+  slideOpts = {
+    slidesPerView: 1,
+    spaceBetween: 10,
+    centeredSlides: true
+  };
+
   constructor(
     private productService: ProductService,
     private alertController: AlertController,
@@ -46,9 +52,21 @@ export class MenuComponent implements OnInit {
   }
 
   async showAlert(product: Product) {
+   /* let slide = '<ion-slides [options]="slideOpts" [pager]="true">' +
+                  '<ion-slide>' +
+                    '<ion-item>' +
+                      '<ion-label>Subida por</ion-label>' +
+                      //'<img src={{image.url}}>' +
+                    '<ion-item>' +
+                  '</ion-slide>' +
+                '</ion-slides>'*/
     let message = "<div>" +
-                    `<span>${product.description}</span>`;
-    message += (product.photos.length > 0) ? `<img src="${await this.cameraService.getImageByName('productos', product.photos[0])}" style="bmenu-radius: 2px">` : "" + "</div>"
+                    `<ion-label>${product.description}</ion-label>`;
+    //message += slide;
+    message += (product.photos.length > 0) ? 
+                    `<img src="${await this.cameraService.getImageByName('productos', product.photos[0])}" style="bmenu-radius: 2px">` : 
+                      "" + 
+                  "</div>"
 
     const alert = await this.alertController.create({
       header: product.name,

@@ -3,7 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'home', loadChildren: './pages/home/home.module#HomePageModule' },
+  { path: 'inicio', loadChildren: './pages/home/home.module#HomePageModule' },
   { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
   { path: 'listado', loadChildren: './pages/lists/lists.module#ListsPageModule' },
   { path: 'registro/:type', loadChildren: './pages/register/register.module#RegisterPageModule' },
@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'juego-cliente', loadChildren: './pages/play-client/play-client.module#PlayClientPageModule' },
   { path: 'hacer-encuesta-cliente', loadChildren: './pages/poll-cliente/poll-cliente.module#PollClientePageModule' },
   { path: 'hacer-encuesta-empleado', loadChildren: './pages/poll-empleoyee/poll-empleoyee.module#PollEmpleoyeePageModule' },
-  { path: 'order', loadChildren: './pages/order/order.module#OrderPageModule' }
+  { path: 'pedido', loadChildren: './pages/order/order.module#OrderPageModule' }
 
 ]
 

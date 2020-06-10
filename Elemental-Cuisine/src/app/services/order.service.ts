@@ -14,7 +14,6 @@ export class OrderService {
   ) { }
 
   saveOrder(id, order){
-    console.log(this.orderCollection)
     return this.dataService.setData(this.orderCollection, id, order);
   }
 
