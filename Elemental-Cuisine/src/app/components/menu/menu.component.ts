@@ -52,17 +52,17 @@ export class MenuComponent implements OnInit {
   }
 
   async showAlert(product: Product) {
-    let slide = '<ion-slides [options]="slideOpts" [pager]="true">' +
+   /* let slide = '<ion-slides [options]="slideOpts" [pager]="true">' +
                   '<ion-slide>' +
                     '<ion-item>' +
                       '<ion-label>Subida por</ion-label>' +
                       //'<img src={{image.url}}>' +
                     '<ion-item>' +
                   '</ion-slide>' +
-                '</ion-slides>'
+                '</ion-slides>'*/
     let message = "<div>" +
                     `<ion-label>${product.description}</ion-label>`;
-    message += slide;
+    //message += slide;
     message += (product.photos.length > 0) ? 
                     `<img src="${await this.cameraService.getImageByName('productos', product.photos[0])}" style="bmenu-radius: 2px">` : 
                       "" + 
