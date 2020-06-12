@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Reservas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>  
+  <form #form="ngForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label for="date" class="label" position="floating">Fecha y Hora</ion-label>
+      <ion-datetime [(ngModel)]="book.date" name="date" displayFormat="D MMM HH:mm"
+        hourValues="08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23,00,01" minuteValues="0,15,30,45" required></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label for="dinersCuantity" class="label" position="floating">Cantidad de Comensales</ion-label>
+      <ion-input type="number" class="input" [(ngModel)]="book.dinersCuantity" name="dinersCuantity" required></ion-input>
+    </ion-item>
+    <div>
+      <ion-button type="submit" [disabled]="!form.valid">Confirmar Reserva</ion-button>
+    </div>
+  </form>
+</ion-content>

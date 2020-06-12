@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons *ngIf="!showSearchBar" slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title *ngIf="!showSearchBar">Clientes</ion-title>
+
+    <ion-searchbar *ngIf="showSearchBar" no-border placeholder="Buscar..." (ionChange)="search($event)"
+      (ionCancel)="showSearchBar = false" [debounce]="250" showCancelButton="true"></ion-searchbar>
+
+    <ion-buttons slot="primary">
+      <ion-button *ngIf="!showSearchBar" icon-only (click)="showSearchBar = true">
+        <ion-icon size="large" slot="icon-only" color="primary" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+  <div scrolly="true" class="pendingAprobalContainer">
+    
+    <ion-list>
+      <ion-list-header>
+        Pendientes de Aprobación
+      </ion-list-header>
+      <ion-item *ngFor="let user of pendingClients">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>{{user.name}} {{user.surname}}</ion-label>
+        <ion-button color="success" (click)="approveUser(user)">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+  </div>
+
+
+
+  <div scrolly="true" class="pendingAprobalContainer">
+    <ion-list>
+      <ion-list-header>
+        Aprobados
+      </ion-list-header>
+      <ion-item *ngFor="let user of aprobatedClients">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>{{user.name}}</ion-label>
+        <ion-button *ngIf="user.status == 'pendienteAprobacion'" color="success" (click)="deleteEmployee(user)"><ion-icon name="checkmark"></ion-icon></ion-button>
+        <ion-button color="medium" (click)="modifyEmployee(user)"><ion-icon name="create"></ion-icon></ion-button>
+        <ion-button color="danger" (click)="deleteEmployee(user)"><ion-icon name="trash"></ion-icon></ion-button>
+      </ion-item>
+    </ion-list>
+  </div>
+
+
+</ion-content>

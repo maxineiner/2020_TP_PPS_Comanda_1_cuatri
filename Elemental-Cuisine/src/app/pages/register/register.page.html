@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="(idObject != null)">Modificación de {{type}}</ion-title>
+    <ion-title *ngIf="(idObject == null)">Registro de {{type}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-user-form *ngIf="(type == 'cliente' || type == 'usuario' )" [isClient]="type == 'cliente'"></app-user-form>
+
+  <app-table-form *ngIf="type == 'mesa'"></app-table-form>
+
+  <app-product-form *ngIf="type == 'producto'" [idObject]="idObject"></app-product-form>
+</ion-content>

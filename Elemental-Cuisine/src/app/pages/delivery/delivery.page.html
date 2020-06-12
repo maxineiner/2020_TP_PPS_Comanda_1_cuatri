@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Envío a Domicilio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-menu *ngIf="!isOrderTaked" (sendOrder)="setOrderMenu($event)"></app-menu>
+  <app-delivery-route *ngIf="isOrderTaked && !isRouteSelected" (sendTime)="setOrderTime($event)"></app-delivery-route>
+  <app-feedback *ngIf="isRouteSelected" [order]="order"></app-feedback>
+</ion-content>
