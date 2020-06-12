@@ -71,7 +71,6 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| R | Delivery Pedido | 03/06/2020 | 04/06/2020 | Finalizado |
 | M | Tomar Pedido | 05/06/2020 | 05/06/2020 | Finalizado |
 
 ___
@@ -91,7 +90,7 @@ ___
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
 | D | ABM Clientes  | 07/06/2020 | 09/06/2020 | Finalizado |
-| O | Push Notification - Mesa | 10/06/2020 | - | En Progreso |
+| O | Push Notification - Mesa | 10/06/2020 | - | Finalizado |
 
 ___
 
@@ -116,10 +115,7 @@ ___
 ### Semana 5  :date:
 
 ___
-
 ## Instalación
 
 ___
-<br>
-
 ## Screenshots
