@@ -3,7 +3,7 @@
 > *Elemental Cusine* es una aplicación móvil diseñada para la gestión integral de pedidos en restaurantes y enfocada en mejorar la expriencia del usuario. 
 
 <p align="center">
-<img src="https://i.ibb.co/DL6LxbL/icon-transp.png" height="300">
+<img src="https://i.ibb.co/7y3VnyW/brand.png" height="300">
 
 ## Equipo *Elementales* :rocket:
 * Nicolás Osorio <[@osorionicolas](https://github.com/osorionicolas "Nicolas Osorio")>
@@ -90,7 +90,7 @@ ___
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
 | D | ABM Clientes  | 07/06/2020 | 09/06/2020 | Finalizado |
-| O | Push Notification - Mesa | 10/06/2020 | - | Finalizado |
+| O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
 
 ___
 
