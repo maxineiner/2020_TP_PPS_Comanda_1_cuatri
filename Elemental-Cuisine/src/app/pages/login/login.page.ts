@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms'; 
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from 'src/app/classes/user';
 import { UserService } from 'src/app/services/user.service';
+import { AlertController } from '@ionic/angular';
+import { CameraService } from 'src/app/services/camera.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +18,7 @@ export class LoginPage implements OnInit {
 
   private email: string;
   private password: string;
+  private photoName: string = "";
   form: FormGroup;
   defaultUsers: Array<any> = [];
   user: User;
@@ -24,7 +28,10 @@ export class LoginPage implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private userService: UserService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private alertController: AlertController,
+    private cameraService: CameraService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -52,13 +59,13 @@ export class LoginPage implements OnInit {
     ]
   };
 
-  addDefaultUser(){
-    this.defaultUsers.push({"email":"admin@admin.com", "password":"123456"});
-    this.defaultUsers.push({"email":"cliente@cliente.com", "password":"123456"});
-    this.defaultUsers.push({"email":"mozo@mozo.com", "password":"123456"});
-    this.defaultUsers.push({"email":"bartender@bartender.com", "password":"123456"});
-    this.defaultUsers.push({"email":"cocinero@cocinero.com", "password":"123456"});
-    this.defaultUsers.push({"email":"anonimo@anonimo.com", "password":"123456"});
+  addDefaultUser() {
+    this.defaultUsers.push({ "email": "admin@admin.com", "password": "123456" });
+    this.defaultUsers.push({ "email": "cliente@cliente.com", "password": "123456" });
+    this.defaultUsers.push({ "email": "mozo@mozo.com", "password": "123456" });
+    this.defaultUsers.push({ "email": "bartender@bartender.com", "password": "123456" });
+    this.defaultUsers.push({ "email": "cocinero@cocinero.com", "password": "123456" });
+    this.defaultUsers.push({ "email": "anonimo@anonimo.com", "password": "123456" });
   }
 
   setDefaultUser() {
@@ -75,6 +82,44 @@ export class LoginPage implements OnInit {
       .catch(err => {
         this.loadingService.closeLoading("Error", "Verifique usuario y contraseña", 'error');
       });
+  }
+
+  async anonymousLogin(event) {
+    event.stopPropagation();
+    var photoName = "";
+
+    const alert = await this.alertController.create({
+      header: 'Ingresar como Anónimo',
+      message: 'Al ingresar como anónimo, muchas funcionalidades no estarán disponibles.',
+      // message: message,
+      inputs: [
+        {
+          name: 'name',
+          type: 'text',
+          placeholder: 'Nombre de Usuario',
+        }
+      ],
+      buttons: [
+        {
+          text: 'Sacar Foto',
+          handler: (inputs) => {
+            this.takePhoto(inputs.name);
+            return false;
+          }
+        },
+        {
+          text: 'Registrar',
+          handler: (inputs) => {
+            this.registerAnonymous(inputs.name)
+            return false;
+          }
+        }
+      ]
+    });
+    alert.present();
+    return alert.onDidDismiss().then(() => {
+      this.photoName = "";
+    })
   }
 
   googleLogin() {
@@ -131,5 +176,47 @@ export class LoginPage implements OnInit {
     }).catch(error => {
       console.log(error);
     });
+  }
+
+  async takePhoto(name) {
+    if (name != "") {
+      name = `${name}-${Date.now()}`;
+      this.loadingService.showLoading("Espere...");
+      await this.cameraService.takePhoto('usuarios', name).then(() => {
+        this.loadingService.closeLoading();
+        this.photoName = name;
+      });
+    }
+    else {
+      this.notificationService.presentToast("Primero ingrese el nombre.", "danger", "bottom");
+    }
+    return name;
+  }
+
+  registerAnonymous(name) {
+    if (this.photoName != "" && name != "") {
+      var random = Math.floor(Math.random() * (999 - 1)) + 1;
+      var newUser: User = {
+        id: "",
+        email: name + "-" + random + "@anonymous.com",
+        password: "123456",
+        profile: "cliente",
+        name: name,
+        surname: name,
+        photo: this.photoName,
+        status: "sinAtender",
+        dni: null,
+        cuil: null,
+        anonymous: true
+      }
+
+      this.userService.saveUserWithLogin(newUser).then(() => {
+        this.alertController.dismiss();
+        this.router.navigate(['/home']);
+      });
+    }
+    else {
+      this.notificationService.presentToast("Falta ingresar nombre o sacar la foto.", "danger", "bottom", false);
+    }
   }
 }

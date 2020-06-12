@@ -19,8 +19,8 @@ const routes: Routes = [
   { path: 'juego-cliente', loadChildren: './pages/play-client/play-client.module#PlayClientPageModule' },
   { path: 'hacer-encuesta-cliente', loadChildren: './pages/poll-cliente/poll-cliente.module#PollClientePageModule' },
   { path: 'hacer-encuesta-empleado', loadChildren: './pages/poll-empleoyee/poll-empleoyee.module#PollEmpleoyeePageModule' },
-  { path: 'pedido', loadChildren: './pages/order/order.module#OrderPageModule' }
-
+  { path: 'pedido', loadChildren: './pages/order/order.module#OrderPageModule' },
+  { path: 'client-list', loadChildren: './pages/client-list/client-list.module#ClientListPageModule' }
 ]
 
 @NgModule({

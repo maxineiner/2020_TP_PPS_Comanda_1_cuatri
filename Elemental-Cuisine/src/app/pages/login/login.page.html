@@ -30,7 +30,8 @@
         <br>
         <div class="group">
           <ion-button shape="round" type="submit" [disabled]="!form.valid">Ingresar</ion-button>
-          
+          <ion-button color="light" shape="round" (click)="anonymousLogin($event)">Anónimo</ion-button>
+
           <!--ion-row>
             <ion-icon slot="start" name="logo-google"></ion-icon>	            
                       

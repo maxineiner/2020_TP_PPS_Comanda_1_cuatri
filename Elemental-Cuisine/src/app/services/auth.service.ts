@@ -35,9 +35,6 @@ export class AuthService {
     return this.AFauth.auth.createUserWithEmailAndPassword(user.email, user.password);
   }
 
-  disableUser(){
-  }
-
   async googleSignIn() {
     const provider = new auth.GoogleAuthProvider();
     const credential = await this.AFauth.auth.signInWithPopup(provider);
@@ -48,6 +45,11 @@ export class AuthService {
     const provider = new auth.FacebookAuthProvider();
     const credential = await this.AFauth.auth.signInWithPopup(provider);
     return credential.user;
+  }
+
+  async sendEmailVerification()
+  {
+    return this.AFauth.auth.currentUser.sendEmailVerification();
   }
 
 }

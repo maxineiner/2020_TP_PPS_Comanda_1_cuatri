@@ -7,6 +7,7 @@ const routes: Routes = [
     { path: 'usuarios', loadChildren: '../user-list/user-list.module#UserListPageModule' },
     { path: 'mesas', loadChildren: '../table-list/table-list.module#TableListPageModule' },
     { path: 'productos', loadChildren: '../product-list/product-list.module#ProductListPageModule' },
+    { path: 'clientes', loadChildren: '../client-list/client-list.module#ClientListPageModule' },
     { path: '', redirectTo: 'usuarios',pathMatch: 'full' }
   ]}
 ];

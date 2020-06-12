@@ -108,6 +108,8 @@ export class ClientHomeComponent implements OnInit {
         this.dataService.setStatus(Collections.Tables, tableId, Status.Busy);
         this.dataService.setStatus(Collections.Users, userId, Status.Attended);
         this.dataService.deleteDocument(Collections.WaitList, userId);
+        var tableService = { tableId: tableId, userId: userId };
+        this.dataService.setData(Collections.TableService, userId, tableService);
         this.notificationService.presentToast(`Mesa N.° ${currentTable.number} asignada`, "danger", "top", false);
         /*this.fcmService.getTokensByProfile(Profiles.Client).then(clients => {
           this.fcmService.sendNotification("Su mesa ha sido asignada", "Se le ha asignado la mesa N.° " + currentTable.number, clients, "menu");

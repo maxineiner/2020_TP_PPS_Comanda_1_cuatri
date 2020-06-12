@@ -9,4 +9,5 @@ export class User {
     dni:number;
     cuil:number;
     status:string;
+    anonymous?:boolean = false;
 }

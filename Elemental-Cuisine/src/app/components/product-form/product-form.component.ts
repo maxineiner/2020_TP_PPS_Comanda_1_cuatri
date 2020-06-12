@@ -64,6 +64,7 @@ export class ProductFormComponent implements OnInit {
   async takePhoto() {
     if (this.images.length < 3) {
       let imgName = `${this.product.name}-${Date.now()}`;
+      await this.cameraService.takePhoto('productos', imgName);
       this.loadPhoto(imgName);
     }
     else {
@@ -77,7 +78,7 @@ export class ProductFormComponent implements OnInit {
         this.images = this.images.filter(x => x.name != imgName);
       },
       err => {
-        this.notificationService.presentToast("Error al eliminar la foto.", "danger", "bottom", false);
+        this.notificationService.presentToast("Error al eliminar la foto.", "danger", "bottom");
       })
   }
 

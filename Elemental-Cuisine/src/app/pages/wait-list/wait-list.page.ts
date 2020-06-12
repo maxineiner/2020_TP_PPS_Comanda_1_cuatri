@@ -18,7 +18,7 @@ import { Profiles } from 'src/app/classes/enums/profiles';
 })
 export class WaitListPage implements OnInit {
 
-  users:Array<Object>;
+  users: Array<Object>;
 
   constructor(
     private userService: UserService,

@@ -1,4 +1,5 @@
 export enum Status {
+    PendingApproval = 'pendienteAprobacion',
     Unattended = 'sinAtender',
     OnHold = 'enEspera',
     Attended = 'atendido',

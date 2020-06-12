@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import * as firebase from "firebase";
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ export class CameraService {
   private image: string;
   constructor(
     private camera: Camera,
+    private notificationService: NotificationService
   ) { }
 
   async takePhoto(collection, imageName) {
@@ -30,7 +32,8 @@ export class CameraService {
       //tomo url de foto en Firebase Storage
       return pictures.putString(image, "data_url").then(() => {
         return pictures.getDownloadURL().then((url) => {
-          alert("Foto guardada con éxito: " + url);
+          this.notificationService.presentToast("Foto guardada con éxito.", "success", "bottom");
+          // alert("Foto guardada con éxito: " + url);
           return url;
         });
       });

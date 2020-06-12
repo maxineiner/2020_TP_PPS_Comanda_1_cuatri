@@ -1,3 +1,4 @@
+import { Status } from './../../classes/enums/Status';
 import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
@@ -81,7 +82,7 @@ export class UserFormComponent implements OnInit {
     this.formValuesToUser(formValues);
     if(this.isClient){
       this.user.profile = "cliente";
-      this.user.status = "sinAtender";
+      this.user.status = Status.PendingApproval;
     }
     this.userService.saveUserWithLogin(this.user).then(response =>{
       if(this.isClient){
