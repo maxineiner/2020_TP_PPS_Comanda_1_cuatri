@@ -37,8 +37,15 @@ export class WaitListPage implements OnInit {
     });
   }
 
-//TODO
   removeClient(user: User){
-
+    this.dataService.setStatus(Collections.Users, user.id, Status.CanTakeTable).then(() => {
+      this.fcmService.getTokensById(user.id).then(userDevice => {
+        this.fcmService.sendNotification(
+          "Ya puede escanear su mesa",
+          "El metre lo ha habilitado para escanear su mesa",
+          [userDevice]
+        )
+      })
+    });
   }
 }

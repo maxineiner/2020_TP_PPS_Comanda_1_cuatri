@@ -59,20 +59,26 @@ export class ClientHomeComponent implements OnInit {
   }
 
   scanTableQR(){
-    if(this.qrscannerService.device == "mobile"){
-      this.qrscannerService.scanQr().then(tableId => {
-        this.assignTableToUser(tableId, this.currentUser.id);
-      });
+    if(this.currentUser.status == Status.CanTakeTable){
+      if(this.qrscannerService.device == "mobile"){
+        this.qrscannerService.scanQr().then(tableId => {
+          this.assignTableToUser(tableId, this.currentUser.id);
+        });
+      }
+      else{
+        this.assignTableToUser("uOqKTtmz8nbCEGsXT5CB", this.currentUser.id);
+      }
     }
-    else{
-      this.assignTableToUser("uOqKTtmz8nbCEGsXT5CB", this.currentUser.id);
+    else {
+      this.notificationService.presentToast("Su solicitud aún no ha sido aprobada por el metre", TypeNotification.Warning, "top");
     }
+    
   }
 
   addToWaitList(){
     this.userService.setDocument(Collections.WaitList, this.currentUser.id.toString(), { 'id': this.currentUser.id, 'date' : Date.now(), 'name': this.currentUser.name + " " + this.currentUser.surname, 'dni' : this.currentUser.dni });
     this.dataService.setStatus(Collections.Users, this.currentUser.id, Status.OnHold).then(() => {
-      this.notificationService.presentToast("Agregado a lista de espera", TypeNotification.Warning, "top", false);
+      this.notificationService.presentToast("Agregado a lista de espera", TypeNotification.Warning, "top");
       this.userService.getUserById(this.currentUser.id.toString()).then(user => {
         this.currentUser = Object.assign(new User, user.data());
       });
@@ -89,7 +95,7 @@ export class ClientHomeComponent implements OnInit {
   removeFromWaitList() {
     this.dataService.deleteDocument(Collections.WaitList, this.currentUser.id.toString());
     this.dataService.setStatus(Collections.Users, this.currentUser.id, Status.Unattended).then(() => {
-      this.notificationService.presentToast("Eliminado de la Lista de Espera", TypeNotification.Warning, "top", false);
+      this.notificationService.presentToast("Eliminado de la Lista de Espera", TypeNotification.Warning, "top");
       this.currentUser.status = Status.Unattended;
     })
   }
@@ -102,7 +108,7 @@ export class ClientHomeComponent implements OnInit {
     this.tableService.getTableById(tableId).then(table => {
       let currentTable = Object.assign(new Table, table.data());
       if (currentTable.status != Status.Available) {
-        this.notificationService.presentToast(`Mesa N.° ${currentTable.number} ${currentTable.status}`, "danger", "top", false);
+        this.notificationService.presentToast(`Mesa N.° ${currentTable.number} ${currentTable.status}`, "danger", "top");
       }
       else{
         this.dataService.setStatus(Collections.Tables, tableId, Status.Busy);
@@ -110,10 +116,7 @@ export class ClientHomeComponent implements OnInit {
         this.dataService.deleteDocument(Collections.WaitList, userId);
         var tableService = { tableId: tableId, userId: userId };
         this.dataService.setData(Collections.TableService, userId, tableService);
-        this.notificationService.presentToast(`Mesa N.° ${currentTable.number} asignada`, "danger", "top", false);
-        /*this.fcmService.getTokensByProfile(Profiles.Client).then(clients => {
-          this.fcmService.sendNotification("Su mesa ha sido asignada", "Se le ha asignado la mesa N.° " + currentTable.number, clients, "menu");
-        });*/
+        this.notificationService.presentToast(`Mesa N.° ${currentTable.number} asignada`, "success", "top");
       }
     });
   }

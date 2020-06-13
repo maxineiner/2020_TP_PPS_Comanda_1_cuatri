@@ -52,6 +52,13 @@ export class UserFormComponent implements OnInit {
         Validators.pattern('^[0-9]{8}$'),
         Validators.required
       ])),
+      cuil: new FormControl('', Validators.compose([
+        Validators.pattern('^[0-9]{11}$'),
+        Validators.required
+      ])),
+      profile: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
     });
   }
  
@@ -75,6 +82,13 @@ export class UserFormComponent implements OnInit {
     'dni': [
       { type: 'pattern',   message: 'El DNI debe contener 8 carácteres númericos.' },
       { type: 'required',  message: 'El DNI es requerido.' },
+    ],
+    'cuil': [
+      { type: 'pattern',   message: 'El CUIL debe contener 11 carácteres númericos.' },
+      { type: 'required',  message: 'El CUIL es requerido.' },
+    ],
+    'profile': [
+      { type: 'required',  message: 'El perfil es requerido.' },
     ]
   };
 

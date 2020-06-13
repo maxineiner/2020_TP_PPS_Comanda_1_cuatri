@@ -32,7 +32,7 @@ export class DataService {
   }
 
   setData(collection, id, data){
-    return this.db.collection(collection).doc(id).set(data);
+    return this.db.collection(collection).doc(id).set(Object.assign({}, data));
   }
  
   setStatus(collection, id, status){

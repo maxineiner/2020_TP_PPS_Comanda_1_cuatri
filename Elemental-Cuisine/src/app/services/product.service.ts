@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { Collections } from '../classes/enums/collections';
+import { Product } from "../classes/product";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,8 @@ export class ProductService {
     return this.dataService.getOne(this.productCollection, productId);
   }
   
-  saveProduct(product){
-    return this.dataService.add(this.productCollection, product);
+  saveProduct(product: Product){
+    return this.dataService.setData(this.productCollection, `${product.name}_${product.description}`.toLowerCase(), product);
   }
 
   getAllProducts(){
