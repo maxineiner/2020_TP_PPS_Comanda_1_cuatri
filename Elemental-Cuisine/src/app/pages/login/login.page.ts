@@ -91,7 +91,6 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({
       header: 'Ingresar como Anónimo',
       message: 'Al ingresar como anónimo, muchas funcionalidades no estarán disponibles.',
-      // message: message,
       inputs: [
         {
           name: 'name',
@@ -171,7 +170,7 @@ export class LoginPage implements OnInit {
           this.userService.saveUser(newUser);
         }
 
-        this.router.navigate(['/home']);
+        this.router.navigateByUrl('/inicio');
       })
     }).catch(error => {
       console.log(error);
@@ -190,7 +189,6 @@ export class LoginPage implements OnInit {
     else {
       this.notificationService.presentToast("Primero ingrese el nombre.", "danger", "bottom");
     }
-    return name;
   }
 
   registerAnonymous(name) {
@@ -212,7 +210,7 @@ export class LoginPage implements OnInit {
 
       this.userService.saveUserWithLogin(newUser).then(() => {
         this.alertController.dismiss();
-        this.router.navigate(['/home']);
+        this.router.navigateByUrl('/inicio');
       });
     }
     else {

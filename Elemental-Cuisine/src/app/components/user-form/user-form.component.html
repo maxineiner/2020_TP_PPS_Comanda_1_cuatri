@@ -75,7 +75,7 @@
 
   <ion-item *ngIf="!isClient">
     <ion-label position="floating">Perfil</ion-label>
-    <ion-select [(ngModel)]="user.profile" name="profile" placeholder="Seleccione perfil">
+    <ion-select formControlName="profile" placeholder="Seleccione perfil">
       <ion-select-option value="mozo">Mozo</ion-select-option>
       <ion-select-option value="cocinero">Cocinero</ion-select-option>
       <ion-select-option value="bartender">Bartender</ion-select-option>

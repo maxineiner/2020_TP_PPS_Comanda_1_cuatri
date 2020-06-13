@@ -8,7 +8,7 @@
     <ion-title *ngIf="!showSearchBar">Clientes</ion-title>
 
     <ion-searchbar *ngIf="showSearchBar" no-border placeholder="Buscar..." (ionChange)="search($event)"
-      (ionCancel)="showSearchBar = false" [debounce]="250" showCancelButton="true"></ion-searchbar>
+      (ionCancel)="showSearchBar = false" [debounce]="250" showCancelButton="always"></ion-searchbar>
 
     <ion-buttons slot="primary">
       <ion-button *ngIf="!showSearchBar" icon-only (click)="showSearchBar = true">

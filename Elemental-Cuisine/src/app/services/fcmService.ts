@@ -77,6 +77,15 @@ export class FcmService {
     });
   }
 
+  getTokensById(id){
+    return new Promise((resolve) => { 
+      this.dataService.getOne(Collections.Devices, id).then(device => {
+        let deviceById = device.data().token;
+        resolve(deviceById);
+      });
+    });
+  }
+
   sendNotification(title: string, message: string, to: unknown, redirectTo?: string) {
     console.log(to);
     let body = {

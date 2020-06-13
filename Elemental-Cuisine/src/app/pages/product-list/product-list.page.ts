@@ -14,7 +14,6 @@ export class ProductListPage implements OnInit {
 
   constructor(
     private productService: ProductService,
-    //public popoverController: PopoverController
   ) { 
     this.productService.getAllProducts().subscribe(products => {
       this.products = products.map(productAux => {
