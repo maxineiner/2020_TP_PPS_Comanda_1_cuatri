@@ -12,7 +12,7 @@ app.use(cors({ origin: true }));
 
 app.post("/", (req, res) => {
   const { body } = req;
-  const isValidMessage = body.message && body.to && body.subject;
+  const isValidMessage = (body.textPlain || body.html) && body.to && body.subject;
 
   if (!isValidMessage) {
     return res.status(400).send({ message: "invalid request" });
@@ -21,8 +21,8 @@ app.post("/", (req, res) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "zaraza",
-      pass: "zaraza"
+      user: "elementalcusine@gmail.com",
+      pass: "elementalcusine2020"
     }
   });
 
@@ -30,7 +30,8 @@ app.post("/", (req, res) => {
     from: "elementalcusine@gmail.com",
     to: body.to,
     subject: body.subject,
-    text: body.message
+    text: body.textPlain,
+    html: body.html
   };
 
   transporter.sendMail(mailOptions, (err, data) => {

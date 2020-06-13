@@ -23,7 +23,7 @@
 
 
   <div scrolly="true" class="pendingAprobalContainer">
-    
+
     <ion-list>
       <ion-list-header>
         Pendientes de Aprobación
@@ -33,6 +33,9 @@
         <ion-label>{{user.name}} {{user.surname}}</ion-label>
         <ion-button color="success" (click)="approveUser(user)">
           <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="deleteEmployee(user)">
+          <ion-icon name="trash"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-list>
@@ -49,9 +52,15 @@
       <ion-item *ngFor="let user of aprobatedClients">
         <ion-icon name="person"></ion-icon>
         <ion-label>{{user.name}}</ion-label>
-        <ion-button *ngIf="user.status == 'pendienteAprobacion'" color="success" (click)="deleteEmployee(user)"><ion-icon name="checkmark"></ion-icon></ion-button>
-        <ion-button color="medium" (click)="modifyEmployee(user)"><ion-icon name="create"></ion-icon></ion-button>
-        <ion-button color="danger" (click)="deleteEmployee(user)"><ion-icon name="trash"></ion-icon></ion-button>
+        <ion-button *ngIf="user.status == 'pendienteAprobacion'" color="success" (click)="deleteEmployee(user)">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button color="medium" (click)="modifyEmployee(user)">
+          <ion-icon name="create"></ion-icon>
+        </ion-button>
+        <ion-button color="danger" (click)="deleteEmployee(user)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-button>
       </ion-item>
     </ion-list>
   </div>

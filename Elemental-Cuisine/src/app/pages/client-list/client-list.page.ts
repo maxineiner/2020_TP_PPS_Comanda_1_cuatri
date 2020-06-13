@@ -1,3 +1,4 @@
+import { EmailService } from './../../services/email.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/classes/user';
 import { UserService } from 'src/app/services/user.service';
@@ -25,7 +26,8 @@ export class ClientListPage implements OnInit {
     private userService: UserService,
     private dataService: DataService,
     private notificationService: NotificationService,
-    private authService: AuthService
+    private authService: AuthService,
+    private emailService: EmailService
   ) { }
 
   ngOnInit() {
@@ -51,9 +53,8 @@ export class ClientListPage implements OnInit {
   approveUser(user)
   {
     this.dataService.setStatus(Collections.Users, user.id, Status.Unattended).then(() => {
-      this.authService.sendEmailVerification().then(() => {
+      this.emailService.sendAprovalEmail(user.email)
         this.notificationService.presentToast("Cliente aprobado! Se ha enviado  correo electrónico", TypeNotification.Success, "bottom", false);
-      })
       });
   }
 
