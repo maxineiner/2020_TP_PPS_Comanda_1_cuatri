@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { isNullOrUndefined } from 'util';
 import { Profiles } from 'src/app/classes/enums/profiles';
 import { Table } from 'src/app/classes/table';
+import { Order } from 'src/app/classes/order';
 
 @Component({
   selector: 'app-order',
@@ -17,7 +18,7 @@ import { Table } from 'src/app/classes/table';
 })
 export class OrderPage implements OnInit {
 
-  private order: any = {};
+  private order: Order;
   private isOrderTaked: boolean = false;
 
   constructor(
@@ -33,9 +34,13 @@ export class OrderPage implements OnInit {
   }
 
   setOrderMenu(order){
-    this.order.price = order.price;
-    this.order.menu = order.menu;
+    this.order = order;
     this.isOrderTaked = true;
+  }
+
+  clearComponent(){
+    this.order = undefined;
+    this.isOrderTaked = false;
   }
 
   async askWaiter() {

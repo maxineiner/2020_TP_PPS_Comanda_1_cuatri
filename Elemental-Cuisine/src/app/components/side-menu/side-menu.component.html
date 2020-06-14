@@ -1,0 +1,25 @@
+<ion-menu side="start" contentId="content1">
+  <ion-header>
+    <ion-toolbar>  
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-menu-toggle auto-hide="true">
+      <ion-list>
+        <ion-item routerLink="/inicio">
+          <ion-icon size="medium" name="home"></ion-icon>
+          Ir a Inicio
+        </ion-item>
+        <ion-item routerLink="/configuracion">
+          <ion-icon size="medium" name="settings"></ion-icon>
+          Configuración
+        </ion-item>
+        <ion-item (click)="logout()" >
+          <ion-icon size="medium" name="exit"></ion-icon>
+          Cerrar Sesión
+        </ion-item>
+      </ion-list>
+    </ion-menu-toggle>
+  </ion-content>
+</ion-menu>

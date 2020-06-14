@@ -21,10 +21,6 @@ export class OrderService {
     return this.dataService.getAll(this.orderCollection);
   }
 
-  updateOrder(id, order){
-    this.dataService.update(this.orderCollection, id, order);
-  }
-
   getOrderById(id){
     return this.dataService.getOne(this.orderCollection, id);
   }

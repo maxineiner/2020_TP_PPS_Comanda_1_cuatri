@@ -67,8 +67,23 @@
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.password">
-      <small  *ngIf="form.get('password').hasError(validation.type) && (form.get('password').dirty || form.get('password').touched)">
+      <small *ngIf="form.get('password').hasError(validation.type) && (form.get('password').dirty || form.get('password').touched)">
         {{ validation.message }}
+      </small>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label position="floating">Repita su clave</ion-label>
+    <ion-input type="password" formControlName="confirmPass"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.confirmPass">
+      <small *ngIf="form.get('confirmPass').hasError(validation.type) && (form.get('confirmPass').dirty || form.get('confirmPass').touched)">
+        {{ validation.message }}
+      </small>
+      <small *ngIf="form.get('confirmPass').dirty && !checkPasswords() && !form.get('confirmPass').hasError(validation.type)">
+        Las contraseñas ingresadas no coinciden
       </small>
     </ng-container>
   </div>
