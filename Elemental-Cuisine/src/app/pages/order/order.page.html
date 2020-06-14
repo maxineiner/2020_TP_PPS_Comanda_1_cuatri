@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
+        <ion-menu-button></ion-menu-button>
       </ion-buttons>
     <ion-title>Menú</ion-title>
     <ion-buttons slot="primary">
@@ -14,5 +14,5 @@
 
 <ion-content>
   <app-menu *ngIf="!isOrderTaked" (sendOrder)="setOrderMenu($event)"></app-menu>
-  <app-feedback *ngIf="isOrderTaked" [order]="order"></app-feedback>
+  <app-feedback *ngIf="isOrderTaked" [currentOrder]="order" (sendFeedback)="clearComponent()"></app-feedback>
 </ion-content>

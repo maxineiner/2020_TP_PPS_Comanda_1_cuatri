@@ -21,7 +21,6 @@ export class PollClientePage implements OnInit {
   currentUser: User;
   private poll:Poll;
 
-  // firebase = firebase;
   foto: string;
   fecha: string;
 

@@ -40,6 +40,9 @@ export class UserFormComponent implements OnInit {
         Validators.minLength(6),
         Validators.required
       ])),
+      confirmPass: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
       name: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z]+$')
@@ -71,6 +74,9 @@ export class UserFormComponent implements OnInit {
       { type: 'required',  message: 'La contraseña es requerida.' },
       { type: 'minlength', message: 'La password debe contener al menos 6 catacteres.' }
     ],
+    'confirmPass': [
+      { type: 'required',  message: 'La contraseña es requerida.' },
+    ],
     'name': [
       { type: 'required', message: 'El nombre es requerido.' },
       { type: 'pattern',  message: 'Ingrese un nombre válido.' }
@@ -91,6 +97,13 @@ export class UserFormComponent implements OnInit {
       { type: 'required',  message: 'El perfil es requerido.' },
     ]
   };
+
+  checkPasswords() { 
+    let pass = this.form.get('password').value;
+    let confirmPass = this.form.get('confirmPass').value;
+    console.log(pass === confirmPass)
+    return pass === confirmPass     
+  }
 
   register(formValues){ 
     this.formValuesToUser(formValues);

@@ -19,10 +19,11 @@ import { FCM } from '@ionic-native/fcm/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FcmService } from './services/FcmService';
 import { HttpClientModule } from '@angular/common/http';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 @NgModule({
-  declarations: [AppComponent],
-    entryComponents: [],
+  declarations: [AppComponent, SideMenuComponent],
+  entryComponents: [],
   imports: [
     BrowserModule,
     HttpClientModule,

@@ -1,4 +1,6 @@
 export enum Status {
+
+    //Client Status
     PendingApproval = 'pendienteAprobacion',
     Unattended = 'sinAtender',
     OnHold = 'enEspera',
@@ -7,7 +9,12 @@ export enum Status {
     Ordered = 'esperandoOrden',
     Ended = 'finalizado',
 
+    //Table Status
     Available = 'disponible',
     Busy = 'ocupada',
-    Reserved = 'reservada'
+    Reserved = 'reservada',
+
+    //Order Status
+    Pending = 'pendiente',
+    Delivered = 'entregado'
 }

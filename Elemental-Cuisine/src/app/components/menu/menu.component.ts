@@ -1,9 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/classes/product';
-import { Collections } from 'src/app/classes/enums/collections';
 import { AlertController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
+import { Status } from 'src/app/classes/enums/status';
+import { Order } from 'src/app/classes/order';
 
 @Component({
   selector: 'app-menu',
@@ -13,9 +14,8 @@ import { CameraService } from 'src/app/services/camera.service';
 export class MenuComponent implements OnInit {
 
   private products: Array<Product>;
-  private total: number = 0;
-  private menu: Array<Product> = new Array<Product>();
-  @Output() sendOrder: EventEmitter<object> = new EventEmitter<object>();
+  private order = new Order();
+  @Output() sendOrder: EventEmitter<Order> = new EventEmitter<Order>();
 
   slideOpts = {
     slidesPerView: 1,
@@ -26,10 +26,14 @@ export class MenuComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private alertController: AlertController,
-    private cameraService: CameraService
+    private cameraService: CameraService,
   ) { 
     this.productService.getAllProducts().subscribe(products => {
-      this.products = products.map(product => product.payload.doc.data() as Product);
+      this.products = products.map(productAux => {
+        let product = productAux.payload.doc.data() as Product;
+        product.id = productAux.payload.doc.id;
+        return product;
+      });    
     });
   }
 
@@ -39,14 +43,11 @@ export class MenuComponent implements OnInit {
 
   showDetails(product: Product){
     this.showAlert(product).then(response => {
-      var quantity = (response.data) ? response.data.quantity : "";
+      var quantity = (response.data) ? parseInt(response.data.quantity) : null;
       if(quantity){
-        for(let i = 0; i < quantity; i++){
-          this.menu.push(product);
-        }
-        let reducer = ( accumulator, currentProduct ) => accumulator + currentProduct.price;
-
-        this.total = this.menu.reduce(reducer, 0)
+        this.order.menu.push({...product, quantity: quantity});
+        this.order.total += product.price * quantity;
+        this.order.status = Status.Pending;
       }
     });
   }
@@ -103,7 +104,7 @@ export class MenuComponent implements OnInit {
   }
 
   sendMenu(){
-    this.sendOrder.emit({"menu":this.menu, "price": this.total});
+    this.sendOrder.emit(this.order);
   }
 
 }
