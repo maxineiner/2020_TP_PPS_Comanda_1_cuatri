@@ -82,9 +82,6 @@
       <small *ngIf="form.get('confirmPass').hasError(validation.type) && (form.get('confirmPass').dirty || form.get('confirmPass').touched)">
         {{ validation.message }}
       </small>
-      <small *ngIf="form.get('confirmPass').dirty && !checkPasswords() && !form.get('confirmPass').hasError(validation.type)">
-        Las contraseñas ingresadas no coinciden
-      </small>
     </ng-container>
   </div>
 
