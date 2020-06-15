@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 export class RegisterPage implements OnInit {
 
   private type: string;
+  private title: string;
   idObject: string = "";
 
   constructor(
@@ -18,5 +19,12 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
     this.type = this.activatedRoute.snapshot.paramMap.get('type');
     this.idObject = this.activatedRoute.snapshot.paramMap.get('id');
+
+    if (this.idObject != null) {
+      this.title = "Modificación de " + this.type;
+    }
+    else {
+      this.title = "Registro de " + this.type;
+    }
   }
 }

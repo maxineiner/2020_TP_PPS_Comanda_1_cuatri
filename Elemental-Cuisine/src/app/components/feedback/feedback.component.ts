@@ -34,7 +34,7 @@ export class FeedbackComponent implements OnInit {
     this.orderService.saveOrder(this.authService.getCurrentUser().uid,  this.orders.map((obj)=> {return Object.assign({}, obj)}));
     this.notificationService.presentToast("Pedido realizado con éxito", "success", "top");
     this.sendFeedback.emit(true);
-    this.router.navigateByUrl("/inicio")
+    this.router.navigateByUrl("/inicio");
   }
 
 }

@@ -7,6 +7,7 @@ import { RegisterPage } from './register.page';
 import { ProductFormComponent } from 'src/app/components/product-form/product-form.component';
 import { TableFormComponent } from 'src/app/components/table-form/table-form.component';
 import { UserFormComponent } from 'src/app/components/user-form/user-form.component';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
