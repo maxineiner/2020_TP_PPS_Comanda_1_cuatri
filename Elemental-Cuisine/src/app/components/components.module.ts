@@ -8,8 +8,8 @@ import { ClientHomeComponent } from './client-home/client-home.component';
 import { WaiterHomeComponent } from './waiter-home/waiter-home.component';
 
 @NgModule({
-    declarations: [MenuComponent, FeedbackComponent, CustomHeaderComponent, ClientHomeComponent, WaiterHomeComponent],
-    exports: [MenuComponent, FeedbackComponent, CustomHeaderComponent, ClientHomeComponent, WaiterHomeComponent],
+    declarations: [MenuComponent, FeedbackComponent, CustomHeaderComponent],
+    exports: [MenuComponent, FeedbackComponent, CustomHeaderComponent],
     imports: [IonicModule, CommonModule]
 })
 export class ComponentsModule { }

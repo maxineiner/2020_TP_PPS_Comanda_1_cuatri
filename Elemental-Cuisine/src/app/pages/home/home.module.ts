@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 
 import { HomePage } from './home.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ClientHomeComponent } from 'src/app/components/client-home/client-home.component';
+import { WaiterHomeComponent } from 'src/app/components/waiter-home/waiter-home.component';
 
 @NgModule({
   imports: [
@@ -13,7 +15,6 @@ import { ComponentsModule } from 'src/app/components/components.module';
     ComponentsModule,
     FormsModule,
     IonicModule,
-    ComponentsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -21,6 +22,6 @@ import { ComponentsModule } from 'src/app/components/components.module';
       }
     ])
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, ClientHomeComponent, WaiterHomeComponent]
 })
-export class HomePageModule {}
+export class HomePageModule { }
