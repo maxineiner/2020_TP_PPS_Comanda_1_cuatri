@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/classes/product';
-//import { PopoverController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list',
@@ -14,7 +14,8 @@ export class ProductListPage implements OnInit {
 
   constructor(
     private productService: ProductService,
-  ) { 
+    private router: Router
+  ) {
     this.productService.getAllProducts().subscribe(products => {
       this.products = products.map(productAux => {
         let product = productAux.payload.doc.data() as Product;
@@ -27,16 +28,20 @@ export class ProductListPage implements OnInit {
   ngOnInit() {
   }
 
-  deleteProduct(event, productId){
+  deleteProduct(event, productId) {
     event.stopPropagation();
     this.productService.deleteProduct(productId);
   }
 
-  modifyProduct(event){
+  modifyProduct(event) {
     event.stopPropagation();
   }
 
-  showDetails(product){
+  showDetails(product) {
     console.log(product);
+  }
+
+  routerToLink() {
+    this.router.navigateByUrl("/registro/producto");
   }
 }

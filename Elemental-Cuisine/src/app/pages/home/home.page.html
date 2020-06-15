@@ -1,11 +1,4 @@
-<ion-header>
-  <ion-toolbar color="dark">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>   
-    <ion-title>Menú Principal</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-custom-header [title]="'Menú Principal'"></app-custom-header>
 
 <ion-content>
   <div class="background">
@@ -28,11 +21,11 @@
         </ion-row>
         <ion-row>
           <ion-col col-6>
-              <ion-card routerLink="/encuestas" class="ion-text-center ion-padding" color="dark">
-                <ion-icon name="clipboard"></ion-icon>          
-                <h2>Encuestas</h2>
-              </ion-card>
-            </ion-col>
+            <ion-card routerLink="/encuestas" class="ion-text-center ion-padding" color="dark">
+              <ion-icon name="clipboard"></ion-icon>
+              <h2>Encuestas</h2>
+            </ion-card>
+          </ion-col>
         </ion-row>
       </ion-grid>
     </section>

@@ -1,19 +1,9 @@
-<ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Encuestas de Clientes</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content >   
-        <ion-list>
-          <ion-item *ngFor="let item of polls" (click)="showDetails($event)">
-            <ion-label>{{item.user}}</ion-label>          
-          </ion-item>
-        </ion-list>   
-  </ion-content>
-  
-  
-  
+<app-custom-header [title]="'Encuestas de Clientes'"></app-custom-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of polls" (click)="showDetails($event)">
+      <ion-label>{{item.user}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

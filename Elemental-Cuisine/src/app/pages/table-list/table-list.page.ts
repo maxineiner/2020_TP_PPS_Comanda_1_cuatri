@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Table } from 'src/app/classes/table';
 import { TableService } from 'src/app/services/table.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-list',
@@ -12,25 +13,30 @@ export class TableListPage implements OnInit {
   private tables: Array<Table>;
 
   constructor(
-    private tableService: TableService
-  ) { 
+    private tableService: TableService,
+    private router: Router
+  ) {
     this.tableService.getAllTables().subscribe(tables => {
       this.tables = tables.map(tableAux => {
-          let table = tableAux.payload.doc.data() as Table
-          table.id = tableAux.payload.doc.id;
-          return table;
-        });
+        let table = tableAux.payload.doc.data() as Table
+        table.id = tableAux.payload.doc.id;
+        return table;
+      });
     });
   }
 
   ngOnInit() {
   }
 
-  deleteTable(table){
+  deleteTable(table) {
     this.tableService.deleteTable(table.id);
   }
 
-  modifyTable(table){
-    
+  modifyTable(table) {
+
+  }
+
+  routerToLink() {
+    this.router.navigateByUrl("/registro/mesa");
   }
 }
