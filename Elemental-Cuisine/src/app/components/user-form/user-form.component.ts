@@ -6,7 +6,7 @@ import { User } from 'src/app/classes/user';
 import { QrscannerService } from 'src/app/services/qrscanner.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-user-form',
@@ -40,9 +40,7 @@ export class UserFormComponent implements OnInit {
         Validators.minLength(6),
         Validators.required
       ])),
-      confirmPass: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
+      confirmPass: new FormControl(''),
       name: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z]+$')
@@ -55,14 +53,14 @@ export class UserFormComponent implements OnInit {
         Validators.pattern('^[0-9]{8}$'),
         Validators.required
       ])),
-      cuil: new FormControl('', Validators.compose([
-        Validators.pattern('^[0-9]{11}$'),
-        Validators.required
-      ])),
-      profile: new FormControl('', Validators.compose([
-        Validators.required
-      ])),
+      cuil: new FormControl(''),
+      profile: new FormControl('')
     });
+    this.form.controls["confirmPass"].setValidators([this.checkPasswords(), Validators.required])
+    if(!this.isClient) {
+      this.form.controls["cuil"].setValidators([Validators.pattern('^[0-9]{11}$'), Validators.required]) 
+      this.form.controls["profile"].setValidators([Validators.required])
+    }
   }
  
   validation_messages = {
@@ -76,6 +74,7 @@ export class UserFormComponent implements OnInit {
     ],
     'confirmPass': [
       { type: 'required',  message: 'La contraseña es requerida.' },
+      { type: 'passwordError', message: 'Las contraseñas ingresadas no coinciden'}
     ],
     'name': [
       { type: 'required', message: 'El nombre es requerido.' },
@@ -98,11 +97,17 @@ export class UserFormComponent implements OnInit {
     ]
   };
 
-  checkPasswords() { 
-    let pass = this.form.get('password').value;
-    let confirmPass = this.form.get('confirmPass').value;
-    console.log(pass === confirmPass)
-    return pass === confirmPass     
+  checkPasswords(): ValidatorFn { 
+    const passwordChecker = () => {
+      const pass = this.form.get('password').value;
+      const confirmPass = this.form.get('confirmPass').value;
+      const isValidPassword = pass === confirmPass
+      if(isValidPassword || confirmPass == "") return null;
+      
+      return { "passwordError": true }
+      
+    }
+    return passwordChecker;
   }
 
   register(formValues){ 
@@ -139,6 +144,10 @@ export class UserFormComponent implements OnInit {
     this.user.email = formValues.email;
     this.user.password = formValues.password;
     this.user.dni = formValues.dni;
+    if(!this.isClient){
+      this.user.cuil = formValues.cuil;
+      this.user.profile = formValues.profile;
+    }
   }
 
 }

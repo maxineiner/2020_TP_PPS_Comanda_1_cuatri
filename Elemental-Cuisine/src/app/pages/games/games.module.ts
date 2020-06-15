@@ -5,24 +5,22 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PlayClientPage } from './play-client.page';
-import { ComponentsModule } from 'src/app/components/components.module';
+import { GamesPage } from './games.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: PlayClientPage
+    component: GamesPage
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    ComponentsModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PlayClientPage]
+  declarations: [GamesPage]
 })
-export class PlayClientPageModule {}
+export class GamesPageModule {}
