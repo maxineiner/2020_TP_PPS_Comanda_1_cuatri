@@ -1,11 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Envío a Domicilio</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-custom-header [title]="'Envío a Domicilio'"></app-custom-header>
 
 <ion-content>
   <app-menu *ngIf="!isOrderTaked" (sendOrder)="setOrderMenu($event)"></app-menu>

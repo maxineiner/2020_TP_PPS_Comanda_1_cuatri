@@ -6,6 +6,7 @@ import { TabBarComponent } from 'src/app/components/tab-bar/tab-bar.component';
 import { TabsRoutingModule } from './tabs-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { ListsPage } from './lists.page';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 const routes: Routes = [
   {
@@ -17,11 +18,12 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
+    ComponentsModule,
     FormsModule,
     IonicModule,
     TabsRoutingModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ListsPage,TabBarComponent]
+  declarations: [ListsPage, TabBarComponent]
 })
-export class ListsPageModule {}
+export class ListsPageModule { }

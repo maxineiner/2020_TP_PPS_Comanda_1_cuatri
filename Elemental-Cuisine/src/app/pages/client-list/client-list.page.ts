@@ -54,7 +54,7 @@ export class ClientListPage implements OnInit {
   {
     this.dataService.setStatus(Collections.Users, user.id, Status.Unattended).then(() => {
       this.emailService.sendAprovalEmail(user.email)
-        this.notificationService.presentToast("Cliente aprobado! Se ha enviado  correo electrónico", TypeNotification.Success, "bottom", false);
+        this.notificationService.presentToast("Cliente aprobado! Se ha enviado el correo electrónico", TypeNotification.Success, "bottom", false);
       });
   }
 
