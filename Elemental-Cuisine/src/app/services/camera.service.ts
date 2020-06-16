@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import * as firebase from "firebase";
+import { storage } from "firebase/app";
 import { NotificationService } from './notification.service';
 
 @Injectable({
@@ -28,7 +28,7 @@ export class CameraService {
       let result = await this.camera.getPicture(options);
       let image = `data:image/jpeg;base64,${result}`;
       //guardo en Firebase Storage
-      let pictures = firebase.storage().ref(`${collection}/${imageName}`);
+      let pictures = storage().ref(`${collection}/${imageName}`);
       //tomo url de foto en Firebase Storage
       return pictures.putString(image, "data_url").then(() => {
         return pictures.getDownloadURL().then((url) => {
@@ -44,10 +44,10 @@ export class CameraService {
   }
 
   getImageByName(collection, imageName) {
-    return firebase.storage().ref(`${collection}/${imageName}`).getDownloadURL();
+    return storage().ref(`${collection}/${imageName}`).getDownloadURL();
   }
 
   deleteImage(collection, imageName) {
-    return firebase.storage().ref(`${collection}/${imageName}`).delete();
+    return storage().ref(`${collection}/${imageName}`).delete();
   }
 }
