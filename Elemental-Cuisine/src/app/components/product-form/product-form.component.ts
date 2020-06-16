@@ -18,6 +18,7 @@ export class ProductFormComponent implements OnInit {
   private images: Array<any>;
   private modification: boolean;
 
+
   constructor(
     private cameraService: CameraService,
     private productService: ProductService,
