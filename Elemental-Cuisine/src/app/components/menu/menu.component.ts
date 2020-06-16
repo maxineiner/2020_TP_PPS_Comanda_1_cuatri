@@ -3,7 +3,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/classes/product';
 import { AlertController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
-import { Status } from 'src/app/classes/enums/status';
+import { Status } from 'src/app/classes/enums/Status';
 import { Order } from 'src/app/classes/order';
 
 @Component({
@@ -52,22 +52,24 @@ export class MenuComponent implements OnInit {
     });
   }
 
+  //TODO ARREGLAR
   async showAlert(product: Product) {
-   /* let slide = '<ion-slides [options]="slideOpts" [pager]="true">' +
-                  '<ion-slide>' +
-                    '<ion-item>' +
-                      '<ion-label>Subida por</ion-label>' +
-                      //'<img src={{image.url}}>' +
-                    '<ion-item>' +
-                  '</ion-slide>' +
-                '</ion-slides>'*/
     let message = "<div>" +
                     `<ion-label>${product.description}</ion-label>`;
-    //message += slide;
-    message += (product.photos.length > 0) ? 
-                    `<img src="${await this.cameraService.getImageByName('productos', product.photos[0])}" style="bmenu-radius: 2px">` : 
-                      "" + 
-                  "</div>"
+    let slides  =     '<ion-slides [options]="slideOpts" [pager]="true">';
+    product.photos.forEach( photo => {
+      const photoUrl = this.cameraService.getImageByName('productos', photo).then(url => {
+        slides += `<ion-slide>` +
+                    '<ion-item>' +
+                      `<img src="${url}" style="bmenu-radius: 2px">` +
+                    '<ion-item>' +
+                  '</ion-slide>'
+      });
+    })
+    message += slides +
+            '</ion-slides>' +
+          "</div>";
+    console.log(message);
 
     const alert = await this.alertController.create({
       header: product.name,

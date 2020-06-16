@@ -6,7 +6,7 @@ import { User } from 'src/app/classes/user';
 import { QrscannerService } from 'src/app/services/qrscanner.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-user-form',

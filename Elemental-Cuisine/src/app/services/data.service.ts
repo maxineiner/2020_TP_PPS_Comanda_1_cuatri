@@ -29,7 +29,11 @@ export class DataService {
   }
 
   getOne(collection, id){
-    return this.db.collection(collection).doc(id).get().toPromise();
+    return this.get(collection, id).toPromise();
+  }
+
+  get(collection, id){
+    return this.db.collection(collection).doc(id).get();
   }
 
   setData(collection, id, data){

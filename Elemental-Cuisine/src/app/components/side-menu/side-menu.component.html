@@ -1,7 +1,11 @@
-<ion-menu side="start" contentId="content1">
+<ion-menu disabled="{{disableMenu}}" side="start" contentId="content1">
   <ion-header>
     <ion-toolbar>  
-      <ion-title>Menú</ion-title>
+      <ion-title slot="start">Menú</ion-title>
+      <ion-chip *ngIf="showOrder" (click)="goTo()" outline color="primary">
+        <ion-icon name="restaurant"></ion-icon>
+        <ion-label>Total: ${{total}}</ion-label>
+      </ion-chip>
     </ion-toolbar>
   </ion-header>
   <ion-content>
