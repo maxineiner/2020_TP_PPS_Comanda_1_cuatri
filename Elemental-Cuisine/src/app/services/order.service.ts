@@ -24,9 +24,5 @@ export class OrderService {
   getOrderById(id){
     return this.dataService.getOne(this.orderCollection, id);
   }
-
-  getOrder(id){
-    return this.dataService.get(this.orderCollection, id);
-  }
   
 }
