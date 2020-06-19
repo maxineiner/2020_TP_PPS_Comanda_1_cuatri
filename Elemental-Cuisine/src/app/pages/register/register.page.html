@@ -3,7 +3,7 @@
 <ion-content>
   <app-user-form *ngIf="(type == 'cliente' || type == 'usuario' )" [isClient]="type == 'cliente'"></app-user-form>
 
-  <app-table-form *ngIf="type == 'mesa'"></app-table-form>
+  <app-table-form *ngIf="type == 'mesa'" [idObject]="idObject"></app-table-form>
 
   <app-product-form *ngIf="type == 'producto'" [idObject]="idObject"></app-product-form>
 </ion-content>

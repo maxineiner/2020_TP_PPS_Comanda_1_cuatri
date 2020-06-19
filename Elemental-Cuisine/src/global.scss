@@ -44,6 +44,10 @@ ion-title{
     color: red !important;
 }
 
+.delete-btn {
+    margin: unset;
+}
+
 .searchbar-input.sc-ion-searchbar-md {
     background-position: left 8px center;
     height: auto;
@@ -53,4 +57,8 @@ ion-title{
     background-color: white;
     -webkit-box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1) !important;
     box-shadow: 0 8px 14px rgba(0, 0, 0, 0.1) !important;
+}
+
+.icon-right-margin {
+    margin-right: 2%;
 }
