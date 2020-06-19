@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import * as firebase from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,11 @@ export class DataService {
   }
 
   getOne(collection, id){
-    return this.db.collection(collection).doc(id).get().toPromise();
+    return this.get(collection, id).toPromise();
+  }
+
+  get(collection, id){
+    return this.db.collection(collection).doc(id).get();
   }
 
   setData(collection, id, data){

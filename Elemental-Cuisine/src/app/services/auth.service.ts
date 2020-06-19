@@ -23,7 +23,7 @@ export class AuthService {
 
   logOut() {
     this.AFauth.auth.signOut().then(auth => {
-      this.router.navigate(['/login']);
+      this.router.navigateByUrl('/login');
     })
   }
 
@@ -50,6 +50,10 @@ export class AuthService {
   async sendEmailVerification()
   {
     return this.AFauth.auth.currentUser.sendEmailVerification();
+  }
+
+  isUserLoggedIn(){
+    return this.AFauth.authState;
   }
 
 }

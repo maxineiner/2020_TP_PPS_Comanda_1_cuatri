@@ -17,5 +17,6 @@ export enum Status {
     //Order Status
     Pending = 'pendiente',
     Prepared = 'preparado',
-    Delivered = 'entregado'
+    Delivered = 'entregado',
+    Confirmed = 'confirmado'
 }

@@ -21,7 +21,14 @@ export class OrderService {
     return this.dataService.getAll(this.orderCollection);
   }
 
+  //Retorna una promesa
   getOrderById(id){
     return this.dataService.getOne(this.orderCollection, id);
   }
+
+  //Retorna una observer
+  getOrder(id){
+    return this.dataService.get(this.orderCollection, id);
+  }
+  
 }
