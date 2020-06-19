@@ -42,11 +42,6 @@ export class SideMenuComponent implements OnInit {
 
   ngOnInit() {}
 
-  goTo(){
-    console.log("Ir a ver pedido")
-    //this.router.navigateByUrl("");
-  }
-
   logout(){
     this.authService.logOut();
   }

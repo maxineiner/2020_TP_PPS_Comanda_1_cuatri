@@ -55,7 +55,7 @@
           </ion-card>
         </ion-col>
         <ion-col col-6 *ngIf="currentUser?.status == 'atendido'">
-          <ion-card class="ion-text-center ion-padding" color="danger">
+          <ion-card routerLink="/pedido/detalle" class="ion-text-center ion-padding" color="danger">
             <ion-icon name="paper"></ion-icon>            
             <h2 class="long-name">Ver Pedido</h2>
           </ion-card>

@@ -30,7 +30,7 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
   ],
   providers: [
     AngularFirestore,
