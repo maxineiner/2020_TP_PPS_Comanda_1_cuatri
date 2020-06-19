@@ -29,6 +29,7 @@ export class CustomHeaderComponent implements OnInit {
   @Input() icon: string;
   @Input() iconColor: string;
   @Input() helpIconColor: string;
+  @Input() showButton: boolean = true;
 
   @Output() onClick: EventEmitter<any> = new EventEmitter();
 

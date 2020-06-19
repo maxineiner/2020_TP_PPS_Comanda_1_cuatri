@@ -18,6 +18,16 @@
       <ion-label for="pass" class="label" position="floating">Precio</ion-label>
       <ion-input type="number" class="input" [(ngModel)]="product.price" name="price" required></ion-input>
     </ion-item>
+
+    <ion-item class="group">
+      <ion-label for="pass" class="label" position="floating">Sector</ion-label>
+      <ion-select placeholder="Seleccione un sector" [(ngModel)]="product.managerProfile" name="managerProfile">
+        <ion-select-option value="cocinero">Cocina</ion-select-option>
+        <ion-select-option value="bartender">Barra</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+
   </ion-list>
   <br>
   <ion-button color="medium" (click)="takePhoto()" [disabled]="product.name == undefined || product.name == ''">Sacar

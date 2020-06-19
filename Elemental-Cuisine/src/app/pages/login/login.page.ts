@@ -1,3 +1,5 @@
+import { Status } from 'src/app/classes/enums/status';
+import { DataService } from 'src/app/services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -63,6 +65,7 @@ export class LoginPage implements OnInit {
     this.defaultUsers.push({ "email": "admin@admin.com", "password": "123456" });
     this.defaultUsers.push({ "email": "cliente@cliente.com", "password": "123456" });
     this.defaultUsers.push({ "email": "mozo@mozo.com", "password": "123456" });
+    this.defaultUsers.push({ "email": "maitre@maitre.com", "password": "123456" });
     this.defaultUsers.push({ "email": "bartender@bartender.com", "password": "123456" });
     this.defaultUsers.push({ "email": "cocinero@cocinero.com", "password": "123456" });
     this.defaultUsers.push({ "email": "anonimo@anonimo.com", "password": "123456" });
@@ -74,10 +77,18 @@ export class LoginPage implements OnInit {
 
   onSubmitLogin(form) {
     this.loadingService.showLoading("Espere...");
-
     this.authService.logIn(form.email, form.password)
       .then(res => {
-        this.loadingService.closeLoadingAndRedirect("/home");
+
+        // Verificamos si está aprobado
+        this.userService.getUserById(this.authService.getCurrentUser().uid).then(user => {
+          if (user.data().profile === 'cliente' && user.data().status === 'pendienteAprobacion') {
+            this.authService.logOut();
+            this.loadingService.closeLoading("Atención", "Su cuenta aún no fue aprobada. Aguarde un momento por favor e intente nuevamente. Gracias", 'info');
+          } else {
+            this.loadingService.closeLoadingAndRedirect("/home");
+          }
+        });
       })
       .catch(err => {
         this.loadingService.closeLoading("Error", "Verifique usuario y contraseña", 'error');
