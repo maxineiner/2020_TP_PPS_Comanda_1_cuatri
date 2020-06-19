@@ -1,12 +1,17 @@
-<app-custom-header [title]="'Usuarios'" [icon]="'add-circle'" [iconColor]="'success'" (onClick)="routerToLink()"></app-custom-header>
+<app-custom-header [title]="'Usuarios'" [icon]="'add-circle'" [iconColor]="'success'" (onClick)="routerToLink()">
+</app-custom-header>
 
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let user of users">
       <ion-icon class="icon-right-margin" name="person"></ion-icon>
       <ion-label>{{user.name}}</ion-label>
-      <ion-button color="medium" (click)="modifyEmployee(user)"><ion-icon name="create"></ion-icon></ion-button>
-      <ion-button color="danger" (click)="deleteEmployee(user)"><ion-icon name="trash"></ion-icon></ion-button>
+      <ion-button color="medium" (click)="modifyEmployee($event)" routerLink="/modificar/usuario/{{user.id}}">
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+      <ion-button color="danger" (click)="deleteEmployee($event, user)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
     </ion-item>
   </ion-list>
 </ion-content>

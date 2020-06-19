@@ -7,7 +7,6 @@ import { Collections } from 'src/app/classes/enums/collections';
 import { Status } from 'src/app/classes/enums/Status';
 import { NotificationService } from 'src/app/services/notification.service';
 import { TypeNotification } from 'src/app/classes/enums/TypeNotification';
-import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-client-list',
@@ -26,7 +25,6 @@ export class ClientListPage implements OnInit {
     private userService: UserService,
     private dataService: DataService,
     private notificationService: NotificationService,
-    private authService: AuthService,
     private emailService: EmailService
   ) { }
 
@@ -41,9 +39,6 @@ export class ClientListPage implements OnInit {
                         .filter(user => user.profile && user.profile == "cliente" && user.status != Status.PendingApproval);
     });
 
-  }
-
-  modifyEmployee(user){
   }
 
   deleteEmployee(user){
