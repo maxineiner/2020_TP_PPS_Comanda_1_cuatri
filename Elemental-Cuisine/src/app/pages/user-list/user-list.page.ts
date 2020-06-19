@@ -28,10 +28,11 @@ export class UserListPage implements OnInit {
   }
 
   modifyEmployee(user) {
-
+    event.stopPropagation();
   }
 
   deleteEmployee(user) {
+    event.stopPropagation();
     this.dataService.deleteDocument(Collections.Users, user);
   }
 

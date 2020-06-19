@@ -15,9 +15,12 @@ import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn, Validatio
 })
 export class UserFormComponent implements OnInit {
 
-  @Input() isClient:boolean;
-  private user:User;
-  form: FormGroup;
+  @Input() isClient: boolean;
+  @Input() idObject: string = "";
+  private image: any;
+  private user: User;
+  private form: FormGroup;
+  private modification: boolean;
 
   constructor(
     private router: Router,
@@ -26,11 +29,31 @@ export class UserFormComponent implements OnInit {
     private qrscannerService: QrscannerService,
     private notificationService: NotificationService,
     private formBuilder: FormBuilder
-  ) { 
+  ) {
     this.user = new User();
   }
 
   ngOnInit() {
+    if (this.idObject) {
+      this.modification = true;
+      this.userService.getUserById(this.idObject).then(user => {
+        this.user = user.data() as User;
+        this.form.patchValue({
+          name: this.user.name,
+          surname: this.user.surname,
+          dni: this.user.dni,
+          cuil: this.user.cuil,
+          email: this.user.email,
+          password: this.user.password,
+          confirmPass: this.user.password,
+          profile: this.user.profile
+        });
+
+        if (this.user.photo)
+          this.loadPhoto(this.user.photo);
+      });
+    }
+
     this.form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
@@ -57,97 +80,136 @@ export class UserFormComponent implements OnInit {
       profile: new FormControl('')
     });
     this.form.controls["confirmPass"].setValidators([this.checkPasswords(), Validators.required])
-    if(!this.isClient) {
-      this.form.controls["cuil"].setValidators([Validators.pattern('^[0-9]{11}$'), Validators.required]) 
+    if (!this.isClient) {
+      this.form.controls["cuil"].setValidators([Validators.pattern('^[0-9]{11}$'), Validators.required])
       this.form.controls["profile"].setValidators([Validators.required])
     }
   }
- 
+
   validation_messages = {
     'email': [
       { type: 'required', message: 'El correo electrónico es requerido.' },
-      { type: 'pattern',  message: 'Ingrese un correo electrónico válido.' }
+      { type: 'pattern', message: 'Ingrese un correo electrónico válido.' }
     ],
     'password': [
-      { type: 'required',  message: 'La contraseña es requerida.' },
+      { type: 'required', message: 'La contraseña es requerida.' },
       { type: 'minlength', message: 'La password debe contener al menos 6 catacteres.' }
     ],
     'confirmPass': [
-      { type: 'required',  message: 'La contraseña es requerida.' },
-      { type: 'passwordError', message: 'Las contraseñas ingresadas no coinciden'}
+      { type: 'required', message: 'La contraseña es requerida.' },
+      { type: 'passwordError', message: 'Las contraseñas ingresadas no coinciden' }
     ],
     'name': [
       { type: 'required', message: 'El nombre es requerido.' },
-      { type: 'pattern',  message: 'Ingrese un nombre válido.' }
+      { type: 'pattern', message: 'Ingrese un nombre válido.' }
     ],
     'surname': [
       { type: 'required', message: 'La apellido es requerido.' },
-      { type: 'pattern',  message: 'Ingrese un apellido válido.' }
+      { type: 'pattern', message: 'Ingrese un apellido válido.' }
     ],
     'dni': [
-      { type: 'pattern',   message: 'El DNI debe contener 8 carácteres númericos.' },
-      { type: 'required',  message: 'El DNI es requerido.' },
+      { type: 'pattern', message: 'El DNI debe contener 8 carácteres númericos.' },
+      { type: 'required', message: 'El DNI es requerido.' },
     ],
     'cuil': [
-      { type: 'pattern',   message: 'El CUIL debe contener 11 carácteres númericos.' },
-      { type: 'required',  message: 'El CUIL es requerido.' },
+      { type: 'pattern', message: 'El CUIL debe contener 11 carácteres númericos.' },
+      { type: 'required', message: 'El CUIL es requerido.' },
     ],
     'profile': [
-      { type: 'required',  message: 'El perfil es requerido.' },
+      { type: 'required', message: 'El perfil es requerido.' },
     ]
   };
 
-  checkPasswords(): ValidatorFn { 
+
+  checkPasswords(): ValidatorFn {
     const passwordChecker = () => {
       const pass = this.form.get('password').value;
       const confirmPass = this.form.get('confirmPass').value;
       const isValidPassword = pass === confirmPass
-      if(isValidPassword || confirmPass == "") return null;
-      
+      if (isValidPassword || confirmPass == "") return null;
+
       return { "passwordError": true }
-      
+
     }
     return passwordChecker;
   }
 
-  register(formValues){ 
+  register(formValues) {
     this.formValuesToUser(formValues);
-    if(this.isClient){
+
+    if (this.image) {
+      this.user.photo = this.image.name;
+    }
+    else {
+      this.user.photo = null;
+    }
+
+    if (this.isClient) {
       this.user.profile = "cliente";
       this.user.status = Status.PendingApproval;
     }
-    this.userService.saveUserWithLogin(this.user).then(response =>{
-      if(this.isClient){
-        this.router.navigateByUrl('/login');
-        this.notificationService.presentToast("Espere a que su cuenta sea confirmada", "primary", "middle");
-      }
-      else{
-        this.notificationService.presentToast("Empleado creado", "success", "bottom");
+
+    if (this.modification) {
+      this.userService.modifyUser(this.idObject, this.user).then(() => {
+        this.notificationService.presentToast("Usuario modificado", "success", "middle");
         this.router.navigateByUrl('/listado/usuarios');
-      }
-    });
-  }  
-
-  takePhoto(){
-    //Cambiar nombre de la foto (segundo parametro)
-    this.cameraService.takePhoto('clientes', Date.now());
+      });
+    }
+    else {
+      this.userService.saveUserWithLogin(this.user).then(response => {
+        if (this.isClient) {
+          this.router.navigateByUrl('/login');
+          this.notificationService.presentToast("Espere a que su cuenta sea confirmada", "primary", "middle");
+        }
+        else {
+          this.notificationService.presentToast("Usuario creado", "success", "bottom");
+          this.router.navigateByUrl('/listado/usuarios');
+        }
+      });
+    }
   }
 
-  scan(){
-    let dniData = this.qrscannerService.scanDni();
-    alert(dniData);
+  async takePhoto() {
+    if (!this.image) {
+      let imgName = `${this.user.name}-${Date.now()}`;
+      await this.cameraService.takePhoto('usuarios', imgName);
+      this.loadPhoto(imgName);
+    }
+    else {
+      this.notificationService.presentToast("Solo se puede subir una foto.", "danger", "middle");
+    }
   }
 
-  formValuesToUser(formValues){
+  deletePhoto(imgName) {
+    this.cameraService.deleteImage('usuarios', imgName).then(
+      resp => {
+        this.image = null;
+      },
+      err => {
+        this.notificationService.presentToast("Error al eliminar la foto.", "danger", "bottom");
+      })
+  }
+
+  scan() {
+    let data = this.qrscannerService.scanDni();
+    alert(data);
+  }
+
+  async loadPhoto(imgName) {
+    let imgUrl = await this.cameraService.getImageByName('usuarios', imgName);
+    this.image = { "url": imgUrl, "name": imgName };
+  }
+
+  formValuesToUser(formValues) {
     this.user.name = formValues.name;
     this.user.surname = formValues.surname;
     this.user.email = formValues.email;
     this.user.password = formValues.password;
     this.user.dni = formValues.dni;
+
     if(!this.isClient){
       this.user.cuil = formValues.cuil;
       this.user.profile = formValues.profile;
     }
   }
-
 }

@@ -28,6 +28,10 @@ export class UserService {
     this.db.collection(Collections.Users).doc(user.id).set(Object.assign({}, user));
   }
 
+  modifyUser(userId, user) {
+    return this.dataService.update(Collections.Users, userId, user);
+  }
+
   setDocument(collection: string, id: string, object: object): void {
     this.db.collection(collection).doc(id).set(object);
   }
