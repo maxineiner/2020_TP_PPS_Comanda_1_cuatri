@@ -79,13 +79,13 @@ export class OrderListPage implements OnInit {
       orders[index].status = status;
       this.orderService.modifyOrder(orderId, orders);
 
-      let products = orders[index].menu as Product[];
-
+    
       switch (status) {
 
         case Status.PendingPreparation:
-          this.notificationService.presentToast('El pedido fue confirmado!', TypeNotification.Success, "bottom", false);
+          let products = orders[index].menu as Product[];
           this.sendNotificationByProfile(products);
+          this.notificationService.presentToast('El pedido fue confirmado!', TypeNotification.Success, "bottom", false);
           break;
 
         case Status.Delivered:

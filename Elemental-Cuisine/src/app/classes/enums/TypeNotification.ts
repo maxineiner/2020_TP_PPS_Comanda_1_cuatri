@@ -3,5 +3,5 @@ export enum TypeNotification {
     Info = 'primary',
     Success = 'success',
     Warning = 'warning',
-    Error = 'error'
+    Error = 'danger'
 }
