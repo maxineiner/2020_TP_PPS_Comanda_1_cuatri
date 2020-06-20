@@ -24,4 +24,13 @@ export class OrderService {
   getOrderById(id){
     return this.dataService.getOne(this.orderCollection, id);
   }
+
+  modifyOrder(id, order) {
+    return this.dataService.update(this.orderCollection, id, order);
+  }
+
+  deleteOrder(id){
+    this.dataService.deleteDocument(this.orderCollection, id);
+  }
+
 }

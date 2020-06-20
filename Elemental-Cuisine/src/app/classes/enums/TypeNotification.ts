@@ -1,6 +1,6 @@
 export enum TypeNotification {
     None = 'none',
-    Info = 'info',
+    Info = 'primary',
     Success = 'success',
     Warning = 'warning',
     Error = 'error'

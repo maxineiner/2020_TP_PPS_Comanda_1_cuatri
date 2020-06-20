@@ -15,7 +15,10 @@ export enum Status {
     Reserved = 'reservada',
 
     //Order Status
-    Pending = 'pendiente',
+    Cancelled = "cancelada",
+    PendingConfirm = "pendienteConfirmacion",
+    PendingPreparation = 'pendientePreparacion',
+    Preparing = 'preparando',
     Prepared = 'preparado',
     Delivered = 'entregado'
 }

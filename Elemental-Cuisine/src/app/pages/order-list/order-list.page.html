@@ -1,0 +1,66 @@
+<app-custom-header [title]="'Pedidos'"></app-custom-header>
+
+<ion-content>
+  <ion-list>
+      <ion-list-header>Pendientes de confirmación</ion-list-header>
+
+      <ion-item *ngIf="pendingConfirmOrders.length == 0">
+        <ion-icon class="disabled-item item-ico" src="assets/icon/pendingConfirm.svg"></ion-icon>
+        <ion-label class="disabled-item">No hay pedidos para confirmar</ion-label>
+      </ion-item>
+
+    <ion-item *ngFor="let orderWithUser of pendingConfirmOrders">
+      <ion-icon class="item-ico" src="assets/icon/pendingConfirm.svg"></ion-icon>
+      <ion-label>Mesa:{{ orderWithUser.user?.currentTable }} | {{ orderWithUser.user?.name }} {{ orderWithUser.user?.surname }}  </ion-label>
+      <ion-button color="success" (click)="updateOrderStatus(orderWithUser.order.id, orderWithUser.index, 'pendientePreparacion')"><ion-icon name="checkmark"></ion-icon></ion-button>
+      <ion-button color="danger" (click)="updateOrderStatus(orderWithUser.order.id, orderWithUser.index, 'cancelada')"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-item>
+  </ion-list>
+
+  
+  <ion-list>
+    <ion-list-header>Para preparar</ion-list-header>
+    
+    <ion-item *ngIf="pendingPreparationOrders.length == 0">
+      <ion-icon class="disabled-item item-ico" src="assets/icon/pendingPreparation.svg"></ion-icon>
+      <ion-label class="disabled-item">No hay pedidos para preparar</ion-label>
+    </ion-item>
+
+    <ion-item *ngFor="let orderWithUser of pendingPreparationOrders">
+      <ion-icon class="item-ico" src="assets/icon/pendingPreparation.svg"></ion-icon>
+      <ion-label>Mesa:{{ orderWithUser.user?.currentTable }} | {{orderWithUser.user?.name}} {{orderWithUser.user?.surname }}</ion-label>
+    </ion-item> 
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>En preparación</ion-list-header>
+
+    <ion-item *ngIf="preparingOrders.length == 0">
+      <ion-icon class="disabled-item item-ico" src="assets/icon/pending.svg"></ion-icon>
+      <ion-label class="disabled-item">No hay pedidos en preparación</ion-label>
+    </ion-item>
+
+    <ion-item *ngFor="let orderWithUser of preparingOrders">
+      <ion-icon class="item-ico" src="assets/icon/pending.svg"></ion-icon>
+      <ion-label>Mesa:{{ orderWithUser.user?.currentTable }} | {{ orderWithUser.user?.name}} {{orderWithUser.user?.surname }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Listos para servir</ion-list-header>
+
+    <ion-item *ngIf="preparedOrders.length == 0">
+      <ion-icon class="disabled-item item-ico"src="assets/icon/prepared.svg"></ion-icon>
+      <ion-label class="disabled-item">No hay pedidos para servir</ion-label>
+    </ion-item>
+
+    <ion-item *ngFor="let orderWithUser of preparedOrders">
+      <ion-icon class="item-ico" src="assets/icon/prepared.svg"></ion-icon>
+      <ion-label>Mesa:{{ orderWithUser.user?.currentTable }} | {{ orderWithUser.user?.name}} {{ orderWithUser.user?.surname}}</ion-label>
+      <ion-button color="primary" (click)="updateOrderStatus(orderWithUser.order.id, orderWithUser.index, 'entregado')"><ion-icon src="assets/icon/double-check.svg"></ion-icon></ion-button>
+      <ion-button color="danger" (click)="updateOrderStatus(orderWithUser.order.id, orderWithUser.index, 'cancelada')"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-item>
+  </ion-list>
+
+  
+</ion-content>
