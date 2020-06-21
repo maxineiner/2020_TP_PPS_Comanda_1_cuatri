@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { SmartAudioService } from 'src/app/services/smart-audio.service';
 
 @Component({
   selector: 'app-simon',
-  templateUrl: './simon.component.html',
-  styleUrls: ['./simon.component.scss'],
+  templateUrl: './simon.page.html',
+  styleUrls: ['./simon.page.scss'],
 })
-export class SimonComponent implements OnInit {
+export class SimonPage implements OnInit {
 
   private colours: Array<string> = ["green","red","yellow","blue"];
   private userColours: Array<string> = new Array<string>();
@@ -17,15 +18,12 @@ export class SimonComponent implements OnInit {
   private isPlaying:boolean = false;
   private currentStep:number = 0;
   private speed:number = 800;
-  private sounds = [
-    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
-    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
-    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
-    new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')
-  ];
+  private sounds = ['simon1', 'simon2', 'simon3', 'simon4'];
   private start = false;
 
-  constructor() { }
+  constructor(
+    private smartAudioService: SmartAudioService
+  ) { }
 
   ngOnInit() {}
   
@@ -43,7 +41,7 @@ export class SimonComponent implements OnInit {
   validate(event){
     let self = this;
     if(this.isPlaying){
-      this.sounds[this.colours.indexOf(event.currentTarget.getAttribute("colour"))].play().catch(function(){});
+      this.smartAudioService.play(this.sounds[this.colours.indexOf(event.currentTarget.getAttribute("colour"))]);
       this.userColours.push(event.currentTarget.getAttribute("colour"));
       if(this.userColours[this.currentStep] == this.machineColours[this.currentStep]){
         this.currentStep++;
@@ -107,8 +105,7 @@ export class SimonComponent implements OnInit {
       for(let pad of pads){
         if(pad.getAttribute("colour") == colour){
           pad.classList.add("active");
-          self.sounds[self.colours.indexOf(colour)].play();
-      
+          self.smartAudioService.play(self.sounds[self.colours.indexOf(colour)]);
         }
       }
     }, 300);
