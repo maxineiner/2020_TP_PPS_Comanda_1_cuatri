@@ -3,10 +3,10 @@ import { SmartAudioService } from 'src/app/services/smart-audio.service';
 
 @Component({
   selector: 'app-simon',
-  templateUrl: './simon.component.html',
-  styleUrls: ['./simon.component.scss'],
+  templateUrl: './simon.page.html',
+  styleUrls: ['./simon.page.scss'],
 })
-export class SimonComponent implements OnInit {
+export class SimonPage implements OnInit {
 
   private colours: Array<string> = ["green","red","yellow","blue"];
   private userColours: Array<string> = new Array<string>();

@@ -6,10 +6,10 @@ import { User } from 'src/app/classes/user';
 
 @Component({
   selector: 'app-tateti',
-  templateUrl: './tateti.component.html',
-  styleUrls: ['./tateti.component.scss'],
+  templateUrl: './tateti.page.html',
+  styleUrls: ['./tateti.page.scss'],
 })
-export class TatetiComponent implements OnInit {
+export class TatetiPage implements OnInit {
 
   PLAYER_COMPUTER;
   PLAYER_HUMAN;
