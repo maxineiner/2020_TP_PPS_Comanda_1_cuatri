@@ -15,9 +15,10 @@ export class LoadingService {
   ngOnInit() {
   }
 
-  async showLoading(message: string) {
+  async showLoading(message, duration = null) {
 
     this.loadingCtrl.create({
+      duration: duration,
       spinner: null,
       cssClass: 'spinner',
       message:  '<div class="spinner">' +
@@ -30,7 +31,7 @@ export class LoadingService {
     });
   }
 
-  closeLoading(title?: string, message?: string, typeNotification?: SweetAlertType) {
+  closeLoading(title?: string, message?: string, typeNotification?: SweetAlertType, duration = 2000) {
     setTimeout(() => {
       this.loading.dismiss();
       
@@ -42,7 +43,7 @@ export class LoadingService {
           backdrop: false
         });
       }
-    }, 2000);
+    }, duration);
   }
 
   closeLoadingAndRedirect(route: string) {

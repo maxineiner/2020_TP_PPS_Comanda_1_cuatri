@@ -15,6 +15,21 @@
     </ion-item>
   </ion-list>
   <br>
-  <ion-button color="medium" (click)="takePhoto()">Sacar Foto</ion-button>
-  <ion-button color="medium" (click)="register()">Registrar</ion-button>
+  <ion-button color="medium" (click)="takePhoto()" [disabled]="table.number == undefined || table.number == ''">Sacar Foto</ion-button>
+  
+  <ion-button color="medium" (click)="register()" *ngIf="!modification">Registrar</ion-button>
+  <ion-button color="medium" (click)="register()" *ngIf="modification">Modificar</ion-button>
+
+  <br>
+
+  <ion-card color="light" *ngIf="image != undefined && image != null">
+    <ion-card-content>
+      <ion-fab vertical="top" horizontal="end">
+        <ion-fab-button class="delete-btn" size="small" color="danger" (click)="deletePhoto(image.name)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <img src="{{image.url}}">
+    </ion-card-content>
+  </ion-card>
 </form>

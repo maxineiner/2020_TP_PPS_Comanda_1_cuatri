@@ -1,15 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { QrscannerService } from 'src/app/services/qrscanner.service';
-import { NotificationService } from 'src/app/services/notification.service';
-import { TableService } from 'src/app/services/table.service';
-import { Table } from 'src/app/classes/table';
 import { Collections } from 'src/app/classes/enums/collections';
-import { Status } from 'src/app/classes/enums/status';
+import { Status } from 'src/app/classes/enums/Status';
 import { DataService } from 'src/app/services/data.service';
 import { User } from 'src/app/classes/user';
 import { FcmService } from 'src/app/services/FcmService';
-import { Profiles } from 'src/app/classes/enums/profiles';
 
 @Component({
   selector: 'app-wait-list',
@@ -22,9 +17,6 @@ export class WaitListPage implements OnInit {
 
   constructor(
     private userService: UserService,
-    private qrscannerService: QrscannerService,
-    private notificationService: NotificationService,
-    private tableService: TableService,
     private dataService: DataService,
     private fcmService: FcmService
   ) { }

@@ -29,11 +29,12 @@ export class TableListPage implements OnInit {
   }
 
   deleteTable(table) {
+    event.stopPropagation();
     this.tableService.deleteTable(table.id);
   }
 
-  modifyTable(table) {
-
+  modifyTable(event) {
+    event.stopPropagation();
   }
 
   routerToLink() {

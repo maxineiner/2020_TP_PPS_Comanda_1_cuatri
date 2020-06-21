@@ -1,0 +1,24 @@
+<app-custom-header [title]="'Ta Te Ti'"></app-custom-header>
+
+
+<ion-content>
+  <form name="juego">
+    <div class="container">
+      <h3 *ngIf="!gameOver">Turno de: {{ currentPlayer?.name }}</h3>
+      <div class="cardGame">
+        <div class="row" style="padding: 5%;">
+          <div id="board" [class.locked]="boardLocked || gameOver">
+            <div *ngFor="let square of board" class="square" [class.checked]="square.value != ''"
+              [class.winner]="square.winner" (click)="square_click(this.square)">
+              {{ square.value }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <ion-button id="btnRestart" type="button" color="primary" *ngIf="gameOver"
+          (click)="newGame()">Jugar de nuevo</ion-button>
+      </div>
+    </div>
+  </form>
+</ion-content>

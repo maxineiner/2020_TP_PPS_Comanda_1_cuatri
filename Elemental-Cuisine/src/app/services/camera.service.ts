@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import * as firebase from "firebase";
 import { NotificationService } from './notification.service';
+import * as firebase from 'firebase/app';
+import "firebase/storage";
 
 @Injectable({
   providedIn: 'root'

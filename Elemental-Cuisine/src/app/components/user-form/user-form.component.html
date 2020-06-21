@@ -49,7 +49,7 @@
     </ng-container>
   </div>
 
-  <ion-item>
+  <ion-item *ngIf="!modification">
     <ion-label position="floating">Correo Electrónico</ion-label>
     <ion-input type="text" formControlName="email"></ion-input>
   </ion-item>
@@ -61,7 +61,7 @@
     </ng-container>
   </div>
 
-  <ion-item>
+  <ion-item *ngIf="!modification">
     <ion-label position="floating">Clave</ion-label>
     <ion-input type="password" formControlName="password"></ion-input>
   </ion-item>
@@ -73,7 +73,7 @@
     </ng-container>
   </div>
 
-  <ion-item>
+  <ion-item *ngIf="!modification">
     <ion-label position="floating">Repita su clave</ion-label>
     <ion-input type="password" formControlName="confirmPass"></ion-input>
   </ion-item>
@@ -89,7 +89,7 @@
     <ion-label position="floating">Perfil</ion-label>
     <ion-select formControlName="profile" placeholder="Seleccione perfil">
       <ion-select-option value="mozo">Mozo</ion-select-option>
-      <ion-select-option value="maitre">Maitre</ion-select-option>
+      <ion-select-option value="maitre">Metre</ion-select-option>
       <ion-select-option value="cocinero">Cocinero</ion-select-option>
       <ion-select-option value="bartender">Bartender</ion-select-option>
       <ion-select-option value="admin">Dueño</ion-select-option>
@@ -97,6 +97,21 @@
     </ion-select>
   </ion-item>
   <br>
-  <ion-button color="primary" (click)="takePhoto()">Sacar Foto</ion-button>
-  <ion-button color="primary" type="submit" [disabled]="!form.valid">Registrar</ion-button>
+  <ion-button color="primary" (click)="takePhoto()" [disabled]="!form.get('name').valid">Sacar Foto</ion-button>
+  
+  <ion-button color="medium" type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
+  <ion-button color="medium" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
+
+  <br>
+
+  <ion-card color="light" *ngIf="image != undefined && image != null">
+    <ion-card-content>
+      <ion-fab vertical="top" horizontal="end">
+        <ion-fab-button class="delete-btn" size="small" color="danger" (click)="deletePhoto(image.name)">
+          <ion-icon name="trash"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+      <img src="{{image.url}}">
+    </ion-card-content>
+  </ion-card>
 </form>

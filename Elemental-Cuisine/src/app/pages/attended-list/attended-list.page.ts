@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Collections } from 'src/app/classes/enums/collections';
 import { Profiles } from 'src/app/classes/enums/profiles';
-import { Status } from 'src/app/classes/enums/status';
+import { Status } from 'src/app/classes/enums/Status';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 

@@ -20,8 +20,11 @@ const routes: Routes = [
   { path: 'hacer-encuesta-empleado', loadChildren: './pages/poll-empleoyee/poll-empleoyee.module#PollEmpleoyeePageModule' },
   { path: 'pedido', loadChildren: './pages/order/order.module#OrderPageModule' },
   { path: 'client-list', loadChildren: './pages/client-list/client-list.module#ClientListPageModule' },
-  { path: 'juegos', loadChildren: './pages/games/games.module#GamesPageModule' },  { path: 'order-list', loadChildren: './pages/order-list/order-list.module#OrderListPageModule' }
-
+  { path: 'pedido/detalle', loadChildren: './pages/order-details/order-details.module#OrderDetailsPageModule' },
+  { path: 'juegos', loadChildren: './pages/games/games.module#GamesPageModule' },
+  { path: 'juegos/memotest', loadChildren: './pages/game-memotest/game-memotest.module#GameMemotestPageModule' },
+  { path: 'juegos/simon', loadChildren: './pages/simon/simon.module#SimonPageModule' },
+  { path: 'juegos/tateti', loadChildren: './pages/tateti/tateti.module#TatetiPageModule' }
 
 ]
 

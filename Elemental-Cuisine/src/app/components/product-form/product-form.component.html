@@ -38,10 +38,10 @@
 
   <br>
 
-  <ion-grid *ngIf="images.length > 0">
-    <ion-row *ngFor="let image of images">
-      <ion-col>
-        <ion-card class="card">
+  <ion-card color="dark">
+    <ion-slides [options]="slideOpts" #slides [pager]="true">
+      <ion-slide *ngFor="let image of images">
+        <ion-card  color="light">
           <ion-card-content>
             <ion-fab vertical="top" horizontal="end">
               <ion-fab-button class="delete-btn" size="small" color="danger" (click)="deletePhoto(image.name)">
@@ -51,8 +51,7 @@
             <img src="{{image.url}}">
           </ion-card-content>
         </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
+      </ion-slide>
+    </ion-slides>
+  </ion-card>
 </form>

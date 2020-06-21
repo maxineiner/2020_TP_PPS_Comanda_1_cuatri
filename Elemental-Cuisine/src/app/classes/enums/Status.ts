@@ -20,5 +20,6 @@ export enum Status {
     PendingPreparation = 'pendientePreparacion',
     Preparing = 'preparando',
     Prepared = 'preparado',
-    Delivered = 'entregado'
+    Delivered = 'entregado',
+    Confirmed = 'confirmado'
 }
