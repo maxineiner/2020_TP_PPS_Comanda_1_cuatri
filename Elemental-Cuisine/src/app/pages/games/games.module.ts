@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { GamesPage } from './games.page';
 import { SimonComponent } from 'src/app/components/simon/simon.component';
+import { TatetiComponent } from 'src/app/components/tateti/tateti.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [GamesPage, SimonComponent]
+  declarations: [GamesPage, SimonComponent, TatetiComponent]
 })
 export class GamesPageModule {}

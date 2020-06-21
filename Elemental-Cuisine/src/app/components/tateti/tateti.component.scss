@@ -1,0 +1,47 @@
+.container {
+    padding: 5%;
+    text-align: center;
+}
+
+.cardGame {
+    background-color: blue;
+    text-align: center; 
+    border-radius: 25px;
+}
+
+
+#board {
+    width: 302px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    font-size: 50px;
+    background-color: #666;
+    grid-gap: 1px;
+}
+
+#board.locked {
+    opacity: .7;
+    pointer-events: none;
+}
+
+#board .square {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+#board .square.checked {
+    cursor: default;
+}
+
+#board .square.winner {
+    background-color: goldenrod;
+}
+
+input[type=button] {
+    margin-top: 20px;
+}
