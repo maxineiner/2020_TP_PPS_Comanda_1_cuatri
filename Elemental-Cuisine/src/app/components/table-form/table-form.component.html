@@ -15,7 +15,7 @@
     </ion-item>
   </ion-list>
   <br>
-  <ion-button color="medium" (click)="takePhoto()">Sacar Foto</ion-button>
+  <ion-button color="medium" (click)="takePhoto()" [disabled]="table.number == undefined || table.number == ''">Sacar Foto</ion-button>
   
   <ion-button color="medium" (click)="register()" *ngIf="!modification">Registrar</ion-button>
   <ion-button color="medium" (click)="register()" *ngIf="modification">Modificar</ion-button>
