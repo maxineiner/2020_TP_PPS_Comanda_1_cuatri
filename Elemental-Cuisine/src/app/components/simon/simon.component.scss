@@ -1,0 +1,72 @@
+.simonBoard{
+    margin-top: 50px;
+    width: 99vw;
+    height: 99vw;
+    border: solid 8px black;
+    border-radius: 50vw;
+    background: linear-gradient(45deg,rgba(0,0,0,1) 0%,rgba(28,36,45,1) 100%);
+}
+
+.pad {
+    height: 50%;
+    width: 50%;
+    float: left;
+    position: relative;
+    border: solid 3px black;
+    opacity: 0.5;
+}
+
+#center{
+    width: 46vw;
+    height: 46vw;
+    margin: 24vw;
+    background-color: white;
+    border: solid 8px black;
+    border-radius: 150px;
+    position: absolute;
+    z-index: 10;
+}
+
+#pad1{
+    background-color: rgb(0,255,0);
+    border-radius: 50vw 0 0 0;
+}
+
+#pad2{
+    background-color: rgb(255,0,0);
+    border-radius: 0 50vw 0 0;
+}
+
+#pad3{
+    background-color: rgb(255,255,0);
+    border-radius: 0 0 0 50vw;
+}
+
+#pad4{
+    background-color: rgb(0,0,255);
+    border-radius: 0 0 50vw 0;
+}
+
+#start{
+    height: 25vw;
+}
+
+#reset{
+    height: 25vw;
+}
+
+.pad:active{
+    opacity:1;
+}
+
+.active{
+    opacity:1;
+}
+
+.container{
+    text-align: -webkit-center;
+}
+
+#controls{
+    margin-top: 50px;
+}
