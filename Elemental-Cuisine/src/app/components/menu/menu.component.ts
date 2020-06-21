@@ -50,7 +50,7 @@ export class MenuComponent implements OnInit {
       if(quantity){
         this.order.menu.push({...product, quantity: quantity});
         this.order.total += product.price * quantity;
-        this.order.status = Status.Pending;
+        this.order.status = Status.PendingConfirm;
       }
     });
   }

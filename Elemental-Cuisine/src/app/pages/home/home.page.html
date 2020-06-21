@@ -31,8 +31,9 @@
     </section>
 
     <app-client-home *ngIf="currentUser?.profile == 'cliente'"></app-client-home>
+    <app-maitre-home *ngIf="currentUser?.profile == 'maitre'"></app-maitre-home>
+    <app-waiter-home *ngIf="currentUser?.profile == 'mozo'"></app-waiter-home>
 
-    <app-waiter-home *ngIf="currentUser?.profile == 'maitre'"></app-waiter-home>
 
   </div>
 </ion-content>

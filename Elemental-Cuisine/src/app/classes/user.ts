@@ -10,4 +10,5 @@ export class User {
     cuil:number;
     status:string;
     anonymous?:boolean = false;
+    currentTable?: string;
 }
