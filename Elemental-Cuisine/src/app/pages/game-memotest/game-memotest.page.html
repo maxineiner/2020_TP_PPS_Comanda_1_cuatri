@@ -1,0 +1,43 @@
+<app-custom-header [title]="'Memotest de animales'"></app-custom-header>
+
+<ion-content>
+    <ion-grid>
+        <div *ngFor="let animal of animals; let i = index">
+            <ion-row *ngIf="i % 3 == 0 && i < 16">
+
+                <ion-col class="ion-align-self-center" *ngIf="animals[i].revealed">
+                    <ion-card class="card-padding" color="{{animals[i].color}}">
+                        <img src="{{animals[i].url}}" />
+                    </ion-card>
+                </ion-col>
+                <ion-col class="ion-align-self-center" *ngIf="!animals[i].revealed" (click)="reveal(animals[i].id)">
+                    <ion-card class="card-padding" color="dark">
+                        <img src="assets/images/memotest/questionmark.png" />
+                    </ion-card>
+                </ion-col>
+
+                <ion-col class="ion-align-self-center" *ngIf="animals[i+1].revealed">
+                    <ion-card class="card-padding" color="{{animals[i+1].color}}">
+                        <img src="{{animals[i+1].url}}" />
+                    </ion-card>
+                </ion-col>
+                <ion-col class="ion-align-self-center" *ngIf="!animals[i+1].revealed" (click)="reveal(animals[i+1].id)">
+                    <ion-card class="card-padding" color="dark">
+                        <img src="assets/images/memotest/questionmark.png" />
+                    </ion-card>
+                </ion-col>
+
+                <ion-col class="ion-align-self-center" *ngIf="animals[i+2].revealed">
+                    <ion-card class="card-padding" color="{{animals[i+2].color}}">
+                        <img src="{{animals[i+2].url}}" />
+                    </ion-card>
+                </ion-col>
+                <ion-col class="ion-align-self-center" *ngIf="!animals[i+2].revealed" (click)="reveal(animals[i+2].id)">
+                    <ion-card class="card-padding" color="dark">
+                        <img src="assets/images/memotest/questionmark.png" />
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </div>
+    </ion-grid>
+</ion-content>

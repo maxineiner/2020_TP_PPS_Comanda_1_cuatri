@@ -1,17 +1,36 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Juegos</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-custom-header [title]="'Juegos'"></app-custom-header>
 
 <ion-content>
-
-</ion-content>
-
-
-<ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-align-self-center">
+        <ion-card class="card-padding" color="dark" routerLink="/juegos/memotest">
+          <img src="assets/images/memotest/memotest.png" />
+          <ion-card-title>Memotest de animales</ion-card-title>
+          <ion-card-subtitle>Voltea las cartas para ver las imágenes y comienza a jugar con este juego de
+            memoria visual de animales!</ion-card-subtitle>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-align-self-center">
+        <ion-card class="card-padding" color="dark">
+          <img src="assets/images/background.png" />
+          <ion-card-title>Memotest</ion-card-title>
+          <ion-card-subtitle>Voltea las cartas para ver las imágenes y comienza a jugar con este juego de
+            memoria visual de animales!</ion-card-subtitle>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="ion-align-self-center">
+        <ion-card class="card-padding" color="dark">
+          <img src="assets/images/background.png" />
+          <ion-card-title>Memotest</ion-card-title>
+          <ion-card-subtitle>Voltea las cartas para ver las imágenes y comienza a jugar con este juego de
+            memoria visual de animales!</ion-card-subtitle>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
