@@ -5,7 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 import { isNullOrUndefined } from 'util';
 import { Router } from '@angular/router';
-import { FcmService } from 'src/app/services/FcmService';
+import { FcmService } from 'src/app/services/fcmService';
 
 @Component({
   selector: 'app-home',

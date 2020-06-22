@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AlertController } from '@ionic/angular';
 import { DataService } from 'src/app/services/data.service';
 import { TableService } from 'src/app/services/table.service';
-import { FcmService } from 'src/app/services/FcmService';
+import { FcmService } from 'src/app/services/fcmService';
 import { NotificationService } from 'src/app/services/notification.service';
 import { isNullOrUndefined } from 'util';
 import { Collections } from 'src/app/classes/enums/collections';

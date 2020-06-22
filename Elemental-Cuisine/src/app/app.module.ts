@@ -17,7 +17,7 @@ import { SmartAudioService } from './services/smart-audio.service';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { FCM } from '@ionic-native/fcm/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { FcmService } from './services/FcmService';
+import { FcmService } from './services/fcmService';
 import { HttpClientModule } from '@angular/common/http';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
 

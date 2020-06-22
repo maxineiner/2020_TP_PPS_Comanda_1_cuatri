@@ -11,7 +11,7 @@ import { QrscannerService } from 'src/app/services/qrscanner.service';
 import { isNullOrUndefined } from 'util';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
-import { FcmService } from 'src/app/services/FcmService';
+import { FcmService } from 'src/app/services/fcmService';
 import { DataService } from 'src/app/services/data.service';
 import { TableService } from 'src/app/services/table.service';
 
