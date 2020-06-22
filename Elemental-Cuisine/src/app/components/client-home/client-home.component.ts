@@ -66,7 +66,7 @@ export class ClientHomeComponent implements OnInit {
         });
       }
       else{
-        this.assignTableToUser("uOqKTtmz8nbCEGsXT5CB", this.currentUser.id);
+        this.assignTableToUser("HPkFGZ1PBj7a7VQuPzq0", this.currentUser.id); // HARDCODED
       }
     }
     else {

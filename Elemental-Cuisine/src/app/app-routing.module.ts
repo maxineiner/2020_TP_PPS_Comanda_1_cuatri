@@ -22,7 +22,10 @@ const routes: Routes = [
   { path: 'client-list', loadChildren: './pages/client-list/client-list.module#ClientListPageModule' },
   { path: 'pedido/detalle', loadChildren: './pages/order-details/order-details.module#OrderDetailsPageModule' },
   { path: 'juegos', loadChildren: './pages/games/games.module#GamesPageModule' },
-  { path: 'juegos/memotest', loadChildren: './pages/game-memotest/game-memotest.module#GameMemotestPageModule' }
+  { path: 'juegos/memotest', loadChildren: './pages/game-memotest/game-memotest.module#GameMemotestPageModule' },
+  { path: 'juegos/simon', loadChildren: './pages/simon/simon.module#SimonPageModule' },
+  { path: 'juegos/tateti', loadChildren: './pages/tateti/tateti.module#TatetiPageModule' }
+
 ]
 
 @NgModule({

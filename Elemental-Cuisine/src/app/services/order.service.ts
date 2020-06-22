@@ -26,9 +26,17 @@ export class OrderService {
     return this.dataService.getOne(this.orderCollection, id);
   }
 
+  modifyOrder(id, order) {
+    return this.dataService.update(this.orderCollection, id, order);
+  }
+
+  deleteOrder(id){
+    this.dataService.deleteDocument(this.orderCollection, id);
+  }
+  
   //Retorna una observer
   getOrder(id){
     return this.dataService.get(this.orderCollection, id);
   }
-  
+
 }

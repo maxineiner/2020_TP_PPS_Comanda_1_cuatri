@@ -8,6 +8,7 @@ import { HomePage } from './home.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { ClientHomeComponent } from 'src/app/components/client-home/client-home.component';
 import { WaiterHomeComponent } from 'src/app/components/waiter-home/waiter-home.component';
+import { MaitreHomeComponent } from './../../components/maitre-home/maitre-home.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,6 @@ import { WaiterHomeComponent } from 'src/app/components/waiter-home/waiter-home.
       }
     ])
   ],
-  declarations: [HomePage, ClientHomeComponent, WaiterHomeComponent]
+  declarations: [HomePage, ClientHomeComponent, WaiterHomeComponent, MaitreHomeComponent]
 })
 export class HomePageModule { }

@@ -80,6 +80,7 @@ export class FcmService {
   getTokensById(id){
     return new Promise((resolve) => { 
       this.dataService.getOne(Collections.Devices, id).then(device => {
+        console.log(device.data());
         let deviceById = device.data().token;
         resolve(deviceById);
       });
