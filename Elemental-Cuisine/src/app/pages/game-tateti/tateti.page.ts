@@ -3,6 +3,9 @@ import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
+import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
+import { Router } from '@angular/router';
+import { Attention } from 'src/app/classes/attention';
 
 @Component({
   selector: 'app-tateti',
@@ -22,8 +25,9 @@ export class TatetiPage implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private userService: UserService,
-  ) { }
+    private userService: UserService,    
+    private currentAttentionService: CurrentAttentionService,
+    private router: Router) { }
 
   ngOnInit() {
     this.userService.getUserById(this.authService.getCurrentUser().uid).then(user => { 
@@ -85,25 +89,24 @@ export class TatetiPage implements OnInit {
     if (winner !== this.DRAW) {
       this.currentPlayer = winner;
       if (winner.symbol == "x") {
-        Swal.fire({
-          title: "Ganaste!",
-          type: "success"
-        });
+        this.gameWon();
       } else {
         Swal.fire({
-          title: 'PERDISTE!',
-          animation: false,
+          title: '¡Qué lástima!',
+          text: 'Perdiste, intentalo de vuelta!',
           type: 'error',
-          customClass: {
-            popup: 'animated tada'
-          }
+          padding: '3em',
+          backdrop: false
         });
       }
     }
     else {
       Swal.fire({
-        title: "Empate!",
-        type: "info"
+        title: '¡Empataste!',
+        text: 'Está peleado, intentalo de vuelta!',
+        type: 'info',
+        padding: '3em',
+        backdrop: false
       });
     }
   }
@@ -155,5 +158,30 @@ export class TatetiPage implements OnInit {
 
   getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  gameWon() {
+    var userId = this.authService.getCurrentUser().uid;
+    this.currentAttentionService.getAttentionById(userId).then(resp => {
+      let attention = resp.data() as Attention;
+
+      let message = "Pudiste vencer en el TaTeTi de nuevo!";
+
+      if (!attention.freeDessert) {
+        message = 'Pudiste vencer en el TaTeTi y ganaste un postre gratis!';
+        attention.freeDessert = true;
+        this.currentAttentionService.modifyAttention(userId, attention);
+      }
+
+      Swal.fire({
+        title: '¡Felicitaciones!',
+        text: message,
+        type: 'success',
+        padding: '3em',
+        backdrop: false
+      }).then(() => {
+        this.router.navigateByUrl('/juegos');
+      });
+    });
   }
 }
