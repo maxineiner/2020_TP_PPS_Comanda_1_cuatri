@@ -1,16 +1,15 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertController } from '@ionic/angular';
-import { DataService } from 'src/app/services/data.service';
 import { TableService } from 'src/app/services/table.service';
 import { FcmService } from 'src/app/services/fcmService';
 import { NotificationService } from 'src/app/services/notification.service';
 import { isNullOrUndefined } from 'util';
-import { Collections } from 'src/app/classes/enums/collections';
 import { Profiles } from 'src/app/classes/enums/profiles';
 import { Table } from 'src/app/classes/table';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
+import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
 
 @Component({
   selector: 'app-custom-header',
@@ -35,7 +34,7 @@ export class CustomHeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private alertController: AlertController,
-    private dataService: DataService,
+    private currentAttentionService: CurrentAttentionService,
     private tableService: TableService,
     private fcmService: FcmService,
     private notificationService: NotificationService,
@@ -91,7 +90,7 @@ export class CustomHeaderComponent implements OnInit {
   }
 
   sendNotificationToWaiter(query) {
-    this.dataService.getOne(Collections.TableService, this.currentUser.id).then(response => {
+    this.currentAttentionService.getAttentionById(this.currentUser.id).then(response => {
       this.tableService.getTableById(response.data().tableId).then(table => {
         let currentTable = Object.assign(new Table, table.data());
         this.fcmService.getTokensByProfile(Profiles.Waiter).then(waiterDevices => {

@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Attention } from 'src/app/classes/attention';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -11,27 +15,30 @@ export class GameMemotestPage implements OnInit {
   private animals: Array<any>;
   private firstElection: number;
 
-  constructor() {
+  constructor(
+    private currentAttentionService: CurrentAttentionService,
+    private authService: AuthService,
+    private router: Router) {
     var imgUrl = "assets/images/memotest/";
     this.animals = [
-      { id: 1, "name": "perro", "url": imgUrl + "perro.png", color: "success", revealed: false },
-      { id: 2, "name": "perro", "url": imgUrl + "perro.png", color: "success", revealed: false },
-      { id: 3, "name": "gato", "url": imgUrl + "gato.png", color: "light", revealed: false },
-      { id: 4, "name": "gato", "url": imgUrl + "gato.png", color: "light", revealed: false },
-      { id: 5, "name": "pez", "url": imgUrl + "pez.png", color: "primary", revealed: false },
-      { id: 6, "name": "pez", "url": imgUrl + "pez.png", color: "primary", revealed: false },
-      { id: 7, "name": "mono", "url": imgUrl + "mono.png", color: "tertiary", revealed: false },
-      { id: 8, "name": "mono", "url": imgUrl + "mono.png", color: "tertiary", revealed: false },
+      { id: 1, "name": "pez", "url": imgUrl + "pez.png", color: "primary", revealed: false },
+      { id: 2, "name": "pez", "url": imgUrl + "pez.png", color: "primary", revealed: false },
+      { id: 3, "name": "lobo", "url": imgUrl + "lobo.png", color: "secondary", revealed: false },
+      { id: 4, "name": "lobo", "url": imgUrl + "lobo.png", color: "secondary", revealed: false },
+      { id: 5, "name": "mono", "url": imgUrl + "mono.png", color: "tertiary", revealed: false },
+      { id: 6, "name": "mono", "url": imgUrl + "mono.png", color: "tertiary", revealed: false },
+      { id: 7, "name": "perro", "url": imgUrl + "perro.png", color: "success", revealed: false },
+      { id: 8, "name": "perro", "url": imgUrl + "perro.png", color: "success", revealed: false },
       { id: 9, "name": "vaca", "url": imgUrl + "vaca.png", color: "warning", revealed: false },
       { id: 10, "name": "vaca", "url": imgUrl + "vaca.png", color: "warning", revealed: false },
-      { id: 11, "name": "jirafa", "url": imgUrl + "jirafa.png", color: "dark", revealed: false },
-      { id: 12, "name": "jirafa", "url": imgUrl + "jirafa.png", color: "dark", revealed: false },
-      { id: 13, "name": "tigre", "url": imgUrl + "tigre.png", color: "medium", revealed: false },
-      { id: 14, "name": "tigre", "url": imgUrl + "tigre.png", color: "medium", revealed: false },
-      { id: 15, "name": "elefante", "url": imgUrl + "elefante.png", color: "danger", revealed: false },
-      { id: 16, "name": "elefante", "url": imgUrl + "elefante.png", color: "danger", revealed: false },
-      { id: 17, "name": "conejo", "url": imgUrl + "conejo.png", color: "secondary", revealed: false },
-      { id: 18, "name": "conejo", "url": imgUrl + "conejo.png", color: "secondary", revealed: false },
+      { id: 11, "name": "elefante", "url": imgUrl + "elefante.png", color: "danger", revealed: false },
+      { id: 12, "name": "elefante", "url": imgUrl + "elefante.png", color: "danger", revealed: false },
+      { id: 13, "name": "leon", "url": imgUrl + "leon.png", color: "light", revealed: false },
+      { id: 14, "name": "leon", "url": imgUrl + "leon.png", color: "light", revealed: false },
+      { id: 15, "name": "pato", "url": imgUrl + "pato.png", color: "medium", revealed: false },
+      { id: 16, "name": "pato", "url": imgUrl + "pato.png", color: "medium", revealed: false },
+      { id: 17, "name": "jirafa", "url": imgUrl + "jirafa.png", color: "dark", revealed: false },
+      { id: 18, "name": "jirafa", "url": imgUrl + "jirafa.png", color: "dark", revealed: false },
     ];
   }
 
@@ -52,19 +59,12 @@ export class GameMemotestPage implements OnInit {
         setTimeout(function () {
           animal.revealed = false;
           firstAnimal.revealed = false;
-        }, 1500);
+        }, 1000);
       }
       else {
         this.animals.find(x => x.revealed == false)
         if (!this.animals.find(x => x.revealed == false)) {
-          Swal.fire({
-            title: '¡Felicitaciones!',
-            text: 'Descubriste a todos los animales y ganaste un descuento increíble!',
-            type: 'success',
-            // width: 600,
-            padding: '3em',
-            backdrop: false
-          })
+          this.gameFinished();
         }
       }
       this.firstElection = null;
@@ -72,5 +72,30 @@ export class GameMemotestPage implements OnInit {
     else {
       this.firstElection = animal.id;
     }
+  }
+
+  gameFinished() {
+    var userId = this.authService.getCurrentUser().uid;
+    this.currentAttentionService.getAttentionById(userId).then(resp => {
+      let attention = resp.data() as Attention;
+
+      let message = "Descubriste a todos los animales de nuevo!";
+
+      if (!attention.discount) {
+        message = 'Descubriste a todos los animales y ganaste un descuento de 10% en tu pedido!';
+        attention.discount = true;
+        this.currentAttentionService.modifyAttention(userId, attention);
+      }
+
+      Swal.fire({
+        title: '¡Felicitaciones!',
+        text: message,
+        type: 'success',
+        padding: '3em',
+        backdrop: false
+      }).then(() => {
+        this.router.navigateByUrl('/juegos');
+      });
+    });
   }
 }

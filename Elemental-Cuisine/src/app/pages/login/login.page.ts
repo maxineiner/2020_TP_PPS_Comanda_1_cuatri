@@ -86,7 +86,7 @@ export class LoginPage implements OnInit {
             this.authService.logOut();
             this.loadingService.closeLoading("Atención", "Su cuenta aún no fue aprobada. Aguarde un momento por favor e intente nuevamente. Gracias", 'info');
           } else {
-            this.loadingService.closeLoadingAndRedirect("/home");
+            this.loadingService.closeLoadingAndRedirect("/inicio");
           }
         });
       })

@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 import { FcmService } from 'src/app/services/fcmService';
 import { DataService } from 'src/app/services/data.service';
 import { TableService } from 'src/app/services/table.service';
+import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
+import { Attention } from 'src/app/classes/attention';
 
 @Component({
   selector: 'app-client-home',
@@ -29,54 +31,55 @@ export class ClientHomeComponent implements OnInit {
     private dataService: DataService,
     private userService: UserService,
     private tableService: TableService,
+    private currentAttentionService: CurrentAttentionService,
     private qrscannerService: QrscannerService,
     private notificationService: NotificationService,
     private router: Router,
     private fcmService: FcmService
   ) {
-      let user = this.authService.getCurrentUser();
-      if (isNullOrUndefined(user)) {
-        this.router.navigateByUrl("/login");
-      }
-      this.userService.getUserById(user.uid).then(userData => {
-        this.currentUser = Object.assign(new User, userData.data());
-      })
+    let user = this.authService.getCurrentUser();
+    if (isNullOrUndefined(user)) {
+      this.router.navigateByUrl("/login");
+    }
+    this.userService.getUserById(user.uid).then(userData => {
+      this.currentUser = Object.assign(new User, userData.data());
+    })
   }
 
-  ngOnInit(){}
+  ngOnInit() { }
 
   scanQr(callback) {
-    if(this.qrscannerService.device == "mobile"){
+    if (this.qrscannerService.device == "mobile") {
       this.qrscannerService.scanQr().then(response => {
         if (response == Collections.WaitList) {
           this.addToWaitList();
         }
       });
     }
-    else{
+    else {
       this.addToWaitList();
     }
   }
 
-  scanTableQR(){
-    if(this.currentUser.status == Status.CanTakeTable){
-      if(this.qrscannerService.device == "mobile"){
+  scanTableQR() {
+    if (this.currentUser.status == Status.CanTakeTable) {
+      if (this.qrscannerService.device == "mobile") {
         this.qrscannerService.scanQr().then(tableId => {
           this.assignTableToUser(tableId, this.currentUser.id);
         });
       }
-      else{
+      else {
         this.assignTableToUser("HPkFGZ1PBj7a7VQuPzq0", this.currentUser.id); // HARDCODED
       }
     }
     else {
       this.notificationService.presentToast("Su solicitud aún no ha sido aprobada por el metre", TypeNotification.Warning, "top");
     }
-    
+
   }
 
-  addToWaitList(){
-    this.userService.setDocument(Collections.WaitList, this.currentUser.id.toString(), { 'id': this.currentUser.id, 'date' : Date.now(), 'name': this.currentUser.name + " " + this.currentUser.surname, 'dni' : this.currentUser.dni });
+  addToWaitList() {
+    this.userService.setDocument(Collections.WaitList, this.currentUser.id.toString(), { 'id': this.currentUser.id, 'date': Date.now(), 'name': this.currentUser.name + " " + this.currentUser.surname, 'dni': this.currentUser.dni });
     this.dataService.setStatus(Collections.Users, this.currentUser.id, Status.OnHold).then(() => {
       this.notificationService.presentToast("Agregado a lista de espera", TypeNotification.Warning, "top");
       this.userService.getUserById(this.currentUser.id.toString()).then(user => {
@@ -100,22 +103,24 @@ export class ClientHomeComponent implements OnInit {
     })
   }
 
-  logout(){
+  logout() {
     this.authService.logOut();
   }
 
-  assignTableToUser(tableId, userId){
+  assignTableToUser(tableId, userId) {
     this.tableService.getTableById(tableId).then(table => {
       let currentTable = Object.assign(new Table, table.data());
       if (currentTable.status != Status.Available) {
         this.notificationService.presentToast(`Mesa N.° ${currentTable.number} ${currentTable.status}`, "danger", "top");
       }
-      else{
+      else {
         this.dataService.setStatus(Collections.Tables, tableId, Status.Busy);
         this.dataService.setStatus(Collections.Users, userId, Status.Attended);
         this.dataService.deleteDocument(Collections.WaitList, userId);
-        var tableService = { tableId: tableId, userId: userId };
-        this.dataService.setData(Collections.TableService, userId, tableService);
+
+        var attention = new Attention(userId, tableId);
+        this.currentAttentionService.saveAttention(userId, attention);
+
         this.notificationService.presentToast(`Mesa N.° ${currentTable.number} asignada`, "success", "top");
       }
     });

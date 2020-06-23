@@ -7,6 +7,6 @@ export enum Collections {
     EmployeePolls = 'encuestas_empleados',
     ClientPolls = 'encuestas_clientes',
     Orders = 'pedidos',
-    TableService = 'servicioDeMesa',
+    CurrentAttention = 'servicioDeMesa',
     EmailTemplates = "email_templates"
 }
