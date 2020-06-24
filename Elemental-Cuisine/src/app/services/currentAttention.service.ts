@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { Collections } from '../classes/enums/collections';
-import { Attention } from "../classes/attention";
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +22,7 @@ export class CurrentAttentionService {
   }
 
   saveAttention(id, attention) {
-    return this.dataService.setData(this.currentAttentionCollection, id, attention);
+    return this.dataService.setData(this.currentAttentionCollection, attention, id);
   }
 
   deleteAttention(attentionId) {

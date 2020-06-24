@@ -35,7 +35,7 @@ export class DataService {
     return this.db.collection(collection).doc(id).get();
   }
 
-  setData(collection, id, data){
+  setData(collection, data, id?){
     return this.db.collection(collection).doc(id).set(Object.assign({}, data));
   }
  

@@ -14,7 +14,7 @@ export class OrderService {
   ) { }
 
   saveOrder(id, order){
-    return this.dataService.setData(this.orderCollection, id, order);
+    return this.dataService.setData(this.orderCollection, order, id);
   }
 
   getAllOrders(){
