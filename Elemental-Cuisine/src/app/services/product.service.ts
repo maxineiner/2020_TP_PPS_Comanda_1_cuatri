@@ -19,7 +19,7 @@ export class ProductService {
   }
   
   saveProduct(product: Product){
-    return this.dataService.setData(this.productCollection, `${product.name.replace(/ /g,"_")}_${product.description}`.toLowerCase(), product);
+    return this.dataService.setData(this.productCollection, product);
   }
 
   getAllProducts(){
