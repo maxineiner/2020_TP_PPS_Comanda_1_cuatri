@@ -14,7 +14,7 @@
           <ion-icon name="timer"></ion-icon>
         </ion-button>
       </ion-list-header>
-      <ion-item *ngFor="let menu of order.menu">
+      <ion-item *ngFor="let menu of (order.menu | chefMenu)">
         <span>x{{menu.quantity}} {{menu.name}}</span>
         <span slot="end">${{menu.price * menu.quantity}}</span>
       </ion-item>

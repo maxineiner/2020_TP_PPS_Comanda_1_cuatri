@@ -20,8 +20,7 @@ export class SideMenuComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private orderService: OrderService,
-    private userService: UserService,
-    private router: Router
+    private userService: UserService
   ) { 
     this.total = 0;
     this.authService.isUserLoggedIn().subscribe(user => {
@@ -34,7 +33,7 @@ export class SideMenuComponent implements OnInit {
           if(!orders.exists) return;
     
           const reducer = (accumulator, order) => accumulator + order.total;
-          this.total = Object.values(orders.data()).reduce(reducer, this.total);
+          this.total = Object.values(orders.data()).reduce(reducer, 0);
         })
       }
     })
