@@ -1,6 +1,6 @@
 import { DataService } from './../../services/data.service';
 import { Product } from './../../classes/product';
-import { FcmService } from './../../services/fcmService';
+import { FcmService } from './../../services/FcmService';
 import { OrderService } from 'src/app/services/order.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/classes/user';
@@ -9,9 +9,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { Status } from 'src/app/classes/enums/Status';
 import { TypeNotification } from 'src/app/classes/enums/TypeNotification';
 import { Order } from 'src/app/classes/order';
-import { Collections } from 'src/app/classes/enums/collections';
-import { Profiles } from 'src/app/classes/enums/profiles';
-
 
 @Component({
   selector: 'app-order-list',
@@ -26,16 +23,14 @@ export class OrderListPage implements OnInit {
   pendingPreparationOrders: Array<OrderWithUser> = Array<OrderWithUser>();
   preparingOrders: Array<OrderWithUser> = Array<OrderWithUser>();
   preparedOrders: Array<OrderWithUser> = Array<OrderWithUser>();
-
+  Status = Status;
   /* #endregion */
 
   constructor(
     private userService: UserService,
     private notificationService: NotificationService,
     private orderService: OrderService,
-    private fcmService: FcmService,
-    private dataService: DataService
-
+    private fcmService: FcmService
   ) { }
 
   ngOnInit() {
@@ -50,7 +45,7 @@ export class OrderListPage implements OnInit {
 
       let allMiniOrers = [];
 
-      let allOrders = ordersData.map(ordersData => {
+      ordersData.map(ordersData => {
         let orders = Object.values(ordersData.payload.doc.data()) as Order[];
         let miniOrder = Object.values(orders) as Order[];
         miniOrder.forEach(order => {

@@ -1,24 +1,25 @@
 <app-custom-header [title]="'Pedido'"></app-custom-header>
 
 <ion-content>
-  <div>
+  <div id="scroll">
     <ion-button id="payBill" color="primary" (click)="payBill()">Solicitar Cuenta</ion-button>
+
+    <ion-list class="orders" *ngFor="let order of orders; index as i">
+      <ion-list-header>
+        <h2>Pedido {{i + 1}}</h2>
+        <ion-button *ngIf="order.status == Status.Delivered" color="success" (click)="confirm(i)">
+          <ion-icon name="checkmark"></ion-icon>
+        </ion-button>
+        <ion-button *ngIf="order.status != Status.Delivered && order.status != Status.Confirmed" color="primary" (click)="showDetails(i)">
+          <ion-icon name="timer"></ion-icon>
+        </ion-button>
+      </ion-list-header>
+      <ion-item *ngFor="let menu of order.menu">
+        <span>x{{menu.quantity}} {{menu.name}}</span>
+        <span slot="end">${{menu.price * menu.quantity}}</span>
+      </ion-item>
+    </ion-list>
   </div>
-  <ion-list class="orders" *ngFor="let order of orders; index as i">
-    <ion-list-header>
-      <h2>Pedido {{i + 1}}</h2>
-    </ion-list-header>
-    <ion-item *ngFor="let menu of order.menu">
-      <span>X{{menu.quantity}} {{menu.name}}</span>
-      <span slot="end">${{menu.price * menu.quantity}}</span>
-      <ion-button slot="end" *ngIf="order.status == 'confirmado'" color="success">
-        <ion-icon name="checkmark"></ion-icon>
-      </ion-button>
-      <ion-button slot="end" *ngIf="order.status != 'confirmado'" color="primary" (click)="showDetails()">
-        <ion-icon name="timer"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-list>
   <ion-item id="total">
     <span>Total:</span>
     <span slot="end">${{total}}</span>

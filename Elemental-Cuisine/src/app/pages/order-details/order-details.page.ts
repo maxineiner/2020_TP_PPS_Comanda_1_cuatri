@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Order } from 'src/app/classes/order';
 import { Router } from '@angular/router';
 import { isNullOrUndefined } from 'util';
+import { AlertController } from '@ionic/angular';
+import { Status } from 'src/app/classes/enums/Status';
 
 @Component({
   selector: 'app-order-details',
@@ -14,11 +16,13 @@ export class OrderDetailsPage implements OnInit {
 
   private orders: Array<Order> = new Array<Order>();
   private total: number;
+  Status = Status;
 
   constructor(
     private orderService: OrderService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private alertController: AlertController
   ) { 
     this.total = 0;
     let user = this.authService.getCurrentUser();
@@ -35,8 +39,31 @@ export class OrderDetailsPage implements OnInit {
   ngOnInit() {
   }
 
-  showDetails(){
+  showDetails(orderIndex){
+    this.showAlert(this.orders[orderIndex].status)
+  }
+
+  async showAlert(orderState) {
+    const alert = await this.alertController.create({
+      header: "Su pedido está en estado:",
+      message: orderState ,
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            alert.dismiss();
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  payBill(){
 
   }
 
+  confirm(orderIndex){
+
+  }
 }
