@@ -16,6 +16,7 @@ export class OrderDetailsPage implements OnInit {
 
   private orders: Array<Order> = new Array<Order>();
   private total: number;
+  private food: Array<Order>
   Status = Status;
 
   constructor(
@@ -24,14 +25,13 @@ export class OrderDetailsPage implements OnInit {
     private router: Router,
     private alertController: AlertController
   ) { 
-    this.total = 0;
     let user = this.authService.getCurrentUser();
     if (isNullOrUndefined(user)) this.router.navigateByUrl("/login");
 
     this.orderService.getOrderById(user.uid).then(orders => {
       this.orders = Object.values(orders.data())
       const reducer = (accumulator, order) => accumulator + order.total;
-      this.total = this.orders.reduce(reducer, this.total);
+      this.total = this.orders.reduce(reducer, 0);
     });
 
   }
