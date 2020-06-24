@@ -61,7 +61,7 @@ export class MenuComponent implements OnInit {
     let slides  =     '<ion-slides [options]="slideOpts">';
     const promise = new Promise(resolve => {
       product.photos.forEach( async (photo, index, array) => {
-        const photoUrl = await this.cameraService.getImageByName('productos', photo).then(url => {
+        await this.cameraService.getImageByName('productos', photo).then(url => {
           slides +=     '<ion-slide>' +
                           `<img src="${url}" style="bmenu-radius: 2px">` +
                         '</ion-slide>'

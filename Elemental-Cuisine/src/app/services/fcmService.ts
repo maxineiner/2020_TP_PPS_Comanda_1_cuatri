@@ -40,7 +40,7 @@ export class FcmService {
       userId: this.authService.getCurrentUser().uid
     };
 
-    return this.dataService.setData('dispositivos', data.userId, data);
+    return this.dataService.setData('dispositivos', data, data.userId);
   }
 
   notificationSetup() {
