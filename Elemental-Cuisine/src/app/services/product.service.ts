@@ -19,7 +19,7 @@ export class ProductService {
   }
   
   saveProduct(product: Product){
-    return this.dataService.setData(this.productCollection, product);
+    return this.dataService.add(this.productCollection, product);
   }
 
   getAllProducts(){

@@ -40,13 +40,13 @@ export class OrderDetailsPage implements OnInit {
   }
 
   showDetails(orderIndex){
-    this.showAlert(this.orders[orderIndex].status)
+    this.showAlert(this.orders[orderIndex])
   }
 
-  async showAlert(orderState) {
+  async showAlert(order) {
     const alert = await this.alertController.create({
       header: "Su pedido está en estado:",
-      message: orderState ,
+      message: order.statusFood + " " + order.statusDrink ,
       buttons: [
         {
           text: 'Aceptar',

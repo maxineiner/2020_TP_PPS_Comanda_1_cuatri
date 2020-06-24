@@ -6,6 +6,7 @@ import { CameraService } from 'src/app/services/camera.service';
 import { Status } from 'src/app/classes/enums/Status';
 import { Order } from 'src/app/classes/order';
 import { LoadingService } from 'src/app/services/loading.service';
+import { Profiles } from 'src/app/classes/enums/profiles';
 
 @Component({
   selector: 'app-menu',
@@ -50,9 +51,13 @@ export class MenuComponent implements OnInit {
       if(quantity){
         this.order.menu.push({...product, quantity: quantity});
         this.order.total += product.price * quantity;
-        this.order.status = Status.PendingConfirm;
       }
     });
+    if(product.managerProfile == Profiles.Chef)
+      this.order.statusFood = Status.PendingConfirm;
+    if(product.managerProfile == Profiles.Bartender)
+      this.order.statusDrink = Status.PendingConfirm;
+
   }
 
   createAlert(product: Product) {
