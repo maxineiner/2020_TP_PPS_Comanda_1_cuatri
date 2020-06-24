@@ -15,7 +15,7 @@
     <ion-label>
       <h1>Pedido</h1>
       <h3 style="text-align: center; padding: 5px;" *ngFor="let product of currentOrder.menu">
-        <span style="float: left">X{{product.quantity}}</span> 
+        <span style="float: left">x{{product.quantity}}</span> 
         <span>{{product.name}}</span>
         <span style="float: right">${{product.price * product.quantity}}</span>
       </h3>
