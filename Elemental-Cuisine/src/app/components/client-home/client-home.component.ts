@@ -118,7 +118,7 @@ export class ClientHomeComponent implements OnInit {
         this.dataService.setStatus(Collections.Users, userId, Status.Attended);
         this.dataService.deleteDocument(Collections.WaitList, userId);
 
-        var attention = new Attention(userId, tableId);
+        var attention = new Attention(tableId);
         this.currentAttentionService.saveAttention(userId, attention);
 
         this.notificationService.presentToast(`Mesa N.° ${currentTable.number} asignada`, "success", "top");
