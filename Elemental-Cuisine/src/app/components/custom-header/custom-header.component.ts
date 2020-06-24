@@ -10,7 +10,6 @@ import { Table } from 'src/app/classes/table';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
-
 @Component({
   selector: 'app-custom-header',
   templateUrl: './custom-header.component.html',
@@ -52,9 +51,9 @@ export class CustomHeaderComponent implements OnInit {
 
   async askWaiter() {
     const alert = await this.alertController.create({
-      header: "Consulta sobre el menú",
+      header: "Tenes alguna duda? Escribila acá!",
       // subHeader: `$${product.price}`,
-      message: "Se le notificará su consulta al mozo y este acudirá cuanto antes para resolverla!",
+      message: "Se le notificará tu consulta al mozo y este acudirá cuanto antes para resolverla!",
       inputs: [
         {
           name: 'query',
