@@ -70,7 +70,7 @@ export class OrderListPage implements OnInit {
 
     this.orderService.getOrderById(orderId).then(orderData => {
       let orders = orderData.data() as Order[];
-      orders[index].status = status;
+      orders[index].statusFood = status;
       this.orderService.modifyOrder(orderId, orders);
 
     
