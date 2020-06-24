@@ -1,4 +1,4 @@
-import { FcmService } from './../../services/FcmService';
+import { FcmService } from './../../services/fcmService';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
