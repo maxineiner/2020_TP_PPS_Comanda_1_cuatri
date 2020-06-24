@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { timer } from 'rxjs';
 import { SmartAudioService } from './services/smart-audio.service';
-import { FcmService } from './services/FcmService';
+import { FcmService } from './services/fcmService';
 
 @Component({
   selector: 'app-root',

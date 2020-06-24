@@ -4,7 +4,7 @@ import { Collections } from 'src/app/classes/enums/collections';
 import { Status } from 'src/app/classes/enums/Status';
 import { DataService } from 'src/app/services/data.service';
 import { User } from 'src/app/classes/user';
-import { FcmService } from 'src/app/services/FcmService';
+import { FcmService } from 'src/app/services/fcmService';
 
 @Component({
   selector: 'app-wait-list',
