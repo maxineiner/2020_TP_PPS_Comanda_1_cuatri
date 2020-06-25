@@ -10,5 +10,3 @@ export class PollClient {
     toImprove: Array<string> = new Array<string>();
     photos: Array<string>;
 }
-
-
