@@ -10,14 +10,27 @@
     </ion-item>
     
     <h2>Descuentos</h2>
-    <ion-item *ngFor="let discount of discounts">
-      <span>x{{menu.quantity}} {{menu.name}}</span>
-      <span slot="end">${{menu.price * menu.quantity}}</span>
+    <ion-item *ngIf="attention?.discount">
+      <span>Descuento del 10%</span>
+    </ion-item>
+    <ion-item *ngIf="attention?.freeDrink && freeDrink">
+      <span>Bebida gratis</span>
+      <span slot="end">${{freeDrink?.name}}</span>
+    </ion-item>
+    <ion-item *ngIf="attention?.freeDessert && freeDesert">
+      <span>Postre gratis</span>
+      <span slot="end">${{freeDessert?.name}}</span>
     </ion-item>
 
     <h2>Propina</h2>
-
+    <ion-label>El valor mostrado es en porcentaje (%)</ion-label>
+    <ion-item>
+      <ion-range [(ngModel)]="tip" min="0" max="20" step="5" value="10" snaps pin color="dark">
+        <ion-icon slot="start" color="danger" name="sad"></ion-icon>
+        <ion-icon slot="end" color="success" name="happy"></ion-icon>
+      </ion-range>
+    </ion-item>
   </div>
 
-  <ion-button id="confirm" expand="full" (click)="saveOrder()" [disabled]="tip == undefined">Solicitar cuenta por: ${{total}}</ion-button>
+  <ion-button id="confirm" expand="full" (click)="payBill()" [disabled]="tip == undefined">Solicitar cuenta por: ${{getTotal()}}</ion-button>
 </ion-content>

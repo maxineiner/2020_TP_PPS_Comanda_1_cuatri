@@ -7,6 +7,8 @@ import { isNullOrUndefined } from 'util';
 import { AlertController } from '@ionic/angular';
 import { Status } from 'src/app/classes/enums/Status';
 import { NotificationService } from 'src/app/services/notification.service';
+import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
+import { Attention } from 'src/app/classes/attention';
 
 @Component({
   selector: 'app-order-details',
@@ -25,17 +27,21 @@ export class OrderDetailsPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private alertController: AlertController,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private attentionService: CurrentAttentionService
   ) { 
     this.currentUser = this.authService.getCurrentUser();
     if (isNullOrUndefined(this.currentUser)) this.router.navigateByUrl("/login");
+    this.attentionService.getAttentionById(this.currentUser.uid).then(currentAttention => {
+      let attention = currentAttention.data() as Attention;
+      if(attention.billRequested) this.router.navigateByUrl("/pagar");
 
-    this.orderService.getOrderById(this.currentUser.uid).then(orders => {
-      this.orders = Object.values(orders.data())
-      const reducer = (accumulator, order) => accumulator + order.total;
-      this.total = this.orders.reduce(reducer, 0);
-    });
-
+      this.orderService.getOrderById(this.currentUser.uid).then(orders => {
+        this.orders = Object.values(orders.data())
+        const reducer = (accumulator, order) => accumulator + order.total;
+        this.total = this.orders.reduce(reducer, 0);
+      });
+    })
   }
 
   ngOnInit() {
