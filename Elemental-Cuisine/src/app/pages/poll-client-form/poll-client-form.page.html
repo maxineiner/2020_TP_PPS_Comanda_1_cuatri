@@ -1,0 +1,97 @@
+<app-custom-header [title]="'Complete la Encuesta'"></app-custom-header>
+
+<ion-content>
+  <ion-list>
+    <ion-radio-group [(ngModel)]="poll.gamesRate">
+      <ion-list-header>
+        <ion-label>
+          ¿Qué te parecieron los juegos?
+        </ion-label>
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>No jugué</ion-label>
+        <ion-radio slot="start" color="dark" selected value="No jugué"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Aburridos</ion-label>
+        <ion-radio slot="start" color="dark" value="Aburridos"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Muy buenos</ion-label>
+        <ion-radio slot="start" color="dark" value="Muy buenos"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+
+    <ion-item-divider></ion-item-divider>
+
+    <ion-list-header>¿Qué tan satisfactoria fue tu visita?</ion-list-header>
+    <ion-item>
+      <ion-range [(ngModel)]="poll.satisfactionRate" min="0" max="10" step="1" value="5" snaps pin color="dark">
+        <ion-icon slot="start" color="danger" name="sad"></ion-icon>
+        <ion-icon slot="end" color="success" name="happy"></ion-icon>
+      </ion-range>
+    </ion-item>
+
+    <ion-list-header>¿Hay algo en lo que creas que necesitemos mejorar?</ion-list-header>
+    <ion-item *ngFor="let check of checks">
+      <ion-label>{{check.val}}</ion-label>
+      <ion-checkbox slot="end" color="dark" [(ngModel)]="check.isChecked"></ion-checkbox>
+    </ion-item>
+
+    <ion-item-divider></ion-item-divider>
+
+    <ion-list-header>¿Como fue la atención del mozo?</ion-list-header>
+    <ion-item>
+      <ion-label>Atención del mozo</ion-label>
+      <ion-select [(ngModel)]="poll.waiterRate">
+        <ion-select-option value="Muy mala">Muy mala</ion-select-option>
+        <ion-select-option value="Mala">Mala</ion-select-option>
+        <ion-select-option value="Regular">Regular</ion-select-option>
+        <ion-select-option value="Buena">Buena</ion-select-option>
+        <ion-select-option value="Muy buena">Muy buena</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-list>
+      <ion-list-header>¡Podes subir algunas fotos de tu experiencia!</ion-list-header>
+
+      <ion-fab vertical="top" horizontal="end">
+        <ion-fab-button color="dark" size="small" (click)="takePhoto()">
+          <ion-icon name="camera"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+
+      <br>
+
+      <ion-card color="dark">
+        <ion-slides [options]="slideOpts" #slides [pager]="true">
+          <ion-slide *ngFor="let image of images">
+            <ion-card color="light">
+              <ion-card-content>
+                <ion-fab vertical="top" horizontal="end">
+                  <ion-fab-button class="delete-btn" size="small" color="danger" (click)="deletePhoto(image.name)">
+                    <ion-icon name="trash"></ion-icon>
+                  </ion-fab-button>
+                </ion-fab>
+                <img src="{{image.url}}">
+              </ion-card-content>
+            </ion-card>
+          </ion-slide>
+        </ion-slides>
+      </ion-card>
+
+      <ion-item-divider></ion-item-divider>
+    </ion-list>
+
+    <ion-item>
+      <ion-label position="stacked">También podes dejarnos algún comentario..</ion-label>
+      <ion-textarea [(ngModel)]="poll.commentary"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <br>
+  <ion-button expand="full" (click)="finalicePoll()">Finalizar</ion-button>
+
+</ion-content>
