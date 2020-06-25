@@ -44,4 +44,9 @@ export class UserService {
     return this.dataService.getAll(collection);
   }
 
+  getCurrentUser()
+  {
+    return this.getUserById(this.authService.getCurrentUser().uid);
+  }
+
 }

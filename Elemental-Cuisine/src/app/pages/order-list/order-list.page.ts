@@ -1,13 +1,15 @@
+import { AuthService } from './../../services/auth.service';
 import { Product } from './../../classes/product';
 import { FcmService } from './../../services/fcmService';
 import { OrderService } from 'src/app/services/order.service';
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/classes/user';
 import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Status } from 'src/app/classes/enums/Status';
 import { TypeNotification } from 'src/app/classes/enums/TypeNotification';
 import { Order } from 'src/app/classes/order';
+import { User } from 'src/app/classes/user';
+import { Profiles } from 'src/app/classes/enums/profiles';
 
 @Component({
   selector: 'app-order-list',
@@ -18,11 +20,17 @@ export class OrderListPage implements OnInit {
 
   /* #region  Atributos */
 
+  allOrders: Array<OrderWithUser> = Array<OrderWithUser>();
+  allOrdersDividedByProfile: Array<OrderWithUser> = Array<OrderWithUser>(); // Todas las ordenes con la comida y bedida en ordenes separadas
   pendingConfirmOrders: Array<OrderWithUser> = Array<OrderWithUser>();
   pendingPreparationOrders: Array<OrderWithUser> = Array<OrderWithUser>();
   preparingOrders: Array<OrderWithUser> = Array<OrderWithUser>();
   preparedOrders: Array<OrderWithUser> = Array<OrderWithUser>();
+  currentUser: User;
+
   Status = Status;
+  Profiles = Profiles;
+
   /* #endregion */
 
   constructor(
@@ -33,7 +41,13 @@ export class OrderListPage implements OnInit {
   ) { }
 
   ngOnInit() {
+
+    this.userService.getCurrentUser().then(userData => {
+      this.currentUser = Object.assign(new User, userData.data());
+    });
+
     this.getOrders();
+    this.getOrdersByProfile();
   }
 
   /* #region  Métodos */
@@ -41,27 +55,65 @@ export class OrderListPage implements OnInit {
   private getOrders(): void {
 
     this.orderService.getAllOrders().subscribe(ordersData => {
-
-      let allMiniOrers = [];
-
+      this.allOrders = [];
       ordersData.map(ordersData => {
         let orders = Object.values(ordersData.payload.doc.data()) as Order[];
-        let miniOrder = Object.values(orders) as Order[];
-        miniOrder.forEach(order => {
+        orders.forEach(order => {
           let orderWithUser: OrderWithUser = new OrderWithUser();
           order.id = ordersData.payload.doc.id
           orderWithUser.order = order;
-          orderWithUser.index = miniOrder.indexOf(order);
+          orderWithUser.index = orders.indexOf(order);
           this.userService.getUserById(order.id).then(user => orderWithUser.user = user.data() as User);
-          allMiniOrers.push(orderWithUser);
+          this.allOrders.push(orderWithUser);
         });
-        return miniOrder;
       });
 
-      this.pendingConfirmOrders = allMiniOrers.filter(miniOrder => miniOrder.order.status === Status.PendingConfirm);
-      this.pendingPreparationOrders = allMiniOrers.filter(miniOrder => miniOrder.order.status === Status.PendingPreparation);
-      this.preparingOrders = allMiniOrers.filter(miniOrder => miniOrder.order.status === Status.Preparing);
-      this.preparedOrders = allMiniOrers.filter(miniOrder => miniOrder.order.status === Status.Prepared);
+      this.pendingConfirmOrders = this.allOrders.filter(orders => (orders.order.statusDrink === Status.PendingConfirm || orders.order.statusFood === Status.PendingConfirm));
+
+    });
+  }
+
+  private getOrdersByProfile(): void {
+
+    this.orderService.getAllOrders().subscribe(ordersData => {
+      this.allOrdersDividedByProfile = [];
+      ordersData.map(ordersData => {
+        let orders = Object.values(ordersData.payload.doc.data()) as Order[];
+
+        orders.forEach(miniOrder => {
+          // Cuando no entiendas nada, descomenta la linea de abajo para empezar a ubicarte
+          // console.log("Order Nro: " + ordersData.payload.doc.id + "indice: " + orders.indexOf(miniOrder), miniOrder);
+          let products = miniOrder.menu as Product[];
+          let drinks = products.filter(product => product.managerProfile == Profiles.Bartender);
+          let foods = products.filter(product => product.managerProfile == Profiles.Chef);
+
+          if (drinks.length > 0) {
+            let orderWithUser: OrderWithUser = new OrderWithUser();
+            orderWithUser.id = ordersData.payload.doc.id;
+            orderWithUser.index = orders.indexOf(miniOrder);
+            orderWithUser.profile = Profiles.Bartender;
+            orderWithUser.order = Object.assign({}, miniOrder);
+            orderWithUser.order.menu = drinks;
+            this.userService.getUserById(orderWithUser.id).then(user => orderWithUser.user = user.data() as User);
+            this.allOrdersDividedByProfile.push(orderWithUser);
+          }
+
+          if (foods.length > 0) {
+            let orderWithUser: OrderWithUser = new OrderWithUser();
+            orderWithUser.id = ordersData.payload.doc.id;
+            orderWithUser.index = orders.indexOf(miniOrder);
+            orderWithUser.profile = Profiles.Chef;
+            orderWithUser.order = Object.assign({}, miniOrder);
+            orderWithUser.order.menu = foods;
+            this.userService.getUserById(orderWithUser.id).then(user => orderWithUser.user = user.data() as User);
+            this.allOrdersDividedByProfile.push(orderWithUser);
+          }
+        })
+      });
+
+      this.pendingPreparationOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.PendingPreparation) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.PendingPreparation)));
+      this.preparingOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.Preparing) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.Preparing)));
+      this.preparedOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.Prepared) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.Prepared)));
 
     });
   }
@@ -71,9 +123,11 @@ export class OrderListPage implements OnInit {
     this.orderService.getOrderById(orderId).then(orderData => {
       let orders = orderData.data() as Order[];
       orders[index].statusFood = status;
+      orders[index].statusDrink = status;
+      console.log(orders[index]);
       this.orderService.modifyOrder(orderId, orders);
 
-    
+
       switch (status) {
 
         case Status.PendingPreparation:
@@ -105,14 +159,21 @@ export class OrderListPage implements OnInit {
     })
   }
 
+  prueba(order) {
+    console.log(order);
+  }
+
 }
 
 /* #endregion */
 
 // Es una clase auxiliar para relacionar el pedido con un usuario
 class OrderWithUser {
+
   id: string;
   index: number;
-  order: Order;
-  user: User;
+  order: Order = new Order();
+  user: User = new User();
+  profile: string;
+
 }
