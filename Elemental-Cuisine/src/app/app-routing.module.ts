@@ -13,11 +13,6 @@ const routes: Routes = [
   { path: 'lista-de-atendidos', loadChildren: './pages/attended-list/attended-list.module#AttendedListPageModule' },
   { path: 'reservar', loadChildren: './pages/book/book.module#BookPageModule' },
   { path: 'delivery', loadChildren: './pages/delivery/delivery.module#DeliveryPageModule' },
-  { path: 'encuestas', loadChildren: './pages/poll/poll.module#PollPageModule' },
-  { path: 'encuestas-cliente', loadChildren: './pages/poll-client-list/poll-client-list.module#PollClientListPageModule' },
-  { path: 'encuestas-empleado', loadChildren: './pages/poll-employee-list/poll-employee-list.module#PollEmployeeListPageModule' },
-  { path: 'hacer-encuesta-cliente', loadChildren: './pages/poll-cliente/poll-cliente.module#PollClientePageModule' },
-  { path: 'hacer-encuesta-empleado', loadChildren: './pages/poll-empleoyee/poll-empleoyee.module#PollEmpleoyeePageModule' },
   { path: 'pedido', loadChildren: './pages/order/order.module#OrderPageModule' },
   { path: 'client-list', loadChildren: './pages/client-list/client-list.module#ClientListPageModule' },
   { path: 'order-list', loadChildren: './pages/order-list/order-list.module#OrderListPageModule' },
@@ -26,8 +21,9 @@ const routes: Routes = [
   { path: 'juegos/memotest', loadChildren: './pages/game-memotest/game-memotest.module#GameMemotestPageModule' },
   { path: 'juegos/simon', loadChildren: './pages/game-simon/simon.module#SimonPageModule' },
   { path: 'juegos/tateti', loadChildren: './pages/game-tateti/tateti.module#TatetiPageModule' },
-  { path: 'pagar', loadChildren: './pages/payment/payment.module#PaymentPageModule' }
-
+  { path: 'pagar', loadChildren: './pages/payment/payment.module#PaymentPageModule' },
+  { path: 'encuestas', loadChildren: './pages/poll-client-list/poll-client-list.module#PollClientListPageModule' },
+  { path: 'encuestas/cliente', loadChildren: './pages/poll-client-form/poll-client-form.module#PollClientFormPageModule' }
 ]
 
 @NgModule({
