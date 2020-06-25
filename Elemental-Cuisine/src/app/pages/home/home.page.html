@@ -33,7 +33,8 @@
     <app-client-home *ngIf="currentUser?.profile == 'cliente'"></app-client-home>
     <app-maitre-home *ngIf="currentUser?.profile == 'maitre'"></app-maitre-home>
     <app-waiter-home *ngIf="currentUser?.profile == 'mozo'"></app-waiter-home>
-
+    <app-bartender-home *ngIf="currentUser?.profile == 'bartender'"></app-bartender-home>
+    <app-cheff-home *ngIf="currentUser?.profile == 'cocinero'"></app-cheff-home>
 
   </div>
 </ion-content>

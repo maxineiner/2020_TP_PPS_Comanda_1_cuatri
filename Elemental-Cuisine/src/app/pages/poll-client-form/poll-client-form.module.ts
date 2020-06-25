@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PollClientePage } from './poll-cliente.page';
+import { PollClientFormPage } from './poll-client-form.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: PollClientePage
+    component: PollClientFormPage
   }
 ];
 
@@ -23,6 +23,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PollClientePage]
+  declarations: [PollClientFormPage]
 })
-export class PollClientePageModule {}
+export class PollClientFormPageModule { }

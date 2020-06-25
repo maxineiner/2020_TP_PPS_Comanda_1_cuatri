@@ -10,6 +10,7 @@ import { TypeNotification } from 'src/app/classes/enums/TypeNotification';
 import { Order } from 'src/app/classes/order';
 import { User } from 'src/app/classes/user';
 import { Profiles } from 'src/app/classes/enums/profiles';
+import { StaticSymbol } from '@angular/compiler';
 
 @Component({
   selector: 'app-order-list',
@@ -60,10 +61,10 @@ export class OrderListPage implements OnInit {
         let orders = Object.values(ordersData.payload.doc.data()) as Order[];
         orders.forEach(order => {
           let orderWithUser: OrderWithUser = new OrderWithUser();
-          order.id = ordersData.payload.doc.id
+          orderWithUser.id = ordersData.payload.doc.id
           orderWithUser.order = order;
           orderWithUser.index = orders.indexOf(order);
-          this.userService.getUserById(order.id).then(user => orderWithUser.user = user.data() as User);
+          this.userService.getUserById(orderWithUser.id).then(user => orderWithUser.user = user.data() as User);
           this.allOrders.push(orderWithUser);
         });
       });
@@ -111,29 +112,77 @@ export class OrderListPage implements OnInit {
         })
       });
 
-      this.pendingPreparationOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.PendingPreparation) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.PendingPreparation)));
-      this.preparingOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.Preparing) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.Preparing)));
-      this.preparedOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.Prepared) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.Prepared)));
+      switch (this.currentUser.profile) {
+        case Profiles.Waiter:
+          this.preparingOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.Preparing) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.Preparing)));
+          this.pendingPreparationOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.PendingPreparation) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.PendingPreparation)));
+          this.preparedOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.Prepared) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.Prepared)));
+          break;
+
+        case Profiles.Bartender:
+          this.pendingPreparationOrders = this.allOrdersDividedByProfile.filter(orders => (orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.PendingPreparation));
+          this.preparingOrders = this.allOrdersDividedByProfile.filter(orders => (orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.Preparing));
+          break;
+
+        case Profiles.Chef:
+          this.pendingPreparationOrders = this.allOrdersDividedByProfile.filter(orders => (orders.profile == Profiles.Chef && orders.order.statusFood == Status.PendingPreparation));
+          this.preparingOrders = this.allOrdersDividedByProfile.filter(orders => (orders.profile == Profiles.Chef && orders.order.statusFood == Status.Preparing));
+          break;
+      }
 
     });
   }
 
-  updateOrderStatus(orderId: string, index: number, status: Status): void {
+  updateOrderStatus(selectedOrder: OrderWithUser, status: Status): void {
 
-    this.orderService.getOrderById(orderId).then(orderData => {
+    this.orderService.getOrderById(selectedOrder.id).then(orderData => {
       let orders = orderData.data() as Order[];
-      orders[index].statusFood = status;
-      orders[index].statusDrink = status;
-      console.log(orders[index]);
-      this.orderService.modifyOrder(orderId, orders);
 
+      // Para la confirmación del Mozo cambiamos los dos estados al mismo tiempo
+      if (status == Status.PendingPreparation) {
+        orders[selectedOrder.index].statusFood = status;
+        orders[selectedOrder.index].statusDrink = status;
+      } else {
+        switch (selectedOrder.profile) {
+          case Profiles.Bartender:
+            orders[selectedOrder.index].statusDrink = status;
+            break;
 
+          case Profiles.Chef:
+            orders[selectedOrder.index].statusFood = status;
+            break;
+        }
+      }
+
+      // Modificamos el estado en Firebase
+      this.orderService.modifyOrder(selectedOrder.id, orders);
+      console.log(selectedOrder);
+
+      // Realizamos tareas adicionales en funcion del estado
       switch (status) {
-
         case Status.PendingPreparation:
-          let products = orders[index].menu as Product[];
-          this.sendNotificationByProfile(products);
+          let products = orders[selectedOrder.index].menu as Product[];
+          let hasDrinks: boolean = products.filter(product => product.managerProfile == Profiles.Bartender).length > 0;
+          let hasFoods: boolean = products.filter(product => product.managerProfile == Profiles.Chef).length > 0;
+
+          if (hasDrinks) {
+            this.sendNotificationByProfile(Profiles.Bartender, 'Nuevo pedido!', 'Hay un nuevo pedido para la barra de bebidas');
+          }
+
+          if (hasFoods) {
+            this.sendNotificationByProfile(Profiles.Chef, 'Nuevo pedido!', 'Hay un nuevo pedido para la cocina');
+          }
+
           this.notificationService.presentToast('El pedido fue confirmado!', TypeNotification.Success, "bottom", false);
+          break;
+
+        case Status.Preparing:
+          this.notificationService.presentToast('Comienzo de la preparación del pedido', TypeNotification.Info, "bottom", false);
+          break;
+
+        case Status.Prepared:
+          this.notificationService.presentToast('Finalización de la preparación del pedido', TypeNotification.Info, "bottom", false);
+          this.sendNotificationByProfile(Profiles.Chef, 'Se finalizó la preparación del pedido!', `El pedido de la mesa ${selectedOrder.user.currentTable} se encuentra listo`);
           break;
 
         case Status.Delivered:
@@ -143,26 +192,17 @@ export class OrderListPage implements OnInit {
         case Status.Cancelled:
           this.notificationService.presentToast('La orden fue cancelada', TypeNotification.Error, "bottom", false);
           break;
-
       }
+
+    });
+
+  }
+
+  private sendNotificationByProfile(profileManager: Profiles, title: string, subTitle: string): void {
+    this.fcmService.getTokensByProfile(profileManager).then(userDevices => {
+      this.fcmService.sendNotification(title, subTitle, userDevices);
     });
   }
-
-  private sendNotificationByProfile(products: Product[]): void {
-    products.forEach(product => {
-      this.fcmService.getTokensByProfile(product.managerProfile).then(userDevices => {
-        this.fcmService.sendNotification(
-          "Nuevo pedido!",
-          `${product.name} ${product.description}`,
-          userDevices);
-      });
-    })
-  }
-
-  prueba(order) {
-    console.log(order);
-  }
-
 }
 
 /* #endregion */

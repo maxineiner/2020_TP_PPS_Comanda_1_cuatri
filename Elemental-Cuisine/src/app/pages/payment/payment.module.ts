@@ -5,24 +5,24 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { PollEmployeeListPage } from './poll-employee-list.page';
+import { PaymentPage } from './payment.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: PollEmployeeListPage
+    component: PaymentPage
   }
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    ComponentsModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PollEmployeeListPage]
+  declarations: [PaymentPage]
 })
-export class PollEmployeeListPageModule {}
+export class PaymentPageModule {}

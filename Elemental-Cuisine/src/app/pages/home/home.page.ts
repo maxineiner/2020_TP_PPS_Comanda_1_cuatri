@@ -1,3 +1,4 @@
+import { Profiles } from 'src/app/classes/enums/profiles';
 import { Component } from '@angular/core';
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,6 +16,7 @@ import { FcmService } from 'src/app/services/fcmService';
 export class HomePage {
 
   currentUser: User;
+  Profiles: Profiles;
 
   constructor(
     private authService: AuthService,
@@ -29,6 +31,7 @@ export class HomePage {
       }
       this.userService.getUserById(user.uid).then(userData => {
         this.currentUser = Object.assign(new User, userData.data());
+        
       })
   }
 

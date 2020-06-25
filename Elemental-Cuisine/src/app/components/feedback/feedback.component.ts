@@ -23,7 +23,9 @@ export class FeedbackComponent implements OnInit {
     private router: Router
   ) { 
     this.orderService.getOrderById(this.authService.getCurrentUser().uid).then(orders => {
-      this.orders = Object.values(orders.data());
+      this.orders = []
+      if(orders.exists)
+        this.orders = Object.values(orders.data());
     });
   }
 
