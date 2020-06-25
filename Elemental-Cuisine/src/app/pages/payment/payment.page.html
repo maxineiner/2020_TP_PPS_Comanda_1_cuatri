@@ -1,0 +1,23 @@
+<app-custom-header [title]="'Pago'"></app-custom-header>
+
+<ion-content>
+  <div id="scroll">
+
+    <h2>Pedidos</h2>
+    <ion-item *ngFor="let menu of menus">
+      <span>x{{menu.quantity}} {{menu.name}}</span>
+      <span slot="end">${{menu.price * menu.quantity}}</span>
+    </ion-item>
+    
+    <h2>Descuentos</h2>
+    <ion-item *ngFor="let discount of discounts">
+      <span>x{{menu.quantity}} {{menu.name}}</span>
+      <span slot="end">${{menu.price * menu.quantity}}</span>
+    </ion-item>
+
+    <h2>Propina</h2>
+
+  </div>
+
+  <ion-button id="confirm" expand="full" (click)="saveOrder()" [disabled]="tip == undefined">Solicitar cuenta por: ${{total}}</ion-button>
+</ion-content>

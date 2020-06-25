@@ -42,26 +42,24 @@ export class OrderListPage implements OnInit {
 
     this.orderService.getAllOrders().subscribe(ordersData => {
 
-      let allMiniOrers = [];
+      let allOrders = [];
 
       ordersData.map(ordersData => {
         let orders = Object.values(ordersData.payload.doc.data()) as Order[];
-        let miniOrder = Object.values(orders) as Order[];
-        miniOrder.forEach(order => {
+        orders.forEach(order => {
           let orderWithUser: OrderWithUser = new OrderWithUser();
           order.id = ordersData.payload.doc.id
           orderWithUser.order = order;
-          orderWithUser.index = miniOrder.indexOf(order);
+          orderWithUser.index = orders.indexOf(order);
           this.userService.getUserById(order.id).then(user => orderWithUser.user = user.data() as User);
-          allMiniOrers.push(orderWithUser);
+          allOrders.push(orderWithUser);
         });
-        return miniOrder;
       });
 
-      this.pendingConfirmOrders = allMiniOrers.filter(miniOrder => miniOrder.order.status === Status.PendingConfirm);
-      this.pendingPreparationOrders = allMiniOrers.filter(miniOrder => miniOrder.order.status === Status.PendingPreparation);
-      this.preparingOrders = allMiniOrers.filter(miniOrder => miniOrder.order.status === Status.Preparing);
-      this.preparedOrders = allMiniOrers.filter(miniOrder => miniOrder.order.status === Status.Prepared);
+      this.pendingConfirmOrders = allOrders.filter(orders => orders.order.status === Status.PendingConfirm);
+      this.pendingPreparationOrders = allOrders.filter(orders => orders.order.status === Status.PendingPreparation);
+      this.preparingOrders = allOrders.filter(orders => orders.order.status === Status.Preparing);
+      this.preparedOrders = allOrders.filter(orders => orders.order.status === Status.Prepared);
 
     });
   }
@@ -72,7 +70,6 @@ export class OrderListPage implements OnInit {
       let orders = orderData.data() as Order[];
       orders[index].statusFood = status;
       this.orderService.modifyOrder(orderId, orders);
-
     
       switch (status) {
 

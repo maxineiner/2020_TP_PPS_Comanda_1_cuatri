@@ -25,7 +25,9 @@ const routes: Routes = [
   { path: 'juegos', loadChildren: './pages/games/games.module#GamesPageModule' },
   { path: 'juegos/memotest', loadChildren: './pages/game-memotest/game-memotest.module#GameMemotestPageModule' },
   { path: 'juegos/simon', loadChildren: './pages/game-simon/simon.module#SimonPageModule' },
-  { path: 'juegos/tateti', loadChildren: './pages/game-tateti/tateti.module#TatetiPageModule' }
+  { path: 'juegos/tateti', loadChildren: './pages/game-tateti/tateti.module#TatetiPageModule' },
+  { path: 'pagar', loadChildren: './pages/payment/payment.module#PaymentPageModule' }
+
 ]
 
 @NgModule({
