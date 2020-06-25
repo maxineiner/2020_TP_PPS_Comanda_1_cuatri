@@ -7,14 +7,17 @@
     <ion-list class="orders" *ngFor="let order of orders; index as i">
       <ion-list-header>
         <h2>Pedido {{i + 1}}</h2>
-        <ion-button *ngIf="order.status == Status.Delivered" color="success" (click)="confirm(i)">
+        <ion-button *ngIf="(order.statusFood == Status.Delivered || order.statusFood == undefined) && (order.statusDrink == Status.Delivered || order.statusDrink == undefined)" color="success" (click)="confirm(i)">
           <ion-icon name="checkmark"></ion-icon>
         </ion-button>
-        <ion-button *ngIf="order.status != Status.Delivered && order.status != Status.Confirmed" color="primary" (click)="showDetails(i)">
+        <ion-button *ngIf="order.statusFood != Status.Confirmed &&
+        order.statusFood != Status.Delivered &&
+        order.statusDrink != Status.Confirmed && 
+        order.statusDrink != Status.Delivered" color="primary" (click)="showDetails(i)">
           <ion-icon name="timer"></ion-icon>
         </ion-button>
       </ion-list-header>
-      <ion-item *ngFor="let menu of (order.menu | chefMenu)">
+      <ion-item *ngFor="let menu of order.menu" [disabled]="order.statusFood == Status.Confirmed && order.statusDrink == Status.Confirmed">
         <span>x{{menu.quantity}} {{menu.name}}</span>
         <span slot="end">${{menu.price * menu.quantity}}</span>
       </ion-item>

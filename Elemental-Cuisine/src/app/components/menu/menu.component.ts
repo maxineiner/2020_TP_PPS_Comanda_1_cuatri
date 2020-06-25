@@ -67,9 +67,9 @@ export class MenuComponent implements OnInit {
     const promise = new Promise(resolve => {
       product.photos.forEach( async (photo, index, array) => {
         await this.cameraService.getImageByName('productos', photo).then(url => {
-          slides +=     '<ion-slide>' +
-                          `<img src="${url}" style="bmenu-radius: 2px">` +
-                        '</ion-slide>'
+          slides +=   '<ion-slide>' +
+                        `<img src="${url}" style="bmenu-radius: 2px">` +
+                      '</ion-slide>'
         })
         if (index === array.length -1) resolve();
       })
