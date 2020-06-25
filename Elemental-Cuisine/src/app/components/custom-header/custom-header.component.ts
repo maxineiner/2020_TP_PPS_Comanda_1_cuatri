@@ -52,7 +52,6 @@ export class CustomHeaderComponent implements OnInit {
   async askWaiter() {
     const alert = await this.alertController.create({
       header: "Tenes alguna duda? Escribila acá!",
-      // subHeader: `$${product.price}`,
       message: "Se le notificará tu consulta al mozo y este acudirá cuanto antes para resolverla!",
       inputs: [
         {

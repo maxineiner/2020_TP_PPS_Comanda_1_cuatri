@@ -1,0 +1,73 @@
+<app-custom-header [title]="'Encuestas Realizadas'"></app-custom-header>
+
+<ion-content>
+
+  <ion-button expand="block" size="small" (click)="doPoll()">
+    <ion-icon slot="start" name="create"></ion-icon>
+    Realizar Encuesta
+  </ion-button>
+
+  <ion-card *ngFor="let poll of polls; let i = index" [ngClass]="{clientPoll: i == 0 && gotPoll}">
+
+    <ion-item [ngClass]="{clientPoll: i == 0 && gotPoll}">
+      <b>{{poll.userName}}</b>
+      <ion-buttons slot="end">
+        <ion-icon *ngIf="poll.satisfactionRate > 6" color="success" name="happy"></ion-icon>
+        <ion-icon *ngIf="poll.satisfactionRate < 7 && poll.satisfactionRate > 4" color="warning" name="sad"></ion-icon>
+        <ion-icon *ngIf="poll.satisfactionRate < 5" color="danger" name="sad"></ion-icon>
+        <ion-label>{{poll.satisfactionRate}}</ion-label>
+      </ion-buttons>
+    </ion-item>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="7">
+
+            <ion-label class="label-title">Opinión de los juegos:</ion-label>
+            <br>
+            <ion-label>{{poll.gamesRate}}</ion-label>
+            <br>
+
+            <ion-label class="label-title">Opinión de la atención:</ion-label>
+            <br>
+            <ion-label>{{poll.waiterRate}}</ion-label>
+            <br>
+
+
+            <div *ngIf="poll.toImprove.length > 0">
+              <ion-label class="label-title">Qué debemos mejorar:</ion-label>
+              <br>
+              <ion-label  *ngFor="let item of poll.toImprove; let x = index">
+                <ion-label *ngIf="x == poll.toImprove.length-1">
+                  {{item}}
+                </ion-label>
+                <ion-label *ngIf="x != poll.toImprove.length-1">
+                  {{item}},
+                </ion-label>
+              </ion-label>
+            </div>
+
+          </ion-col>
+          <ion-col size="5">
+
+            <ion-slides [options]="slideOpts" #slides [pager]="true">
+              <ion-slide *ngFor="let photo of poll.photos">
+                <img src="{{photo}}">
+              </ion-slide>
+            </ion-slides>
+
+          </ion-col>
+        </ion-row>
+
+        <div *ngIf="poll.commentary">
+          <ion-label class="label-title">Comentario:</ion-label>
+          <br>
+          <ion-label>{{poll.commentary}}</ion-label>
+        </div>
+
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

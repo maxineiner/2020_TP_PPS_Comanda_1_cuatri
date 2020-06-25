@@ -4,7 +4,7 @@ export enum Collections {
     Devices = 'dispositivos',
     Tables = 'mesas',
     Products = 'productos',
-    ClientPoll = 'encuesta_clientes',
+    ClientPoll = 'encuestas_clientes',
     Orders = 'pedidos',
     CurrentAttention = 'servicioDeMesa',
     EmailTemplates = "email_templates"
