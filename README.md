@@ -98,7 +98,7 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| P | Push notification - Pedido | 08/06/2020 | - | En Progreso |
+| P | Push notification - Pedido | 08/06/2020 | 10/06/2020 | Finalizado |
 
 ___
 
@@ -106,10 +106,36 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| 26 | Panel Clientes | 07/06/2020 | - | En Progreso |
+| 26 | Panel Clientes | 07/06/2020 | 11/06/2020 | Finalizado |
 
 ___
+
 ### Semana 4  :date:
+
+#### Nicolás Osorio (branch: *nosorio*) :wolf:
+
+| Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
+|---|---|---|---|---|
+| T | Juego 1  | 13/06/2020 | 14/06/2020 | Finalizado |
+| O | Push Notification - Mesa | 14/06/2020 | 11/06/2020 | Finalizado |
+
+___
+
+#### Brian Pariz (branch: *bpariz*) :tiger:
+
+| Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
+|---|---|---|---|---|
+| U | Juego 2 | 13/06/2020 | - | Finalizado |
+| O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
+
+___
+
+#### Joaquín Enriquez (branch: *jenriquez*) :frog:
+
+| Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
+|---|---|---|---|---|
+| V | Juego 3 | 14/06/2020 | - | Finalizado |
+| O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
 
 ___
 ### Semana 5  :date:
