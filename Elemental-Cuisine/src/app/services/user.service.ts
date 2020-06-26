@@ -11,6 +11,8 @@ import { Collections } from 'src/app/classes/enums/collections';
 })
 export class UserService {
 
+  collection: Collections = Collections.Users;
+
   constructor(
     private db: AngularFirestore,
     private authService: AuthService,
@@ -25,11 +27,11 @@ export class UserService {
   }
 
   saveUser(user) {
-    this.db.collection(Collections.Users).doc(user.id).set(Object.assign({}, user));
+    this.db.collection(this.collection).doc(user.id).set(Object.assign({}, user));
   }
 
   modifyUser(userId, user) {
-    return this.dataService.update(Collections.Users, userId, user);
+    return this.dataService.update(this.collection, userId, user);
   }
 
   setDocument(collection: string, id: string, object: object): void {
@@ -37,11 +39,21 @@ export class UserService {
   }
 
   getUserById(userId) {
-    return this.dataService.getOne(Collections.Users, userId);
+    return this.dataService.getOne(this.collection, userId);
   }
 
   getAllUsers(collection): Observable<DocumentChangeAction<User>[]> {
     return this.dataService.getAll(collection);
+  }
+
+  getCurrentUser()
+  {
+    return this.getUserById(this.authService.getCurrentUser().uid);
+  }
+
+  deleteUser(userId)
+  {
+    this.dataService.deleteDocument(this.collection, userId);
   }
 
 }
