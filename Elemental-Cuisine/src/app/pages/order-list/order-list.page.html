@@ -64,7 +64,7 @@
     <ion-list>
       <ion-list-header>En preparación</ion-list-header>
 
-      <ion-item *ngIf="preparingOrders.length == 0">
+      <ion-item *ngIf="preparingOrders?.length == 0">
         <ion-icon class="disabled-item item-ico" src="assets/icon/preparingFoods.svg"></ion-icon>
         <ion-label class="disabled-item">No hay pedidos en preparación</ion-label>
       </ion-item>
@@ -101,10 +101,6 @@
         <ion-button color="primary"
           (click)="updateOrderStatus(orderWithUser, Status.Delivered)">
           <ion-icon src="assets/icon/double-check.svg"></ion-icon>
-        </ion-button>
-        <ion-button color="danger"
-          (click)="updateOrderStatus(orderWithUser, Status.Cancelled)">
-          <ion-icon name="close"></ion-icon>
         </ion-button>
       </ion-item>
     </ion-list>
