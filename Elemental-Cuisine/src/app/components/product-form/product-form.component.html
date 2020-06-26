@@ -20,10 +20,11 @@
     </ion-item>
 
     <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Sector</ion-label>
-      <ion-select placeholder="Seleccione un sector" [(ngModel)]="product.managerProfile" name="managerProfile">
-        <ion-select-option value="cocinero">Cocina</ion-select-option>
-        <ion-select-option value="bartender">Barra</ion-select-option>
+      <ion-label for="pass" class="label" position="floating">Categoría</ion-label>
+      <ion-select placeholder="Seleccione una categoría" [(ngModel)]="product.category" name="category">
+        <ion-select-option value="Comida">Comida</ion-select-option>
+        <ion-select-option value="Bebida">Bebida</ion-select-option>
+        <ion-select-option value="Postre">Postre</ion-select-option>
       </ion-select>
     </ion-item>
 
