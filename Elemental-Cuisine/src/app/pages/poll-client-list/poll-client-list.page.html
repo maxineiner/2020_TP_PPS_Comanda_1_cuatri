@@ -2,7 +2,7 @@
 
 <ion-content>
 
-  <ion-button expand="block" size="small" (click)="doPoll()">
+  <ion-button *ngIf="currentUser?.profile != 'admin'" expand="block" size="small" (click)="doPoll()">
     <ion-icon slot="start" name="create"></ion-icon>
     Realizar Encuesta
   </ion-button>

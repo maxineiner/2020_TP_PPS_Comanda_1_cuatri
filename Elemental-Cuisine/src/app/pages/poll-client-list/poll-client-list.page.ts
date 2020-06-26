@@ -5,6 +5,10 @@ import { PollClient } from 'src/app/classes/poll-client';
 import { AuthService } from 'src/app/services/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { LoadingService } from 'src/app/services/loading.service';
+import { isNullOrUndefined } from 'util';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/classes/user';
 
 @Component({
   selector: 'app-poll-client-list',
@@ -13,21 +17,33 @@ import { NotificationService } from 'src/app/services/notification.service';
 })
 export class PollClientListPage implements OnInit {
 
+  currentUser: User;
   private polls: Array<PollClient>;
   private gotPoll: boolean;
 
   constructor(
     private router: Router,
     private pollService: PollService,
-    private cameraService: CameraService,    
+    private cameraService: CameraService,
+    private userService: UserService,
     private notificationService: NotificationService,
+    private loadingService: LoadingService,
     private authService: AuthService
   ) {
     this.polls = new Array<PollClient>();
   }
 
   ngOnInit() {
+    let user = this.authService.getCurrentUser();
+    if (isNullOrUndefined(user)) {
+      this.router.navigateByUrl("/login");
+    }
+    this.userService.getUserById(user.uid).then(userData => {
+      this.currentUser = Object.assign(new User, userData.data());
+    })
+
     this.pollService.getAllPolls().subscribe(polls => {
+      this.loadingService.showLoading("Espere...");
 
       this.polls = polls.map(pollAux => {
         let poll = pollAux.payload.doc.data() as PollClient;
@@ -35,14 +51,18 @@ export class PollClientListPage implements OnInit {
         return poll;
       });
 
-      let userId = this.authService.getCurrentUser().uid;
+      if (this.currentUser.profile != 'admin') {
+        let userId = this.currentUser.id;
 
-      if (this.polls.find(x => x.userId == userId)) {
-        this.gotPoll = true;
-        let pollAux = this.polls.find(x => x.userId == userId);
-        this.polls = this.polls.filter(x => x.userId !== userId);
-        this.polls.unshift(pollAux);
+        if (this.polls.find(x => x.userId == userId)) {
+          this.gotPoll = true;
+          let pollAux = this.polls.find(x => x.userId == userId);
+          this.polls = this.polls.filter(x => x.userId !== userId);
+          this.polls.unshift(pollAux);
+        }
       }
+
+      this.loadingService.closeLoading();
     });
   }
 
@@ -62,7 +82,7 @@ export class PollClientListPage implements OnInit {
       this.notificationService.presentToast("Solo se puede realizar una encuesta!", "danger", "middle");
       return;
     }
-    
+
     this.router.navigateByUrl('/encuestas/cliente');
   }
 }

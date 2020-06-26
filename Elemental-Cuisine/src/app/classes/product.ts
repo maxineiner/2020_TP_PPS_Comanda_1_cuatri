@@ -1,4 +1,5 @@
 import { Profiles } from 'src/app/classes/enums/profiles';
+import { Categories } from './enums/categories';
 export class Product {
     id:string;
     name:string;
@@ -6,5 +7,6 @@ export class Product {
     preparationTime:number;
     price:number;
     photos:Array<string>;
-    managerProfile: Profiles
+    category: Categories;
+    managerProfile: Profiles;
 }

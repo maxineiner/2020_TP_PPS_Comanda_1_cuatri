@@ -5,6 +5,8 @@ import { ProductService } from 'src/app/services/product.service';
 import { QrscannerService } from 'src/app/services/qrscanner.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
+import { Categories } from 'src/app/classes/enums/categories';
+import { Profiles } from 'src/app/classes/enums/profiles';
 
 @Component({
   selector: 'app-product-form',
@@ -17,7 +19,7 @@ export class ProductFormComponent implements OnInit {
   private product: Product;
   private images: Array<any>;
   private modification: boolean;
-  
+
   constructor(
     private cameraService: CameraService,
     private productService: ProductService,
@@ -43,6 +45,8 @@ export class ProductFormComponent implements OnInit {
   }
 
   register() {
+    this.product.managerProfile = this.product.category == Categories.Drink ? Profiles.Bartender : Profiles.Chef;
+
     this.product.photos = this.images.map(x => x.name);
     if (this.modification) {
       this.productService.modifyProduct(this.idObject, this.product).then(() => {

@@ -41,8 +41,8 @@ export class ClientHomeComponent implements OnInit {
     if (isNullOrUndefined(user)) {
       this.router.navigateByUrl("/login");
     }
-    this.userService.getUserById(user.uid).then(userData => {
-      this.currentUser = Object.assign(new User, userData.data());
+    this.userService.getUser(user.uid).subscribe(userData => {
+      this.currentUser = Object.assign(new User, userData);
     })
   }
 
@@ -82,9 +82,6 @@ export class ClientHomeComponent implements OnInit {
     this.userService.setDocument(Collections.WaitList, this.currentUser.id.toString(), { 'id': this.currentUser.id, 'date': Date.now(), 'name': this.currentUser.name + " " + this.currentUser.surname, 'dni': this.currentUser.dni });
     this.dataService.setStatus(Collections.Users, this.currentUser.id, Status.OnHold).then(() => {
       this.notificationService.presentToast("Agregado a lista de espera", TypeNotification.Warning, "top");
-      this.userService.getUserById(this.currentUser.id.toString()).then(user => {
-        this.currentUser = Object.assign(new User, user.data());
-      });
       this.fcmService.getTokensByProfile(Profiles.Waiter).then(waiterDevices => {
         this.fcmService.sendNotification(
           "Nuevo cliente en lista de espera",

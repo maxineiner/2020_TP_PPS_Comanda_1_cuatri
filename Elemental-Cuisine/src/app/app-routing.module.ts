@@ -23,7 +23,9 @@ const routes: Routes = [
   { path: 'juegos/tateti', loadChildren: './pages/game-tateti/tateti.module#TatetiPageModule' },
   { path: 'pagar', loadChildren: './pages/payment/payment.module#PaymentPageModule' },
   { path: 'encuestas', loadChildren: './pages/poll-client-list/poll-client-list.module#PollClientListPageModule' },
-  { path: 'encuestas/cliente', loadChildren: './pages/poll-client-form/poll-client-form.module#PollClientFormPageModule' }
+  { path: 'encuestas/cliente', loadChildren: './pages/poll-client-form/poll-client-form.module#PollClientFormPageModule' },
+  { path: 'cuentas-por-cerrar', loadChildren: './pages/close-bills/close-bills.module#CloseBillsPageModule' }
+
 ]
 
 @NgModule({
