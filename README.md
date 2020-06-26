@@ -116,8 +116,8 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| D | ABM Clientes  | 13/06/2020 | 09/06/2020 | Finalizado |
-| O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
+| T | Juego 1  | 13/06/2020 | 14/06/2020 | Finalizado |
+| O | Push Notification - Mesa | 14/06/2020 | 11/06/2020 | Finalizado |
 
 ___
 
@@ -125,7 +125,7 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| P | Push notification - Pedido | 13/06/2020 | - | Finalizado |
+| U | Juego 2 | 13/06/2020 | - | Finalizado |
 | O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
 
 ___
@@ -134,7 +134,7 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| 26 | Panel Clientes | 14/06/2020 | - | Finalizado |
+| V | Juego 3 | 14/06/2020 | - | Finalizado |
 | O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
 
 ___
