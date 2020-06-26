@@ -8,4 +8,5 @@ export class Product {
     price:number;
     photos:Array<string>;
     category: Categories;
+    managerProfile: Profiles;
 }
