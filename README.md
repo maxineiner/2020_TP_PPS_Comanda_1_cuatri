@@ -98,7 +98,7 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| P | Push notification - Pedido | 08/06/2020 | - | En Progreso |
+| P | Push notification - Pedido | 08/06/2020 | 10/06/2020 | Finalizado |
 
 ___
 
@@ -106,7 +106,7 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| 26 | Panel Clientes | 07/06/2020 | - | En Progreso |
+| 26 | Panel Clientes | 07/06/2020 | 11/06/2020 | Finalizado |
 
 ___
 
@@ -116,7 +116,7 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| D | ABM Clientes  | 07/06/2020 | 09/06/2020 | Finalizado |
+| D | ABM Clientes  | 13/06/2020 | 09/06/2020 | Finalizado |
 | O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
 
 ___
@@ -125,7 +125,8 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| P | Push notification - Pedido | 08/06/2020 | - | En Progreso |
+| P | Push notification - Pedido | 13/06/2020 | - | Finalizado |
+| O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
 
 ___
 
@@ -133,7 +134,8 @@ ___
 
 | Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
 |---|---|---|---|---|
-| 26 | Panel Clientes | 07/06/2020 | - | En Progreso |
+| 26 | Panel Clientes | 14/06/2020 | - | Finalizado |
+| O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
 
 ___
 ### Semana 5  :date:
