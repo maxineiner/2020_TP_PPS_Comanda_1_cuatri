@@ -1,0 +1,25 @@
+<app-custom-header [title]="'Cuentas por cerrar'"></app-custom-header>
+
+<ion-content>
+  <section>
+
+    <ion-list>
+      <ion-list-header>Pendientes por cerrar</ion-list-header>
+
+      <ion-item *ngIf="pendingBills.length == 0">
+        <ion-icon class="disabled-item item-ico" src="assets/icon/pendingConfirm.svg"></ion-icon>
+        <ion-label class="disabled-item"> No hay cuentas por cerrar</ion-label>
+      </ion-item>
+
+
+      <ion-item *ngFor="let pendingBill of pendingBills">
+        <ion-icon class="icon-right-margin" src="assets/icon/mesa.svg"></ion-icon>
+        <ion-label>{{pendingBill.tableNumber}}</ion-label>
+        <ion-button color="primary" (click)="closeBill(pendingBill.id)">
+          <ion-icon src="assets/icon/double-check.svg"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+  </section>
+</ion-content>

@@ -1,4 +1,5 @@
 export class Attention {
+    id: string;
     tableId: string;
     discount: boolean = false;
     freeDrink: boolean = false;
