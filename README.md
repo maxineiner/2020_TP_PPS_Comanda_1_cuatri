@@ -109,7 +109,31 @@ ___
 | 26 | Panel Clientes | 07/06/2020 | - | En Progreso |
 
 ___
+
 ### Semana 4  :date:
+
+#### Nicolás Osorio (branch: *nosorio*) :wolf:
+
+| Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
+|---|---|---|---|---|
+| D | ABM Clientes  | 07/06/2020 | 09/06/2020 | Finalizado |
+| O | Push Notification - Mesa | 10/06/2020 | 11/06/2020 | Finalizado |
+
+___
+
+#### Brian Pariz (branch: *bpariz*) :tiger:
+
+| Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
+|---|---|---|---|---|
+| P | Push notification - Pedido | 08/06/2020 | - | En Progreso |
+
+___
+
+#### Joaquín Enriquez (branch: *jenriquez*) :frog:
+
+| Tarea | Descripción | Fecha Inicio | Fecha Fin | Estado |
+|---|---|---|---|---|
+| 26 | Panel Clientes | 07/06/2020 | - | En Progreso |
 
 ___
 ### Semana 5  :date:
