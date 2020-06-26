@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { Platform } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QrscannerService {
 
-  device = "web"; // HARDCODED
+  device = (this.platform.is("mobileweb") || this.platform.is("desktop")) ? "web" : "mobile";
 
   constructor(
     private scanner: BarcodeScanner, 
-
+    private platform: Platform
   ) { }
 
   /*scanDni(){

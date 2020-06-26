@@ -42,6 +42,10 @@ export class UserService {
     return this.dataService.getOne(this.collection, userId);
   }
 
+  getUser(userId) {
+    return this.dataService.getChanges(this.collection, userId);
+  }
+
   getAllUsers(collection): Observable<DocumentChangeAction<User>[]> {
     return this.dataService.getAll(collection);
   }
