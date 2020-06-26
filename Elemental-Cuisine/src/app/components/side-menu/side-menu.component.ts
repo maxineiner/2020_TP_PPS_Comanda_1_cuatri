@@ -16,6 +16,7 @@ export class SideMenuComponent implements OnInit {
   private total: number;
   private showOrder = false;
   private disableMenu = true;
+  private currentUser: User;
 
   constructor(
     private authService: AuthService,
@@ -26,12 +27,13 @@ export class SideMenuComponent implements OnInit {
     this.authService.isUserLoggedIn().subscribe(user => {
       if (user && user.uid) {
         this.userService.getUserById(user.uid).then(user => {
-          this.showOrder = (user.data() as User).profile === Profiles.Client
+          this.currentUser = user.data() as User
         })
         this.disableMenu = false;
         this.orderService.getOrder(user.uid).subscribe(orders => {
           if(!orders.exists) return;
-    
+          
+          this.showOrder = this.currentUser.profile === Profiles.Client
           const reducer = (accumulator, order) => accumulator + order.total;
           this.total = Object.values(orders.data()).reduce(reducer, 0);
         })
