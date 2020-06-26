@@ -5,6 +5,7 @@ import { PollClient } from 'src/app/classes/poll-client';
 import { AuthService } from 'src/app/services/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-poll-client-list',
@@ -19,8 +20,9 @@ export class PollClientListPage implements OnInit {
   constructor(
     private router: Router,
     private pollService: PollService,
-    private cameraService: CameraService,    
+    private cameraService: CameraService,
     private notificationService: NotificationService,
+    private loadingService: LoadingService,
     private authService: AuthService
   ) {
     this.polls = new Array<PollClient>();
@@ -28,6 +30,7 @@ export class PollClientListPage implements OnInit {
 
   ngOnInit() {
     this.pollService.getAllPolls().subscribe(polls => {
+      this.loadingService.showLoading("Espere...");
 
       this.polls = polls.map(pollAux => {
         let poll = pollAux.payload.doc.data() as PollClient;
@@ -43,6 +46,7 @@ export class PollClientListPage implements OnInit {
         this.polls = this.polls.filter(x => x.userId !== userId);
         this.polls.unshift(pollAux);
       }
+      this.loadingService.closeLoading();
     });
   }
 
@@ -62,7 +66,7 @@ export class PollClientListPage implements OnInit {
       this.notificationService.presentToast("Solo se puede realizar una encuesta!", "danger", "middle");
       return;
     }
-    
+
     this.router.navigateByUrl('/encuestas/cliente');
   }
 }
