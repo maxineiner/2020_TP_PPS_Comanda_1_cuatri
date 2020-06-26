@@ -6,6 +6,9 @@ import { AuthService } from 'src/app/services/auth.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { isNullOrUndefined } from 'util';
+import { UserService } from 'src/app/services/user.service';
+import { User } from 'src/app/classes/user';
 
 @Component({
   selector: 'app-poll-client-list',
@@ -14,6 +17,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 })
 export class PollClientListPage implements OnInit {
 
+  currentUser: User;
   private polls: Array<PollClient>;
   private gotPoll: boolean;
 
@@ -21,6 +25,7 @@ export class PollClientListPage implements OnInit {
     private router: Router,
     private pollService: PollService,
     private cameraService: CameraService,
+    private userService: UserService,
     private notificationService: NotificationService,
     private loadingService: LoadingService,
     private authService: AuthService
@@ -29,6 +34,14 @@ export class PollClientListPage implements OnInit {
   }
 
   ngOnInit() {
+    let user = this.authService.getCurrentUser();
+    if (isNullOrUndefined(user)) {
+      this.router.navigateByUrl("/login");
+    }
+    this.userService.getUserById(user.uid).then(userData => {
+      this.currentUser = Object.assign(new User, userData.data());
+    })
+
     this.pollService.getAllPolls().subscribe(polls => {
       this.loadingService.showLoading("Espere...");
 
@@ -38,14 +51,17 @@ export class PollClientListPage implements OnInit {
         return poll;
       });
 
-      let userId = this.authService.getCurrentUser().uid;
+      if (this.currentUser.profile != 'admin') {
+        let userId = this.currentUser.id;
 
-      if (this.polls.find(x => x.userId == userId)) {
-        this.gotPoll = true;
-        let pollAux = this.polls.find(x => x.userId == userId);
-        this.polls = this.polls.filter(x => x.userId !== userId);
-        this.polls.unshift(pollAux);
+        if (this.polls.find(x => x.userId == userId)) {
+          this.gotPoll = true;
+          let pollAux = this.polls.find(x => x.userId == userId);
+          this.polls = this.polls.filter(x => x.userId !== userId);
+          this.polls.unshift(pollAux);
+        }
       }
+
       this.loadingService.closeLoading();
     });
   }
