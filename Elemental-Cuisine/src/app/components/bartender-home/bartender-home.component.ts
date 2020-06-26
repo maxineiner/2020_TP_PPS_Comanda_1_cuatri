@@ -10,5 +10,4 @@ export class BartenderHomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {}
-
 }
