@@ -82,7 +82,7 @@ export class ClientHomeComponent implements OnInit {
     this.userService.setDocument(Collections.WaitList, this.currentUser.id.toString(), { 'id': this.currentUser.id, 'date': Date.now(), 'name': this.currentUser.name + " " + this.currentUser.surname, 'dni': this.currentUser.dni });
     this.dataService.setStatus(Collections.Users, this.currentUser.id, Status.OnHold).then(() => {
       this.notificationService.presentToast("Agregado a lista de espera", TypeNotification.Warning, "top");
-      this.fcmService.getTokensByProfile(Profiles.Waiter).then(waiterDevices => {
+      this.fcmService.getTokensByProfile(Profiles.Maitre).then(waiterDevices => {
         this.fcmService.sendNotification(
           "Nuevo cliente en lista de espera",
           "El cliente " + this.currentUser.name + " " + this.currentUser.surname + " está esperando a ser atendido",
