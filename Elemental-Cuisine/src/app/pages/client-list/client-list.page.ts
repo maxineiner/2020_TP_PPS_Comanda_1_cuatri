@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/services/auth.service';
 import { EmailService } from './../../services/email.service';
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/classes/user';
@@ -18,6 +19,7 @@ export class ClientListPage implements OnInit {
   showSearchBar = false;
   pendingClients: Array<User>;
   aprobatedClients: Array<User>;
+  searchBarTargetText: string;
 
   users:Array<User>;
 
@@ -26,6 +28,7 @@ export class ClientListPage implements OnInit {
     private dataService: DataService,
     private notificationService: NotificationService,
     private emailService: EmailService
+
   ) { }
 
   ngOnInit() {
@@ -41,11 +44,12 @@ export class ClientListPage implements OnInit {
 
   }
 
-  deleteEmployee(user){
-    this.dataService.deleteDocument(Collections.Users , user);
+  deleteClient(user: User) {
+    event.stopPropagation();
+    this.userService.deleteUser(user.id);
   }
 
-  approveUser(user)
+  approveClient(user)
   {
     this.dataService.setStatus(Collections.Users, user.id, Status.Unattended).then(() => {
       this.emailService.sendAprovalEmail(user.email)
@@ -53,9 +57,9 @@ export class ClientListPage implements OnInit {
       });
   }
 
-  search() 
+  search(event) 
   {
-    console.log('adsadas');
+    this.searchBarTargetText = event.detail.value;
   }
   
 }
