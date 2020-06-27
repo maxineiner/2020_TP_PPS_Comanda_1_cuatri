@@ -2,7 +2,7 @@
 
 <ion-content>
 
-  <ion-button *ngIf="currentUser?.profile != Profiles.Owner && (currentUser?status == Status.Attended || currentUser?status == Status.Ordered" expand="block" size="small" (click)="doPoll()">
+  <ion-button *ngIf="currentUser?.profile != Profiles.Owner && (currentUser?.status == Status.Attended || currentUser?.status == Status.Ordered)" expand="block" size="small" (click)="doPoll()">
     <ion-icon slot="start" name="create"></ion-icon>
     Realizar Encuesta
   </ion-button>

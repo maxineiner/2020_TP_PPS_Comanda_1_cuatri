@@ -32,11 +32,14 @@ export class SideMenuComponent implements OnInit {
         })
         this.disableMenu = false;
         this.orderService.getOrder(user.uid).subscribe(orders => {
-          if(!orders.exists) return;
+          if(!orders) {
+            this.showOrder = false;
+            return;
+          }
           
           this.showOrder = this.currentUser.profile === Profiles.Client
           const reducer = (accumulator, order) => accumulator + order.total;
-          this.total = Object.values(orders.data()).reduce(reducer, 0);
+          this.total = Object.values(orders).reduce(reducer, 0);
         })
       }
     })
