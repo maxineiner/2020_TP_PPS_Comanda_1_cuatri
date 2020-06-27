@@ -27,6 +27,5 @@ export class DeliveryPage implements OnInit {
     this.order.time = route.time;
     this.order.destination = route.destination;
     this.isRouteSelected = true;
-    console.log(this.order);
   }
 }

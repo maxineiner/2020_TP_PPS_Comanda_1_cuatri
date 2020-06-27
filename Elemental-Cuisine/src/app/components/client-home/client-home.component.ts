@@ -25,6 +25,7 @@ import { Attention } from 'src/app/classes/attention';
 export class ClientHomeComponent implements OnInit {
 
   currentUser: User;
+  Status = Status;
 
   constructor(
     private authService: AuthService,
