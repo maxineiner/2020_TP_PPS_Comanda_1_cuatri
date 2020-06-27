@@ -161,7 +161,7 @@ export class UserFormComponent implements OnInit {
     else {
       this.userService.saveUserWithLogin(this.user).then(response => {
         if (this.isClient) {
-          this.fcmService.getTokensByProfile(Profiles.Owner).then(userDevices => {
+          this.fcmService.getTokensByProfile(Profiles.Owner).then((userDevices: any[]) => {
             this.fcmService.sendNotification("Nuevo cliente!", 'Se requiere su aprobación', userDevices);
           });
           this.router.navigateByUrl('/login');

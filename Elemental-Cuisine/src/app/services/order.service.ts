@@ -36,7 +36,7 @@ export class OrderService {
   
   //Retorna una observer
   getOrder(id){
-    return this.dataService.get(this.orderCollection, id);
+    return this.dataService.getChanges(this.orderCollection, id);
   }
 
 }

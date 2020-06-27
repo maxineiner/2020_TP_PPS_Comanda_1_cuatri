@@ -7,7 +7,6 @@ export enum Status {
     CanTakeTable = 'puedeTomarMesa',
     Attended = 'atendido',
     Ordered = 'esperandoOrden',
-    Ended = 'finalizado',
 
     //Table Status
     Available = 'disponible',
