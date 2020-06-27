@@ -10,8 +10,6 @@ import { UserService } from 'src/app/services/user.service';
 import { AlertController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
-import { FcmService } from 'src/app/services/fcmService';
-import { Profiles } from 'src/app/classes/enums/profiles';
 
 @Component({
   selector: 'app-login',
@@ -35,8 +33,7 @@ export class LoginPage implements OnInit {
     private loadingService: LoadingService,
     private alertController: AlertController,
     private cameraService: CameraService,
-    private notificationService: NotificationService,
-    private fcmService: FcmService
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -87,9 +84,6 @@ export class LoginPage implements OnInit {
         this.userService.getUserById(this.authService.getCurrentUser().uid).then(user => {
           if (user.data().profile === 'cliente' && user.data().status === 'pendienteAprobacion') {
             this.authService.logOut();
-            this.fcmService.getTokensByProfile(Profiles.Owner).then(userDevices => {
-              this.fcmService.sendNotification("Nuevo cliente!", 'Se requiere su aprobación', userDevices);
-            });
             this.loadingService.closeLoading("Atención", "Su cuenta aún no fue aprobada. Aguarde un momento por favor e intente nuevamente. Gracias", 'info');
           } else {
             this.loadingService.closeLoadingAndRedirect("/inicio");
