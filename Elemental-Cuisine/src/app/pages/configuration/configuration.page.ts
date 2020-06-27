@@ -18,7 +18,6 @@ export class ConfigurationPage implements OnInit {
   }
 
   activateSounds(){
-    console.log(this.isActive);
     this.smartAudioService.activateSounds(this.isActive);
   }
 

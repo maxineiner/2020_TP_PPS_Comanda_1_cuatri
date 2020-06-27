@@ -51,11 +51,9 @@ export class FcmService {
 
       this.fcm.onNotification().subscribe(data => {
         this.smartAudioService.play("login")
-        if(data.wasTapped){
-          console.log("Segundo plano: " + JSON.stringify(data))
-        }
-        //Aplicación en primer plano
-        else{
+        if(!data.wasTapped){
+          //Aplicación en primer plano
+          console.log("Primer plano: " + JSON.stringify(data))
           this.notificationService.presentToast(data.body,"primary","top", true);
         }
       }, error => {
@@ -66,14 +64,17 @@ export class FcmService {
   getTokensByProfile(userProfile){
       return new Promise((resolve) => { 
         this.dataService.getAll(Collections.Users).subscribe(users => {
-        let usersByProfile = users.map(user => user.payload.doc.data() as User).filter(user => user.profile == userProfile)
-        this.dataService.getAll(Collections.Devices).subscribe(devices => {
-          let devicesByProfile = devices.map(device => device.payload.doc.data() as any)
-                                        .filter(device => usersByProfile.some(user => user.id == device.userId))
-                                        .map(device => device.token);
-          resolve(devicesByProfile);
+          new Promise((resolve) => resolve(users.map(user => user.payload.doc.data() as User).filter(user => user.profile == userProfile)))
+          .then((usersByProfile: any[]) => {
+            this.dataService.getAll(Collections.Devices).subscribe(devices => {
+              let devicesByProfile = devices.map(device => device.payload.doc.data() as any)
+                                            .filter(device => usersByProfile.some(user => user.id == device.userId))
+                                            .map(device => device.token);
+              if(usersByProfile.length > 0)
+                resolve(devicesByProfile);
+            });
+          });
         });
-      });
     });
   }
 

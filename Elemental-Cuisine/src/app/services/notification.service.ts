@@ -19,7 +19,7 @@ export class NotificationService {
       position: position,
       color: color,
       showCloseButton: closeButton,
-      closeButtonText: "Ok"
+      closeButtonText: "Aceptar"
     });
 
     if (closeButton == true) {

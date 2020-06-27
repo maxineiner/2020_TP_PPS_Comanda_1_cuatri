@@ -9,6 +9,8 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { isNullOrUndefined } from 'util';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
+import { Profiles } from 'src/app/classes/enums/profiles';
+import { Status } from 'src/app/classes/enums/Status';
 
 @Component({
   selector: 'app-poll-client-list',
@@ -20,6 +22,8 @@ export class PollClientListPage implements OnInit {
   currentUser: User;
   private polls: Array<PollClient>;
   private gotPoll: boolean;
+  Profiles = Profiles;
+  Status = Status;
 
   constructor(
     private router: Router,
@@ -51,7 +55,7 @@ export class PollClientListPage implements OnInit {
         return poll;
       });
 
-      if (this.currentUser.profile != 'admin') {
+      if (this.currentUser.profile != Profiles.Owner) {
         let userId = this.currentUser.id;
 
         if (this.polls.find(x => x.userId == userId)) {

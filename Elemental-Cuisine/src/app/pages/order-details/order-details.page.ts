@@ -36,7 +36,8 @@ export class OrderDetailsPage implements OnInit {
       let attention = currentAttention.data() as Attention;
       if (attention.billRequested) this.router.navigateByUrl("/pagar");
       this.orderService.getOrderById(this.currentUser.uid).then(orders => {
-        if (!orders.exists) return;
+        this.total = 0;
+        if(!orders.exists) return;
         this.orders = Object.values(orders.data());
         const reducer = (accumulator, order) => accumulator + order.total;
         this.total = this.orders.reduce(reducer, 0);

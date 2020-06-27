@@ -7,6 +7,8 @@ import { QrscannerService } from 'src/app/services/qrscanner.service';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
+import { Profiles } from 'src/app/classes/enums/profiles';
+import { FcmService } from 'src/app/services/fcmService';
 
 @Component({
   selector: 'app-user-form',
@@ -28,7 +30,8 @@ export class UserFormComponent implements OnInit {
     private cameraService: CameraService,
     private qrscannerService: QrscannerService,
     private notificationService: NotificationService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private fcmService: FcmService
   ) {
     this.user = new User();
   }
@@ -158,6 +161,9 @@ export class UserFormComponent implements OnInit {
     else {
       this.userService.saveUserWithLogin(this.user).then(response => {
         if (this.isClient) {
+          this.fcmService.getTokensByProfile(Profiles.Owner).then((userDevices: any[]) => {
+            this.fcmService.sendNotification("Nuevo cliente!", 'Se requiere su aprobación', userDevices);
+          });
           this.router.navigateByUrl('/login');
           this.notificationService.presentToast("Espere a que su cuenta sea confirmada", "primary", "middle");
         }

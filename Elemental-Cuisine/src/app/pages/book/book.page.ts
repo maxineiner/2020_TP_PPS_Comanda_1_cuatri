@@ -24,11 +24,8 @@ export class BookPage implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.book);
-
     this.book.clientId = this.authService.getCurrentUser().uid;
     this.book.date = new Date(this.book.date).valueOf();
-    console.log(this.book);
     this.loadingService.showLoading("Guardando Reserva...");
     this.loadingService.closeLoading();
   }
