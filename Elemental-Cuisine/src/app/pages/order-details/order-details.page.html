@@ -3,7 +3,9 @@
 <ion-content>
   <div id="scroll">
     <ion-button id="payBill" color="primary" (click)="payBill()">Solicitar Cuenta</ion-button>
-
+    <h3 id="empty" *ngIf="!orders.length">
+      Aún no ha realizado ningún pedido
+    </h3>
     <ion-list class="orders" *ngFor="let order of orders; index as i">
       <ion-list-header>
         <h2>Pedido {{i + 1}}</h2>

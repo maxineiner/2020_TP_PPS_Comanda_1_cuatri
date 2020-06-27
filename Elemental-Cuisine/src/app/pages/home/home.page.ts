@@ -16,7 +16,7 @@ import { FcmService } from 'src/app/services/fcmService';
 export class HomePage {
 
   currentUser: User;
-  Profiles: Profiles;
+  Profiles = Profiles;
 
   constructor(
     private authService: AuthService,
