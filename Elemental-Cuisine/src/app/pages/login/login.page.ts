@@ -76,7 +76,7 @@ export class LoginPage implements OnInit {
   }
 
   onSubmitLogin(form) {
-    this.loadingService.showLoading("Espere...");
+    this.loadingService.showLoading();
     this.authService.logIn(form.email, form.password)
       .then(res => {
 
@@ -191,7 +191,7 @@ export class LoginPage implements OnInit {
   async takePhoto(name) {
     if (name != "") {
       name = `${name}-${Date.now()}`;
-      this.loadingService.showLoading("Espere...");
+      this.loadingService.showLoading();
       await this.cameraService.takePhoto('usuarios', name).then(() => {
         this.loadingService.closeLoading();
         this.photoName = name;

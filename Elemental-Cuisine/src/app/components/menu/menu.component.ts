@@ -45,7 +45,7 @@ export class MenuComponent implements OnInit {
   }
 
   showDetails(product: Product){
-    this.loadingService.showLoading("");
+    this.loadingService.showLoading();
     this.createAlert(product).then(response => {
       var quantity = (response.data) ? parseInt(response.data.quantity) : null;
       if(quantity){

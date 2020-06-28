@@ -47,7 +47,7 @@ export class PollClientListPage implements OnInit {
     })
 
     this.pollService.getAllPolls().subscribe(polls => {
-      this.loadingService.showLoading("Espere...");
+      this.loadingService.showLoading();
 
       this.polls = polls.map(pollAux => {
         let poll = pollAux.payload.doc.data() as PollClient;
