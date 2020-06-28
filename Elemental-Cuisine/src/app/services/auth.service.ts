@@ -21,6 +21,14 @@ export class AuthService {
     });
   }
 
+  logInWithCredential(credential){
+    return this.AFauth.auth.signInWithCredential(credential)
+  }
+
+  getFacebookCredentials(facebookResponse){
+    return auth.FacebookAuthProvider.credential(facebookResponse.authResponse.accessToken);
+  }
+
   logOut() {
     this.AFauth.auth.signOut().then(auth => {
       this.router.navigateByUrl('/login');
@@ -37,12 +45,6 @@ export class AuthService {
 
   async googleSignIn() {
     const provider = new auth.GoogleAuthProvider();
-    const credential = await this.AFauth.auth.signInWithPopup(provider);
-    return credential.user;
-  }
-
-  async facebookSigin() {
-    const provider = new auth.FacebookAuthProvider();
     const credential = await this.AFauth.auth.signInWithPopup(provider);
     return credential.user;
   }

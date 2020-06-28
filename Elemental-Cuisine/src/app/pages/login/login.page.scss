@@ -60,12 +60,7 @@ ion-button {
 
 #defaultUsers {
     border-radius: 25px;
-}
-
-#register{
-    display: flex;
-}
-
-.registerButton{
-    width: 50%;
+    position: absolute;
+    z-index: 9999;
+    right: 0;
 }

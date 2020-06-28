@@ -24,6 +24,7 @@
     "@ionic-native/barcode-scanner": "^5.16.0",
     "@ionic-native/camera": "^5.16.0",
     "@ionic-native/core": "^5.0.0",
+    "@ionic-native/facebook": "^5.27.0",
     "@ionic-native/fcm": "^5.16.0",
     "@ionic-native/geolocation": "^5.23.0",
     "@ionic-native/local-notifications": "^5.16.0",
@@ -107,7 +108,13 @@
         "GOOGLE_SERVICES_VERSION": "4.2.0"
       },
       "cordova-plugin-local-notification": {},
-      "cordova-plugin-geolocation": {}
+      "cordova-plugin-geolocation": {},
+      "cordova-plugin-facebook4-no-zxing": {
+        "APP_ID": "441744350074316",
+        "APP_NAME": "Elemental Cuisine",
+        "FACEBOOK_HYBRID_APP_EVENTS": "false",
+        "FACEBOOK_ANDROID_SDK_VERSION": "4.40.0"
+      }
     },
     "platforms": [
       "android"

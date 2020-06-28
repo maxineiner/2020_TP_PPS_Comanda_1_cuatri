@@ -1,4 +1,13 @@
 <ion-content>
+  <ion-chip id="defaultUsers" color="light">
+    <ion-avatar>
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+    </ion-avatar>
+    <ion-label>Usuarios</ion-label>
+    <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="user" (ionChange)="setDefaultUser()">
+      <ion-select-option *ngFor="let user of defaultUsers" [value]="user">{{user.email}}</ion-select-option>
+    </ion-select>
+  </ion-chip>
   <div class="login-wrap">
     <div class="login-html">
       <span class="tab">Iniciar Sesión</span>
@@ -50,16 +59,10 @@
         </div>
       </form>
       <div class="hr"></div>
-      <div class="group" id="register">
-        <ion-button class="registerButton" color="light" shape="round" (click)="anonymousLogin($event)">Anónimo</ion-button>
-        <ion-button class="registerButton" shape="round" routerLink="/registro/cliente">Registrarse</ion-button>
+      <div class="group">
+        <ion-button color="light" shape="round" (click)="anonymousLogin($event)">Anónimo</ion-button>
+        <ion-button shape="round" routerLink="/registro/cliente">Registrarse</ion-button>
       </div>
-      <ion-item id="defaultUsers">
-        <ion-label>Usuarios</ion-label>
-        <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="user" (ionChange)="setDefaultUser()">
-          <ion-select-option *ngFor="let user of defaultUsers" [value]="user">{{user.email}}</ion-select-option>
-        </ion-select>
-      </ion-item>
     </div>
   </div>
 </ion-content>
