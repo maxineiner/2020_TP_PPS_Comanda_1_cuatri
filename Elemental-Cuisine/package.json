@@ -38,6 +38,7 @@
     "cordova-plugin-badge": "^0.8.8",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-facebook4-no-zxing": "^4.2.2",
     "cordova-plugin-fcm-with-dependecy-updated": "^4.1.0",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova-plugin-googleplus": "^8.5.0",
