@@ -156,8 +156,19 @@ export class OrderListPage implements OnInit {
 
       // Para la confirmación del Mozo cambiamos los dos estados al mismo tiempo
       if (status == Status.PendingPreparation) {
-        orders[selectedOrder.index].statusFood = status;
-        orders[selectedOrder.index].statusDrink = status;
+
+        let products = orders[selectedOrder.index].menu as Product[];
+        let hasDrinks: boolean = products.filter(product => product.managerProfile == Profiles.Bartender).length > 0;
+        let hasFoods: boolean = products.filter(product => product.managerProfile == Profiles.Chef).length > 0;
+
+        if (hasDrinks) {
+          orders[selectedOrder.index].statusFood = status;
+        }
+
+        if (hasFoods) {
+          orders[selectedOrder.index].statusDrink = status;
+        }
+        
       } else {
         switch (selectedOrder.profile) {
           case Profiles.Bartender:
