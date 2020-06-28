@@ -5,8 +5,6 @@ import { TableService } from 'src/app/services/table.service';
 import { Table } from 'src/app/classes/table';
 import { OrderService } from 'src/app/services/order.service';
 import { Status } from 'src/app/classes/enums/Status';
-import { UserService } from 'src/app/services/user.service';
-import { User } from 'src/app/classes/user';
 import { Collections } from 'src/app/classes/enums/collections';
 import { DataService } from 'src/app/services/data.service';
 

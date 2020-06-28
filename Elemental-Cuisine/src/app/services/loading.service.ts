@@ -15,7 +15,7 @@ export class LoadingService {
   ngOnInit() {
   }
 
-  async showLoading(message, duration = null) {
+  async showLoading(message = "Espere...", duration = null) {
 
     this.loadingCtrl.create({
       duration: duration,
