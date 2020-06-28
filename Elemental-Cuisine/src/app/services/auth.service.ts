@@ -25,6 +25,10 @@ export class AuthService {
     return this.AFauth.auth.signInWithCredential(credential)
   }
 
+  getGoogleCredentials(googleResponse){
+    return auth.GoogleAuthProvider.credential(googleResponse.idToken);
+  }
+
   getFacebookCredentials(facebookResponse){
     return auth.FacebookAuthProvider.credential(facebookResponse.authResponse.accessToken);
   }
