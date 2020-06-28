@@ -39,7 +39,7 @@
     <ion-list>
       <ion-list-header>Para preparar</ion-list-header>
       <ion-item *ngIf="pendingPreparationOrders.length == 0">
-        <ion-icon class="disabled-item item-ico" src="assets/icon/pendingPreparationFoods.svg"></ion-icon>
+        <ion-icon class="disabled-item item-ico" [src]="this.currentUser?.profile === Profiles.Bartender? 'assets/icon/pendingPreparationDrinks.svg' : 'assets/icon/pendingPreparationFoods.svg'"></ion-icon>
         <ion-label class="disabled-item">No hay pedidos para preparar</ion-label>
       </ion-item>
 
@@ -65,7 +65,7 @@
       <ion-list-header>En preparación</ion-list-header>
 
       <ion-item *ngIf="preparingOrders?.length == 0">
-        <ion-icon class="disabled-item item-ico" src="assets/icon/preparingFoods.svg"></ion-icon>
+        <ion-icon class="disabled-item item-ico" [src]="this.currentUser?.profile === Profiles.Bartender? 'assets/icon/preparingDrinks.svg' : 'assets/icon/preparingFoods.svg'"></ion-icon>
         <ion-label class="disabled-item">No hay pedidos en preparación</ion-label>
       </ion-item>
 
@@ -91,12 +91,12 @@
       <ion-list-header>Listos para servir</ion-list-header>
 
       <ion-item *ngIf="preparedOrders.length == 0">
-        <ion-icon class="disabled-item item-ico" src="assets/icon/prepared.svg"></ion-icon>
+        <ion-icon class="disabled-item item-ico" src="assets/icon/preparedFoods.svg"></ion-icon>
         <ion-label class="disabled-item">No hay pedidos para servir</ion-label>
       </ion-item>
 
       <ion-item *ngFor="let orderWithUser of preparedOrders">
-        <ion-icon class="item-ico" [src]="orderWithUser.profile === Profiles.Bartender? 'assets/icon/preparedDrinks.svg' : 'assets/icon/preparedFood.svg'"></ion-icon>
+        <ion-icon class="item-ico" [src]="orderWithUser.profile === Profiles.Bartender? 'assets/icon/preparedDrinks.svg' : 'assets/icon/preparedFoods.svg'"></ion-icon>
         <ion-label>Mesa:{{ orderWithUser.user.currentTable }} | {{ orderWithUser.user.name }} {{ orderWithUser.user.surname }}</ion-label>
         <ion-button color="primary"
           (click)="updateOrderStatus(orderWithUser, Status.Delivered)">

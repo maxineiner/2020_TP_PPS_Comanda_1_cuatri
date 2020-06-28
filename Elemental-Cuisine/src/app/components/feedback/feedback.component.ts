@@ -1,3 +1,5 @@
+import { Profiles } from 'src/app/classes/enums/profiles';
+import { FcmService } from 'src/app/services/fcmService';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { OrderService } from 'src/app/services/order.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,7 +22,8 @@ export class FeedbackComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private notificationService: NotificationService,
-    private router: Router
+    private router: Router,
+    private fcmService: FcmService
   ) { 
     this.orderService.getOrderById(this.authService.getCurrentUser().uid).then(orders => {
       this.orders = []
@@ -35,6 +38,9 @@ export class FeedbackComponent implements OnInit {
     this.orders.push(this.currentOrder)
     this.orderService.saveOrder(this.authService.getCurrentUser().uid,  this.orders.map((obj)=> {return Object.assign({}, obj)}));
     this.notificationService.presentToast("Pedido realizado con éxito", "success", "top");
+    this.fcmService.getTokensByProfile(Profiles.Waiter).then(userDevices => {
+      this.fcmService.sendNotification('Nuevo pedido!', 'Se requiere su confirmación', userDevices);
+    });
     this.sendFeedback.emit(true);
     this.router.navigateByUrl("/inicio");
   }
