@@ -20,6 +20,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FcmService } from './services/fcmService';
 import { HttpClientModule } from '@angular/common/http';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { Facebook } from '@ionic-native/facebook/ngx';
 
 @NgModule({
   declarations: [AppComponent, SideMenuComponent],
@@ -37,6 +38,7 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
     BarcodeScanner,
     Camera,
     FCM,
+    Facebook,
     FcmService,
     Geolocation,
     NativeAudio,
