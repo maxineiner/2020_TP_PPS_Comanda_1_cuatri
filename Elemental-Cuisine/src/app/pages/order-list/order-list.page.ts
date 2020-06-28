@@ -1,3 +1,5 @@
+import { LoadingService } from 'src/app/services/loading.service';
+import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Product } from './../../classes/product';
 import { FcmService } from './../../services/fcmService';
@@ -10,7 +12,7 @@ import { TypeNotification } from 'src/app/classes/enums/TypeNotification';
 import { Order } from 'src/app/classes/order';
 import { User } from 'src/app/classes/user';
 import { Profiles } from 'src/app/classes/enums/profiles';
-import { StaticSymbol } from '@angular/compiler';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-order-list',
@@ -38,17 +40,29 @@ export class OrderListPage implements OnInit {
     private userService: UserService,
     private notificationService: NotificationService,
     private orderService: OrderService,
-    private fcmService: FcmService
+    private fcmService: FcmService,
+    private authService: AuthService,
+    private router: Router,
+    private loadingService: LoadingService
   ) { }
 
   ngOnInit() {
 
-    this.userService.getCurrentUser().then(userData => {
-      this.currentUser = Object.assign(new User, userData.data());
+    this.loadingService.showLoading("Espere...");
+
+    let user = this.authService.getCurrentUser();
+    if (isNullOrUndefined(user)) {
+      this.router.navigateByUrl("/login");
+    }
+    this.userService.getUser(user.uid).subscribe(userData => {
+      this.currentUser = Object.assign(new User, userData);
+
+      this.getOrders();
+      this.getOrdersByProfile();
     });
 
-    this.getOrders();
-    this.getOrdersByProfile();
+
+    this.loadingService.closeLoading();
   }
 
   /* #region  Métodos */
@@ -76,7 +90,7 @@ export class OrderListPage implements OnInit {
 
   private getOrdersByProfile(): void {
 
-    this.orderService.getAllOrders().subscribe(ordersData => {
+    this.orderService.getAllOrders().subscribe(async ordersData => {
       this.allOrdersDividedByProfile = [];
       ordersData.map(ordersData => {
         let orders = Object.values(ordersData.payload.doc.data()) as Order[];
@@ -112,7 +126,9 @@ export class OrderListPage implements OnInit {
         })
       });
 
-      switch (this.currentUser.profile) {
+      console.log(this.currentUser);
+
+      switch (await this.currentUser.profile) {
         case Profiles.Waiter:
           this.preparingOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.Preparing) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.Preparing)));
           this.pendingPreparationOrders = this.allOrdersDividedByProfile.filter(orders => ((orders.profile == Profiles.Bartender && orders.order.statusDrink == Status.PendingPreparation) || (orders.profile == Profiles.Chef && orders.order.statusFood == Status.PendingPreparation)));
@@ -203,6 +219,7 @@ export class OrderListPage implements OnInit {
       this.fcmService.sendNotification(title, subTitle, userDevices);
     });
   }
+
 }
 
 /* #endregion */
