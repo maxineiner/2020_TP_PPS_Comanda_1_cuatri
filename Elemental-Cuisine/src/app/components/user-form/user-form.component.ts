@@ -197,8 +197,13 @@ export class UserFormComponent implements OnInit {
   }
 
   scan() {
-    let data = this.qrscannerService.scanDni();
-    alert(data);
+    if(this.qrscannerService.device == "mobile"){
+      this.qrscannerService.scanDni().then(data => {
+        this.form.controls["surname"].setValue(data[1]);
+        this.form.controls["name"].setValue(data[2]);
+        this.form.controls["dni"].setValue(parseInt(data[4]));
+      });
+    }
   }
 
   async loadPhoto(imgName) {
