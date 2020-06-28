@@ -3,5 +3,5 @@
 <ion-content>
   <app-menu *ngIf="!isOrderTaked" (sendOrder)="setOrderMenu($event)"></app-menu>
   <app-delivery-route *ngIf="isOrderTaked && !isRouteSelected" (sendTime)="setOrderTime($event)"></app-delivery-route>
-  <app-feedback *ngIf="isRouteSelected" [order]="order"></app-feedback>
+  <app-feedback *ngIf="isRouteSelected" [currentOrder]="order"></app-feedback>
 </ion-content>

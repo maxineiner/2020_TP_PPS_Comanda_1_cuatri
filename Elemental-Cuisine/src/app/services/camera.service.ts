@@ -40,7 +40,7 @@ export class CameraService {
       });
     } 
     catch (error) {
-      alert(error);
+      console.log(error);
     }
   }
 

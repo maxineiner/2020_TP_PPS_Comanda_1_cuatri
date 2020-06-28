@@ -18,8 +18,7 @@ export class DeliveryPage implements OnInit {
   }
 
   setOrderMenu(order){
-    this.order.price = order.price;
-    this.order.menu = order.menu;
+    this.order = order;
     this.isOrderTaked = true;
   }
 

@@ -14,22 +14,6 @@ export class QrscannerService {
     private platform: Platform
   ) { }
 
-  /*scanDni(){
-    let options = { prompt: "Escaneá el DNI", formats: "PDF_417" };
-
-    this.scanner.scan(options).then(barcodeData => {
-      return barcodeData.text.split('@');
-    }).catch(err => { 
-      console.log('Error', err);
-    });
-  }
-
-  scanQr(){
-    return this.scanner.scan().then(barcodeData => {
-      return barcodeData.text;
-    }).catch(err => { });
-  }*/
-
   scanQr(options?){
     return this.scanner.scan(options).then(barcodeData => {
       return barcodeData.text;

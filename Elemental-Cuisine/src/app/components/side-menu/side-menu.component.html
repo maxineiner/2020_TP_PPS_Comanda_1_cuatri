@@ -19,6 +19,10 @@
           <ion-icon size="medium" name="settings"></ion-icon>
           Configuración
         </ion-item>
+        <ion-item *ngIf="!currentUser?.anonymous" routerLink="/delivery" >
+          <ion-icon size="medium" name="timer"></ion-icon>
+          Envío a Domicilio
+        </ion-item>
         <ion-item (click)="logout()" >
           <ion-icon size="medium" name="exit"></ion-icon>
           Cerrar Sesión
