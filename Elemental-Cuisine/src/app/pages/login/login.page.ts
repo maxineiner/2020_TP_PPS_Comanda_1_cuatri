@@ -1,5 +1,3 @@
-import { Status } from 'src/app/classes/enums/status';
-import { DataService } from 'src/app/services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { LoadingService } from 'src/app/services/loading.service';
@@ -10,6 +8,8 @@ import { UserService } from 'src/app/services/user.service';
 import { AlertController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,9 @@ export class LoginPage implements OnInit {
     private loadingService: LoadingService,
     private alertController: AlertController,
     private cameraService: CameraService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private fb: Facebook,
+    private googlePlus: GooglePlus
   ) { }
 
   ngOnInit() {
@@ -133,59 +135,66 @@ export class LoginPage implements OnInit {
   }
 
   googleLogin() {
-    this.authService.googleSignIn().then(googleResponse => {
-      this.userService.getUserById(googleResponse.uid).then(user => {
-
-        if (!user.exists) {
-          var newUser: User = {
-            id: googleResponse.uid,
-            email: googleResponse.email,
-            password: null,
-            profile: "cliente",
-            name: googleResponse.displayName.split(" ")[0],
-            surname: googleResponse.displayName.split(" ")[1],
-            photo: googleResponse.photoURL,
-            status: "sinAtender",
-            dni: null,
-            cuil: null
-          }
-
-          this.userService.saveUser(newUser);
-        }
-
-        this.router.navigateByUrl('/inicio');
-      })
-    }).catch(error => {
-      console.log(error);
+    this.googlePlus.login({
+      'webClientId': '898640537441-vtvt4594qrkhnv6a8isvp2nmfko1m96m.apps.googleusercontent.com',
+      'offline': true
     })
+    .then(googleResponse => {
+      const credential = this.authService.getGoogleCredentials(googleResponse);
+      this.authService.logInWithCredential(credential).then(() => {
+        const currentUser = this.authService.getCurrentUser();
+        this.userService.getUserById(currentUser.uid).then(user => {
+          if (!user.exists) {
+            var newUser: User = {
+              id: currentUser.uid,
+              email: currentUser.email,
+              password: null,
+              profile: "cliente",
+              name: currentUser.displayName.split(" ")[0],
+              surname: currentUser.displayName.split(" ")[1],
+              photo: currentUser.photoURL,
+              status: "sinAtender",
+              dni: null,
+              cuil: null
+            }
+            this.userService.saveUser(newUser);
+          }
+          this.router.navigateByUrl('/inicio');
+        })
+      })
+    })
+    .catch(err => console.error(err));
   }
 
   facebookLogin() {
-    this.authService.facebookSigin().then(facebookResponse => {
-      this.userService.getUserById(facebookResponse.uid).then(user => {
-
-        if (!user.exists) {
-          var newUser: User = {
-            id: facebookResponse.uid,
-            email: facebookResponse.email,
-            password: null,
-            profile: "cliente",
-            name: facebookResponse.displayName.split(" ")[0],
-            surname: facebookResponse.displayName.split(" ")[1],
-            photo: facebookResponse.photoURL,
-            status: "sinAtender",
-            dni: null,
-            cuil: null
-          }
-
-          this.userService.saveUser(newUser);
+    this.fb.login(['public_profile', 'user_friends', 'email'])
+      .then((facebookResponse: FacebookLoginResponse) => {
+        if (facebookResponse.status === 'connected') {
+          const credential = this.authService.getFacebookCredentials(facebookResponse);
+          this.authService.logInWithCredential(credential).then(() => {
+            const currentUser = this.authService.getCurrentUser();
+            this.userService.getUserById(currentUser.uid).then(user => {
+              if (!user.exists) {
+                var newUser: User = {
+                  id: currentUser.uid,
+                  email: currentUser.email,
+                  password: null,
+                  profile: "cliente",
+                  name: currentUser.displayName.split(" ")[0],
+                  surname: currentUser.displayName.split(" ")[1],
+                  photo: currentUser.photoURL,
+                  status: "sinAtender",
+                  dni: null,
+                  cuil: null
+                }
+                this.userService.saveUser(newUser);
+              }
+              this.router.navigateByUrl('/inicio');
+            });
+          });
         }
-
-        this.router.navigateByUrl('/inicio');
       })
-    }).catch(error => {
-      console.log(error);
-    });
+      .catch(e => console.log('Error logging into Facebook', e));
   }
 
   async takePhoto(name) {

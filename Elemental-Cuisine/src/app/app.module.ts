@@ -20,6 +20,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FcmService } from './services/fcmService';
 import { HttpClientModule } from '@angular/common/http';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
+import { Facebook } from '@ionic-native/facebook/ngx';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @NgModule({
   declarations: [AppComponent, SideMenuComponent],
@@ -36,9 +38,11 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
     AngularFirestore,
     BarcodeScanner,
     Camera,
+    Facebook,
     FCM,
     FcmService,
     Geolocation,
+    GooglePlus,
     NativeAudio,
     SmartAudioService,
     SplashScreen,
