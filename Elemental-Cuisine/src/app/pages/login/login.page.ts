@@ -9,7 +9,7 @@ import { AlertController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import * as firebase from 'firebase';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +34,8 @@ export class LoginPage implements OnInit {
     private alertController: AlertController,
     private cameraService: CameraService,
     private notificationService: NotificationService,
-    private fb: Facebook
+    private fb: Facebook,
+    private googlePlus: GooglePlus
   ) { }
 
   ngOnInit() {
@@ -134,31 +135,35 @@ export class LoginPage implements OnInit {
   }
 
   googleLogin() {
-    this.authService.googleSignIn().then(googleResponse => {
-      this.userService.getUserById(googleResponse.uid).then(user => {
-
-        if (!user.exists) {
-          var newUser: User = {
-            id: googleResponse.uid,
-            email: googleResponse.email,
-            password: null,
-            profile: "cliente",
-            name: googleResponse.displayName.split(" ")[0],
-            surname: googleResponse.displayName.split(" ")[1],
-            photo: googleResponse.photoURL,
-            status: "sinAtender",
-            dni: null,
-            cuil: null
-          }
-
-          this.userService.saveUser(newUser);
-        }
-
-        this.router.navigateByUrl('/inicio');
-      })
-    }).catch(error => {
-      console.log(error);
+    this.googlePlus.login({
+      'webClientId': '898640537441-vtvt4594qrkhnv6a8isvp2nmfko1m96m.apps.googleusercontent.com',
+      'offline': true
     })
+    .then(googleResponse => {
+      const credential = this.authService.getGoogleCredentials(googleResponse);
+      this.authService.logInWithCredential(credential).then(() => {
+        const currentUser = this.authService.getCurrentUser();
+        this.userService.getUserById(currentUser.uid).then(user => {
+          if (!user.exists) {
+            var newUser: User = {
+              id: currentUser.uid,
+              email: currentUser.email,
+              password: null,
+              profile: "cliente",
+              name: currentUser.displayName.split(" ")[0],
+              surname: currentUser.displayName.split(" ")[1],
+              photo: currentUser.photoURL,
+              status: "sinAtender",
+              dni: null,
+              cuil: null
+            }
+            this.userService.saveUser(newUser);
+          }
+          this.router.navigateByUrl('/inicio');
+        })
+      })
+    })
+    .catch(err => console.error(err));
   }
 
   facebookLogin() {
@@ -167,8 +172,7 @@ export class LoginPage implements OnInit {
         if (facebookResponse.status === 'connected') {
           const credential = this.authService.getFacebookCredentials(facebookResponse);
           this.authService.logInWithCredential(credential).then(() => {
-            const currentUser = this.authService.getCurrentUser()
-            console.log(currentUser)
+            const currentUser = this.authService.getCurrentUser();
             this.userService.getUserById(currentUser.uid).then(user => {
               if (!user.exists) {
                 var newUser: User = {
