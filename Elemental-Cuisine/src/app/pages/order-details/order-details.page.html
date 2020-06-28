@@ -2,7 +2,7 @@
 
 <ion-content>
   <div id="scroll">
-    <ion-button id="payBill" color="primary" (click)="payBill()">Solicitar Cuenta</ion-button>
+    <ion-button id="payBill" color="primary" (click)="payBill()" [disabled]="orders.length == 0">Solicitar Cuenta</ion-button>
     <h3 id="empty" *ngIf="!orders.length">
       Aún no ha realizado ningún pedido
     </h3>
