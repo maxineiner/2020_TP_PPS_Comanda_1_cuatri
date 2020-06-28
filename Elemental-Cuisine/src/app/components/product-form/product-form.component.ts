@@ -90,6 +90,6 @@ export class ProductFormComponent implements OnInit {
 
   scan() {
     let data = this.qrscannerService.scanDni();
-    alert(data);
+    console.log(data)
   }
 }

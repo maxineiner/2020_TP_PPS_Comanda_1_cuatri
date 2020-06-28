@@ -30,9 +30,8 @@
         <br>
         <div class="group">
           <ion-button shape="round" type="submit" [disabled]="!form.valid">Ingresar</ion-button>
-          <ion-button color="light" shape="round" (click)="anonymousLogin($event)">Anónimo</ion-button>
 
-          <!--ion-row>
+          <ion-row>
             <ion-icon slot="start" name="logo-google"></ion-icon>	            
                       
             <ion-col col-2>
@@ -47,12 +46,13 @@
               </ion-fab-button>
             </ion-col>
             
-          </ion-row-->
+          </ion-row>
         </div>
       </form>
       <div class="hr"></div>
-      <div class="group">
-        <ion-button shape="round" routerLink="/registro/cliente">Registrarse</ion-button>
+      <div class="group" id="register">
+        <ion-button class="registerButton" color="light" shape="round" (click)="anonymousLogin($event)">Anónimo</ion-button>
+        <ion-button class="registerButton" shape="round" routerLink="/registro/cliente">Registrarse</ion-button>
       </div>
       <ion-item id="defaultUsers">
         <ion-label>Usuarios</ion-label>

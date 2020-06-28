@@ -86,7 +86,7 @@ export class TableFormComponent implements OnInit {
 
   scan() {
     let data = this.qrscannerService.scanDni();
-    alert(data);
+    console.log(data);
   }
 
   async loadPhoto(imgName) {
