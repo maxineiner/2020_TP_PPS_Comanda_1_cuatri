@@ -39,7 +39,7 @@
     <ion-list>
       <ion-list-header>Para preparar</ion-list-header>
       <ion-item *ngIf="pendingPreparationOrders.length == 0">
-        <ion-icon class="disabled-item item-ico" src="assets/icon/pendingPreparationFoods.svg"></ion-icon>
+        <ion-icon class="disabled-item item-ico" [src]="this.currentUser?.profile === Profiles.Bartender? 'assets/icon/pendingPreparationDrinks.svg' : 'assets/icon/pendingPreparationFoods.svg'"></ion-icon>
         <ion-label class="disabled-item">No hay pedidos para preparar</ion-label>
       </ion-item>
 
@@ -65,7 +65,7 @@
       <ion-list-header>En preparación</ion-list-header>
 
       <ion-item *ngIf="preparingOrders?.length == 0">
-        <ion-icon class="disabled-item item-ico" src="assets/icon/preparingFoods.svg"></ion-icon>
+        <ion-icon class="disabled-item item-ico" [src]="this.currentUser?.profile === Profiles.Bartender? 'assets/icon/preparingDrinks.svg' : 'assets/icon/preparingFoods.svg'"></ion-icon>
         <ion-label class="disabled-item">No hay pedidos en preparación</ion-label>
       </ion-item>
 
