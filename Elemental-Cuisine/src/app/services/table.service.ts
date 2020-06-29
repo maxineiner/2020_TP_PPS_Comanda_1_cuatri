@@ -26,7 +26,6 @@ export class TableService {
   }
 
   modifyTable(tableId, table) {
-    debugger;
     return this.dataService.update(this.tableCollection, tableId, table);
   }
 

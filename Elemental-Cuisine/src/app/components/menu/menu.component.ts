@@ -7,6 +7,7 @@ import { Status } from 'src/app/classes/enums/Status';
 import { Order } from 'src/app/classes/order';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Profiles } from 'src/app/classes/enums/profiles';
+import { Categories } from 'src/app/classes/enums/categories';
 
 @Component({
   selector: 'app-menu',
@@ -16,6 +17,10 @@ import { Profiles } from 'src/app/classes/enums/profiles';
 export class MenuComponent implements OnInit {
 
   private products: Array<Product>;
+  private foods: Array<Product>;
+  private drinks: Array<Product>;
+  private desserts: Array<Product>;
+
   private order = new Order();
   @Output() sendOrder: EventEmitter<Order> = new EventEmitter<Order>();
 
@@ -30,55 +35,61 @@ export class MenuComponent implements OnInit {
     private alertController: AlertController,
     private cameraService: CameraService,
     private loadingService: LoadingService
-  ) { 
+  ) {
+    this.foods = new Array<Product>();
+    this.drinks = new Array<Product>();
+    this.desserts = new Array<Product>();
     this.productService.getAllProducts().subscribe(products => {
       this.products = products.map(productAux => {
         let product = productAux.payload.doc.data() as Product;
         product.id = productAux.payload.doc.id;
         return product;
-      });    
+      });
+
+      this.foods = this.products.filter(x => x.category == Categories.Food);
+      this.drinks = this.products.filter(x => x.category == Categories.Drink);
+      this.desserts = this.products.filter(x => x.category == Categories.Dessert);
     });
   }
-
 
   ngOnInit() {
   }
 
-  showDetails(product: Product){
+  showDetails(product: Product) {
     this.loadingService.showLoading();
     this.createAlert(product).then(response => {
       var quantity = (response.data) ? parseInt(response.data.quantity) : null;
-      if(quantity){
-        this.order.menu.push({...product, quantity: quantity});
+      if (quantity) {
+        this.order.menu.push({ ...product, quantity: quantity });
         this.order.total += product.price * quantity;
       }
     });
-    if(product.managerProfile == Profiles.Chef)
+    if (product.managerProfile == Profiles.Chef)
       this.order.statusFood = Status.PendingConfirm;
-    if(product.managerProfile == Profiles.Bartender)
+    if (product.managerProfile == Profiles.Bartender)
       this.order.statusDrink = Status.PendingConfirm;
 
   }
 
   createAlert(product: Product) {
     let message = "<div>" +
-                    `<ion-label>${product.description}</ion-label>`;
-    let slides  =     '<ion-slides [options]="slideOpts">';
+      `<ion-label>${product.description}</ion-label>`;
+    let slides = '<ion-slides [options]="slideOpts">';
     const promise = new Promise(resolve => {
-      product.photos.forEach( async (photo, index, array) => {
+      product.photos.forEach(async (photo, index, array) => {
         await this.cameraService.getImageByName('productos', photo).then(url => {
-          slides +=   '<ion-slide>' +
-                        `<img src="${url}" style="bmenu-radius: 2px">` +
-                      '</ion-slide>'
+          slides += '<ion-slide>' +
+            `<img src="${url}" style="bmenu-radius: 2px">` +
+            '</ion-slide>'
         })
-        if (index === array.length -1) resolve();
+        if (index === array.length - 1) resolve();
       })
     })
 
     return promise.then(() => {
       message += slides +
-            '</ion-slides>' +
-          "</div>";
+        '</ion-slides>' +
+        "</div>";
       this.loadingService.closeLoading(undefined, undefined, undefined, 1000);
       return this.showAlert(product, message);
     })
@@ -119,7 +130,7 @@ export class MenuComponent implements OnInit {
     })
   }
 
-  sendMenu(){
+  sendMenu() {
     this.sendOrder.emit(this.order);
   }
 

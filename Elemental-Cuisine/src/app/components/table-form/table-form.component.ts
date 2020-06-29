@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Table } from 'src/app/classes/table';
 import { CameraService } from 'src/app/services/camera.service';
 import { TableService } from 'src/app/services/table.service';
-import { QrscannerService } from 'src/app/services/qrscanner.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
 
@@ -21,7 +20,6 @@ export class TableFormComponent implements OnInit {
   constructor(
     private cameraService: CameraService,
     private tableService: TableService,
-    private qrscannerService: QrscannerService,
     private notificationService: NotificationService,
     private router: Router
   ) {
@@ -72,21 +70,13 @@ export class TableFormComponent implements OnInit {
   }
 
   deletePhoto(imgName) {
-    debugger;
     this.cameraService.deleteImage('mesas', imgName).then(
       resp => {
-        debugger;
         this.image = null;
       },
       err => {
-        debugger;
         this.notificationService.presentToast("Error al eliminar la foto.", "danger", "bottom");
       })
-  }
-
-  scan() {
-    let data = this.qrscannerService.scanDni();
-    console.log(data);
   }
 
   async loadPhoto(imgName) {
