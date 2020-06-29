@@ -2,25 +2,25 @@
   <ion-grid>
     <ion-row>
       <ion-col col-6 *ngIf="currentUser?.status == Status.Unattended">
-        <ion-card (click)="scanQr()" class="ion-text-center ion-padding" color="danger">
+        <ion-card (click)="scanQr()" class="ion-text-center ion-padding" color="primary">
           <ion-icon name="list"></ion-icon>
           <h2 class="long-name">Anotarse en Lista de Espera</h2>
         </ion-card>
       </ion-col>
       <ion-col col-6 *ngIf="currentUser?.status == Status.OnHold || currentUser?.status == Status.CanTakeTable">
-        <ion-card (click)="scanTableQR()" class="ion-text-center ion-padding" color="danger">
+        <ion-card (click)="scanTableQR()" class="ion-text-center ion-padding">
           <ion-icon name="list"></ion-icon>
           <h2 class="long-name">Escanear Mesa</h2>
         </ion-card>
       </ion-col>
       <ion-col col-6 *ngIf="currentUser?.status == Status.Attended">
-        <ion-card routerLink="/pedido" class="ion-text-center ion-padding" color="danger">
+        <ion-card routerLink="/pedido" class="ion-text-center ion-padding" color="primary">
           <ion-icon name="list"></ion-icon>
           <h2 class="long-name">Ver Carta</h2>
         </ion-card>
       </ion-col>
       <ion-col col-6 *ngIf="currentUser?.status != Status.Unattended">
-        <ion-card routerLink="/encuestas" class="ion-text-center ion-padding" color="danger">
+        <ion-card routerLink="/encuestas" class="ion-text-center ion-padding" color="primary">
           <ion-icon name="clipboard"></ion-icon>
           <h2 class="long-name">Ver Encuestas</h2>
         </ion-card>
@@ -28,7 +28,7 @@
     </ion-row>
     <!--ion-row>
       <ion-col col-6>
-        <ion-card routerLink="/reservar" class="ion-text-center ion-padding" color="danger">
+        <ion-card routerLink="/reservar" class="ion-text-center ion-padding" color="primary">
           <ion-icon name="bookmarks"></ion-icon>          
           <h2 class="long-name">Realizar Reserva</h2>
         </ion-card>
@@ -37,19 +37,19 @@
 
     <ion-row>
       <ion-col col-6 *ngIf="currentUser?.status == Status.OnHold">
-        <ion-card (click)="removeFromWaitList()" class="ion-text-center ion-padding" color="danger">
+        <ion-card (click)="removeFromWaitList()" class="ion-text-center ion-padding" color="primary">
           <ion-icon name="list"></ion-icon>
           <h2 class="long-name">Abandonar Lista de Espera</h2>
         </ion-card>
       </ion-col>
       <ion-col col-6 *ngIf="currentUser?.status == Status.Attended">
-        <ion-card routerLink="/pedido/detalle" class="ion-text-center ion-padding" color="danger">
+        <ion-card routerLink="/pedido/detalle" class="ion-text-center ion-padding" color="primary">
           <ion-icon name="paper"></ion-icon>
           <h2 class="long-name">Ver Pedido</h2>
         </ion-card>
       </ion-col>
       <ion-col col-6 *ngIf="currentUser?.status == Status.Attended">
-        <ion-card routerLink="/juegos" class="ion-text-center ion-padding" color="danger">
+        <ion-card routerLink="/juegos" class="ion-text-center ion-padding" color="primary">
           <ion-icon name="trophy"></ion-icon> 
           <h2 class="long-name">Jugar</h2>
         </ion-card>

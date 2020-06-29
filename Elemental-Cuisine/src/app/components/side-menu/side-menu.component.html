@@ -1,11 +1,14 @@
-<ion-menu disabled="{{disableMenu}}" side="start" contentId="content1">
-  <ion-header>
-    <ion-toolbar>  
+<!-- <ion-menu disabled="{{disableMenu}}" side="start" contentId="content1"> -->
+  <ion-menu side="start" contentId="content1">
+  <ion-header color="dark">
+    <ion-toolbar color="dark">
       <ion-title slot="start">Menú</ion-title>
-      <ion-chip *ngIf="showOrder" routerLink="/pedido/detalle" outline color="primary">
-        <ion-icon name="restaurant"></ion-icon>
-        <ion-label>Total: ${{total}}</ion-label>
-      </ion-chip>
+      <ion-menu-toggle>
+        <ion-chip *ngIf="showOrder" routerLink="/pedido/detalle" outline color="primary">
+          <ion-icon name="restaurant"></ion-icon>
+          <ion-label>Total: ${{total}}</ion-label>
+        </ion-chip>
+      </ion-menu-toggle>
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -19,11 +22,11 @@
           <ion-icon size="medium" name="settings"></ion-icon>
           Configuración
         </ion-item>
-        <ion-item *ngIf="currentUser?.profile == Profiles.Client" routerLink="/delivery" >
+        <ion-item *ngIf="currentUser?.profile == Profiles.Client" routerLink="/delivery">
           <ion-icon size="medium" name="timer"></ion-icon>
           Envío a Domicilio
         </ion-item>
-        <ion-item (click)="logout()" >
+        <ion-item (click)="logout()">
           <ion-icon size="medium" name="exit"></ion-icon>
           Cerrar Sesión
         </ion-item>

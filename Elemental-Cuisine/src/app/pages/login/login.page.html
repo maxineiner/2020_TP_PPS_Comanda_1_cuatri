@@ -1,12 +1,15 @@
 <ion-content>
-  <ion-chip id="defaultUsers" color="light">
+  <ion-chip id="defaultUsers" color="dark">
+
     <ion-avatar>
-      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjYzVkYmZmIiBkPSJNMCAwaDUxMnY1MTJIMHoiLz48cGF0aCBkPSJNMjU2IDMwNGM2MS42IDAgMTEyLTUwLjQgMTEyLTExMlMzMTcuNiA4MCAyNTYgODBzLTExMiA1MC40LTExMiAxMTIgNTAuNCAxMTIgMTEyIDExMnptMCA0MGMtNzQuMiAwLTIyNCAzNy44LTIyNCAxMTJ2NTZoNDQ4di01NmMwLTc0LjItMTQ5LjgtMTEyLTIyNC0xMTJ6IiBmaWxsPSIjODJhZWZmIi8+PC9zdmc+" />
+      <img src="assets/icon/usuario.svg" />
     </ion-avatar>
     <ion-label>Usuarios</ion-label>
-    <ion-select interface="popover" okText="Aceptar" cancelText="Cancelar" id="defaultUsersSelect" [(ngModel)]="user" (ionChange)="setDefaultUser()">
+    <ion-select interface="popover" okText="Aceptar" cancelText="Cancelar" id="defaultUsersSelect" [(ngModel)]="user"
+      (ionChange)="setDefaultUser()">
       <ion-select-option *ngFor="let user of defaultUsers" [value]="user">{{user.email}}</ion-select-option>
     </ion-select>
+    
   </ion-chip>
   <div class="login-wrap">
     <div class="login-html">
@@ -38,11 +41,12 @@
         </div>
         <br>
         <div class="group">
-          <ion-button shape="round" type="submit" [disabled]="!form.valid">Ingresar</ion-button>
+          <!-- <ion-button shape="round" type="submit" [disabled]="!form.valid">Ingresar</ion-button> -->
+          <ion-button shape="round" type="submit">Ingresar</ion-button>
 
           <ion-row>
-            <ion-icon slot="start" name="logo-google"></ion-icon>	            
-                      
+            <ion-icon slot="start" name="logo-google"></ion-icon>
+
             <ion-col col-2>
               <ion-fab-button class="ion-float-right" size="small" color="danger" (click)="googleLogin()">
                 <ion-icon name="logo-google"></ion-icon>
@@ -54,7 +58,7 @@
                 <ion-icon name="logo-facebook"></ion-icon>
               </ion-fab-button>
             </ion-col>
-            
+
           </ion-row>
         </div>
       </form>

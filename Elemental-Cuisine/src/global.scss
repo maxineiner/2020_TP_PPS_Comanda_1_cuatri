@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -25,7 +25,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-ion-title{
+ion-title {
     line-height: 33px;
 }
 
@@ -33,12 +33,12 @@ ion-title{
     text-align: center;
 }
 
-.background {
-    height    : 100%;
-    width     : 100%;
-    position  : fixed;
-    background: rgba(168, 231, 168, 0.9);
-}
+// .background {
+//     height    : 100%;
+//     width     : 100%;
+//     position  : fixed;
+//     background: rgba(168, 231, 168, 0.9);
+// }
 
 .btnCancel {
     color: red !important;
@@ -61,4 +61,10 @@ ion-title{
 
 .icon-right-margin {
     margin-right: 2%;
+}
+
+ion-content {
+    position: relative;
+    height: 100%;
+    --background: url(assets/images/dinner-opacity-40.jpg) no-repeat center;
 }

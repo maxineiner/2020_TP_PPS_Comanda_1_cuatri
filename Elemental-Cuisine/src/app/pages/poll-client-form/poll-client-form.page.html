@@ -11,15 +11,15 @@
 
       <ion-item>
         <ion-label>No jugué</ion-label>
-        <ion-radio slot="start" color="dark" selected value="No jugué"></ion-radio>
+        <ion-radio slot="start" selected value="No jugué"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Aburridos</ion-label>
-        <ion-radio slot="start" color="dark" value="Aburridos"></ion-radio>
+        <ion-radio slot="start" value="Aburridos"></ion-radio>
       </ion-item>
       <ion-item>
         <ion-label>Muy buenos</ion-label>
-        <ion-radio slot="start" color="dark" value="Muy buenos"></ion-radio>
+        <ion-radio slot="start" value="Muy buenos"></ion-radio>
       </ion-item>
     </ion-radio-group>
 
@@ -36,7 +36,7 @@
     <ion-list-header>¿Hay algo en lo que creas que necesitemos mejorar?</ion-list-header>
     <ion-item *ngFor="let check of checks">
       <ion-label>{{check.val}}</ion-label>
-      <ion-checkbox slot="end" color="dark" [(ngModel)]="check.isChecked"></ion-checkbox>
+      <ion-checkbox slot="end" [(ngModel)]="check.isChecked"></ion-checkbox>
     </ion-item>
 
     <ion-item-divider></ion-item-divider>
