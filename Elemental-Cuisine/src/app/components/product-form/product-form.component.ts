@@ -126,13 +126,21 @@ export class ProductFormComponent implements OnInit {
     if (this.modification) {
       this.productService.modifyProduct(this.idObject, this.product).then(() => {
         this.notificationService.presentToast("Producto modificado", "success", "middle");
-        this.router.navigateByUrl('/listado/productos');
+        if (this.profile == Profiles.Owner) {
+          this.router.navigateByUrl('/listado/productos');
+        } else {
+          this.router.navigateByUrl('/productos');
+        }
       });
     }
     else {
       this.productService.saveProduct(this.product).then(product => {
         this.notificationService.presentToast("Producto creado", "success", "middle");
-        this.router.navigateByUrl('/listado/productos');
+        if (this.profile == Profiles.Owner) {
+          this.router.navigateByUrl('/listado/productos');
+        } else {
+          this.router.navigateByUrl('/productos');
+        }
       });
     }
   }

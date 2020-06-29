@@ -99,8 +99,8 @@
   <br>
   <ion-button color="primary" (click)="takePhoto()" [disabled]="!form.get('name').valid">Sacar Foto</ion-button>
   
-  <ion-button type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
-  <ion-button color="medium" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
+  <ion-button color="primary" type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
+  <ion-button color="primary" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
 
   <br>
 

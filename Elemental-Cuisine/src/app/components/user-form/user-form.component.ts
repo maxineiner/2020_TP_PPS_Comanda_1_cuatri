@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import { Profiles } from 'src/app/classes/enums/profiles';
 import { FcmService } from 'src/app/services/fcmService';
+import { TypeNotification } from 'src/app/classes/enums/typeNotification';
 
 @Component({
   selector: 'app-user-form',
@@ -69,11 +70,11 @@ export class UserFormComponent implements OnInit {
       confirmPass: new FormControl(''),
       name: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+$')
+        Validators.pattern('^[a-zA-Z\\s]+$')
       ])),
       surname: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+$')
+        Validators.pattern('^[a-zA-Z\\s]+$')
       ])),
       dni: new FormControl('', Validators.compose([
         Validators.pattern('^[0-9]{8}$'),
@@ -159,7 +160,7 @@ export class UserFormComponent implements OnInit {
       });
     }
     else {
-      this.userService.saveUserWithLogin(this.user).then(response => {
+      this.userService.saveUserWithLogin(this.user).then(() => {
         if (this.isClient) {
           this.fcmService.getTokensByProfile(Profiles.Owner).then((userDevices: any[]) => {
             this.fcmService.sendNotification("Nuevo cliente!", 'Se requiere su aprobación', userDevices);
@@ -171,7 +172,7 @@ export class UserFormComponent implements OnInit {
           this.notificationService.presentToast("Usuario creado", "success", "bottom");
           this.router.navigateByUrl('/listado/usuarios');
         }
-      });
+      }).catch(() => this.notificationService.presentToast("La dirección de correo electrónico ya está siendo utilizada", "danger", "middle"));
     }
   }
 
@@ -212,8 +213,8 @@ export class UserFormComponent implements OnInit {
   }
 
   formValuesToUser(formValues) {
-    this.user.name = formValues.name;
-    this.user.surname = formValues.surname;
+    this.user.name = formValues.name.trim();
+    this.user.surname = formValues.surname.trim();
     this.user.email = formValues.email;
     this.user.password = formValues.password;
     this.user.dni = formValues.dni;
