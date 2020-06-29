@@ -35,9 +35,7 @@ export class PollClientListPage implements OnInit {
     private authService: AuthService
   ) {
     this.polls = new Array<PollClient>();
-  }
 
-  ngOnInit() {
     let user = this.authService.getCurrentUser();
     if (isNullOrUndefined(user)) {
       this.router.navigateByUrl("/login");
@@ -68,6 +66,9 @@ export class PollClientListPage implements OnInit {
         this.loadingService.closeLoading();
       });
     });
+  }
+
+  ngOnInit() {
   }
 
   async loadPhotos(photos) {

@@ -1,24 +1,26 @@
-#total{
-    position: fixed; 
-    bottom:0; 
-    width: 100%
+#total {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    --ion-background-color: var(--ion-color-primary);
+    color: white;
 }
 
-#scroll{
+#scroll {
     overflow: auto;
     height: 94%;
 }
 
-#payBill{
+#payBill {
     float: right;
 }
 
-.orders{
+.orders {
     padding: 5px;
     width: 100%;
 }
 
-#empty{
+#empty {
     position: relative;
     text-align: center;
     margin-top: 80px;
