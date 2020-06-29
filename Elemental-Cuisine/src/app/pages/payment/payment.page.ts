@@ -7,6 +7,7 @@ import { isNullOrUndefined } from 'util';
 import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
 import { Categories } from 'src/app/classes/enums/categories';
 import { Attention } from 'src/app/classes/attention';
+import { QrscannerService } from 'src/app/services/qrscanner.service';
 
 @Component({
   selector: 'app-payment',
@@ -28,7 +29,8 @@ export class PaymentPage implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private router: Router,
-    private attentionService: CurrentAttentionService
+    private attentionService: CurrentAttentionService,
+    private qrScannerService: QrscannerService
   ) { 
     this.currentUser = this.authService.getCurrentUser();
     if (isNullOrUndefined(this.currentUser)) this.router.navigateByUrl("/login");
@@ -66,6 +68,33 @@ export class PaymentPage implements OnInit {
     const tip = (this.tip) ? (this.total - discount - freeItems) * this.tip / 100 : 0;
     const total = this.total - discount - freeItems + tip;
     return total;
+  }
+
+  scanQr(){
+    if (this.qrScannerService.device == "mobile") {
+      this.qrScannerService.scanQr().then(response => {
+        switch (response){
+          case "0":
+            this.tip = 0;
+            break;
+          case "5":
+            this.tip = 5;
+            break;
+          case "10":
+            this.tip = 10;
+            break;
+          case "15":
+            this.tip = 15;
+            break;
+          case "20":
+            this.tip = 20;
+            break;
+        }
+      });
+    }
+    else {
+      this.tip = 10;
+    }
   }
 
 }

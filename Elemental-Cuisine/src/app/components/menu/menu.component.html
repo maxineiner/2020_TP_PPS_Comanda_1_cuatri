@@ -52,5 +52,5 @@
 
 </div>
 
-<ion-button type="submit" id="confirm" [disabled]="total == 0" (click)="sendMenu()">Visualizar Pedido por
+<ion-button type="submit" id="confirm" [disabled]="order?.total == 0" (click)="sendMenu()">Visualizar Pedido por
   ${{order.total}}</ion-button>

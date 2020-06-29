@@ -20,7 +20,6 @@ export class MenuComponent implements OnInit {
   private foods: Array<Product>;
   private drinks: Array<Product>;
   private desserts: Array<Product>;
-
   private order = new Order();
   @Output() sendOrder: EventEmitter<Order> = new EventEmitter<Order>();
 
@@ -113,7 +112,8 @@ export class MenuComponent implements OnInit {
         {
           name: 'quantity',
           type: 'number',
-          placeholder: 'Cantidad de unidades'
+          value: 'Cantidad de unidades',
+          min: 1
         }
       ],
       buttons: [
