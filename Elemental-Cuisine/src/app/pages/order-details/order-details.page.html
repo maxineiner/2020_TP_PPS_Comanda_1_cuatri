@@ -17,7 +17,7 @@
           <ion-icon name="timer"></ion-icon>
         </ion-button>
       </ion-list-header>
-      <ion-item *ngFor="let menu of order.menu" [disabled]="order.statusFood == Status.Confirmed && order.statusDrink == Status.Confirmed">
+      <ion-item *ngFor="let menu of order.menu" [disabled]="order.statusFood == Status.Confirmed && order.statusDrink == Status.Confirmed" color="transparent">
         <span>x{{menu.quantity}} {{menu.name}}</span>
         <span slot="end">${{menu.price * menu.quantity}}</span>
       </ion-item>

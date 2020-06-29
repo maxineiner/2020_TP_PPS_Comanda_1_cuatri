@@ -2,8 +2,8 @@
 </app-custom-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let user of users">
+  <ion-list class="transparent">
+    <ion-item *ngFor="let user of users" color="transparent">
       <ion-icon class="icon-right-margin" name="person"></ion-icon>
       <ion-label>{{user.name}} {{user.surname}} | {{user.profile}}</ion-label>
       <ion-button color="medium" (click)="modifyEmployee($event)" routerLink="/modificar/usuario/{{user.id}}">

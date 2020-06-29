@@ -1,8 +1,8 @@
 <app-custom-header [title]="'Mesas'" [icon]="'add-circle'" [iconColor]="'success'" (onClick)="routerToLink()"></app-custom-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let table of tables">
+  <ion-list class="transparent">
+    <ion-item *ngFor="let table of tables" color="transparent">
       <ion-icon class="icon-right-margin" src="assets/icon/mesa.svg"></ion-icon>
       <ion-label>Mesa {{table.number}}</ion-label>
       <ion-button color="medium" (click)="modifyTable($event)" routerLink="/modificar/mesa/{{table.id}}"><ion-icon name="create"></ion-icon></ion-button>

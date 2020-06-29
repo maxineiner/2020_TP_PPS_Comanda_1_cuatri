@@ -13,19 +13,19 @@
   <ion-content>
     <ion-menu-toggle>
       <ion-list>
-        <ion-item routerLink="/inicio">
+        <ion-item routerLink="/inicio" color="transparent">
           <ion-icon size="medium" name="home"></ion-icon>
           Ir a Inicio
         </ion-item>
-        <ion-item routerLink="/configuracion">
+        <ion-item routerLink="/configuracion" color="transparent">
           <ion-icon size="medium" name="settings"></ion-icon>
           Configuración
         </ion-item>
-        <ion-item *ngIf="currentUser?.profile == Profiles.Client" routerLink="/delivery">
+        <ion-item *ngIf="currentUser?.profile == Profiles.Client" routerLink="/delivery" color="transparent">
           <ion-icon size="medium" name="timer"></ion-icon>
           Envío a Domicilio
         </ion-item>
-        <ion-item (click)="logout()">
+        <ion-item (click)="logout()" color="transparent">
           <ion-icon size="medium" name="exit"></ion-icon>
           Cerrar Sesión
         </ion-item>

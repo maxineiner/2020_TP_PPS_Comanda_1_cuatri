@@ -1,8 +1,8 @@
 <app-custom-header [title]="'Productos'" [icon]="'add-circle'" [iconColor]="'success'" (onClick)="routerToLink()"></app-custom-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let product of products" (click)="showDetails(product)">
+  <ion-list class="transparent">
+    <ion-item *ngFor="let product of products" (click)="showDetails(product)" color="transparent">
       <ion-icon class="icon-right-margin" name="restaurant"></ion-icon>
       <ion-label>{{product.name}}</ion-label>
       <ion-button color="medium" (click)="modifyProduct($event)" routerLink="/modificar/producto/{{product.id}}">

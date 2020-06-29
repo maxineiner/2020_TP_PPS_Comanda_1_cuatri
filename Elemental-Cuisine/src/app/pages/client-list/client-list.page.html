@@ -21,18 +21,17 @@
 
 <ion-content>
 
-
   <div scrolly="true" class="pendingAprobalContainer">
 
-    <ion-list>
+    <ion-list class="transparent">
       <ion-list-header>Pendientes de Aprobación</ion-list-header>
       
-      <ion-item *ngIf="pendingClients?.length == 0" disabled=true>
+      <ion-item *ngIf="pendingClients?.length == 0" disabled=true color="transparent">
         <ion-icon class="item-ico" name="person"></ion-icon>
         <ion-label>No hay clientes para aprobar</ion-label>
       </ion-item>
 
-      <ion-item *ngFor="let client of pendingClients | filter: this.searchBarTargetText: 'name'">
+      <ion-item *ngFor="let client of pendingClients | filter: this.searchBarTargetText: 'name'" color="transparent">
         <ion-icon class="icon-right-margin" name="person"></ion-icon>
         <ion-label>{{client.name}} {{client.surname}}</ion-label>
         <ion-button color="success" (click)="approveClient(client)">
@@ -49,15 +48,15 @@
 
 
   <div scrolly="true" class="pendingAprobalContainer">
-    <ion-list>
+    <ion-list class="transparent">
       <ion-list-header>Aprobados</ion-list-header>
       
-      <ion-item *ngIf="aprobatedClients?.length == 0" disabled=true>
+      <ion-item *ngIf="aprobatedClients?.length == 0" disabled=true color="transparent">
         <ion-icon class="item-ico" name="person"></ion-icon>
         <ion-label>No hay clientes para aprobar</ion-label>
       </ion-item>
 
-      <ion-item *ngFor="let client of aprobatedClients | filter: this.searchBarTargetText: 'name'">
+      <ion-item *ngFor="let client of aprobatedClients | filter: this.searchBarTargetText: 'name'" color="transparent">
         
         <ion-icon class="icon-right-margin" name="person"></ion-icon>
         <ion-label>{{client.name}} {{client.surname}}</ion-label>

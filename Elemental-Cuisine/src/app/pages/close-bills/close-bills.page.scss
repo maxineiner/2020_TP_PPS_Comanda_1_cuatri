@@ -1,5 +1,5 @@
 .item-ico {
-    margin-right: 0.3em;
+    font-size: 90px;
 }
 
 .disabled-item {
@@ -16,4 +16,11 @@ ion-list-header > ion-icon {
     display: inline-block;
     vertical-align: middle;
     margin-left: 1.03em;
+}
+
+#empty{
+    position: relative;
+    text-align: center;
+    margin-top: 80px;
+    padding: 15%;
 }

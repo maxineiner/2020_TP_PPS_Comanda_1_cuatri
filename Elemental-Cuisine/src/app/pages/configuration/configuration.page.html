@@ -1,8 +1,8 @@
 <app-custom-header [title]="'Configuración'"></app-custom-header>
 
 <ion-content>
-  <ion-item>
+  <ion-item color="transparent">
     <ion-label>Sonidos</ion-label>
-    <ion-toggle (ionChange)="activateSounds()" [(ngModel)]="isActive" checked="{{isActive}}"></ion-toggle>
+    <ion-toggle (ionChange)="activateSounds()" [(ngModel)]="isActive" checked="{{isActive}}" color="danger"></ion-toggle>
   </ion-item>
 </ion-content>
