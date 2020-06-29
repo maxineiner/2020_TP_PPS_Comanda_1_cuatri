@@ -4,6 +4,8 @@ import { CameraService } from 'src/app/services/camera.service';
 import { TableService } from 'src/app/services/table.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-table-form',
@@ -16,11 +18,14 @@ export class TableFormComponent implements OnInit {
   private table: Table;
   private image: any;
   private modification: boolean;
+  private form: FormGroup;
 
   constructor(
     private cameraService: CameraService,
+    private loadingService: LoadingService,
     private tableService: TableService,
     private notificationService: NotificationService,
+    private formBuilder: FormBuilder,
     private router: Router
   ) {
     this.table = new Table();
@@ -30,14 +35,54 @@ export class TableFormComponent implements OnInit {
     if (this.idObject) {
       this.modification = true;
       this.tableService.getTableById(this.idObject).then(table => {
-        this.table = table.data() as Table;
-        if (this.table.photo)
-          this.loadPhoto(this.table.photo);
-      });
+        this.loadingService.showLoading().then(() => {
+          this.table = table.data() as Table;
+          this.form.patchValue({
+            number: this.table.number,
+            capacity: this.table.capacity,
+            type: this.table.type
+          });
+
+          if (this.table.photo)
+            this.loadPhoto(this.table.photo);
+        });
+      }).then(() => {
+        this.loadingService.closeLoading();
+      })
     }
+
+    this.form = this.formBuilder.group({
+      number: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[0-9]+$')
+      ])),
+      capacity: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[0-9]+$')
+      ])),
+      type: new FormControl('', Validators.compose([
+        Validators.required
+      ]))
+    });
   }
 
-  register() {
+  validation_messages = {
+    'number': [
+      { type: 'required', message: 'El número es requerido.' },
+      { type: 'pattern', message: 'Ingrese un número válido.' }
+    ],
+    'capacity': [
+      { type: 'required', message: 'La capacidad es requerida.' },
+      { type: 'pattern', message: 'Ingrese una capacidad válida.' }
+    ],
+    'type': [
+      { type: 'required', message: 'El tipo de mesa es requerido.' }
+    ]
+  };
+
+  register(formValues) {
+    this.formValuesToTable(formValues);
+
     if (this.image) {
       this.table.photo = this.image.name;
     }
@@ -82,5 +127,11 @@ export class TableFormComponent implements OnInit {
   async loadPhoto(imgName) {
     let imgUrl = await this.cameraService.getImageByName('mesas', imgName);
     this.image = { "url": imgUrl, "name": imgName };
+  }
+
+  formValuesToTable(formValues) {
+    this.table.number = formValues.number;
+    this.table.capacity = formValues.capacity;
+    this.table.type = formValues.type;
   }
 }

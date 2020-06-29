@@ -11,6 +11,7 @@ import { isNullOrUndefined } from 'util';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-product-form',
@@ -30,6 +31,7 @@ export class ProductFormComponent implements OnInit {
   constructor(
     private cameraService: CameraService,
     private authService: AuthService,
+    private loadingService:LoadingService,
     private userService: UserService,
     private productService: ProductService,
     private notificationService: NotificationService,
@@ -45,18 +47,22 @@ export class ProductFormComponent implements OnInit {
     if (this.idObject) {
       this.modification = true;
       this.productService.getProduct(this.idObject).then(prod => {
-        this.product = prod.data() as Product;
-        this.form.patchValue({
-          name: this.product.name,
-          description: this.product.description,
-          preparationTime: this.product.preparationTime,
-          price: this.product.price,
-          category: this.product.category
+        this.loadingService.showLoading().then(() => {
+          this.product = prod.data() as Product;
+          this.form.patchValue({
+            name: this.product.name,
+            description: this.product.description,
+            preparationTime: this.product.preparationTime,
+            price: this.product.price,
+            category: this.product.category
+          });
+  
+          this.product.photos.forEach(photo => {
+            this.loadPhoto(photo);
+          });
+        }).then(()=>{
+          this.loadingService.closeLoading();
         });
-
-        this.product.photos.forEach(photo => {
-          this.loadPhoto(photo);
-        })
       });
     }
 

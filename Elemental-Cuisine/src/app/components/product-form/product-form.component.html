@@ -1,37 +1,4 @@
 <form class="form" [formGroup]="form" (ngSubmit)="register(form.value)">
-  <!-- <ion-list lines="full" class="ion-no-margin ion-no-padding">
-
-    <ion-item class="group">
-      <ion-label for="user" class="label" position="floating">Nombre</ion-label>
-      <ion-input type="text" class="input" [(ngModel)]="product.name" name="name" required></ion-input>
-    </ion-item>
-
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Descripción</ion-label>
-      <ion-input type="text" class="input" [(ngModel)]="product.description" name="description" required></ion-input>
-    </ion-item>
-
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Tiempo de Elaboración</ion-label>
-      <ion-input type="number" class="input" [(ngModel)]="product.preparationTime" name="preparationTime" required>
-      </ion-input>
-    </ion-item>
-
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Precio</ion-label>
-      <ion-input type="number" class="input" [(ngModel)]="product.price" name="price" required></ion-input>
-    </ion-item>
-
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Categoría</ion-label>
-      <ion-select placeholder="Seleccione una categoría" [(ngModel)]="product.category" name="category">
-        <ion-select-option value="Comida">Comida</ion-select-option>
-        <ion-select-option value="Bebida">Bebida</ion-select-option>
-        <ion-select-option value="Postre">Postre</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-  </ion-list> -->
 
   <ion-item>
     <ion-label position="floating">Nombre</ion-label>
@@ -86,7 +53,8 @@
 
   <ion-item [disabled]="this.profile == Profiles.Bartender">
     <ion-label position="floating">Categoría</ion-label>
-    <ion-select formControlName="category" [placeholder]="this.profile == Profiles.Bartender ? 'Bebida' : 'Seleccione una categoría'">
+    <ion-select formControlName="category"
+      [placeholder]="this.profile == Profiles.Bartender ? 'Bebida' : 'Seleccione una categoría'">
       <ion-select-option value="food">Comida</ion-select-option>
       <ion-select-option *ngIf="this.profile == Profiles.Owner" value="drink">Bebida</ion-select-option>
       <ion-select-option value="dessert">Postre</ion-select-option>
@@ -94,12 +62,12 @@
   </ion-item>
 
   <br>
+  <ion-item-group>
+    <ion-button color="primary" (click)="takePhoto()" [disabled]="!form.get('name').valid">Sacar Foto</ion-button>
 
-  <ion-button color="primary" (click)="takePhoto()" [disabled]="!form.get('name').valid">Sacar Foto</ion-button>
-  
-  <ion-button type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
-  <ion-button color="medium" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
-
+    <ion-button type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
+    <ion-button color="medium" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
+  </ion-item-group>
   <br>
 
   <ion-card color="dark">
