@@ -20,7 +20,6 @@ export class MenuComponent implements OnInit {
   private foods: Array<Product>;
   private drinks: Array<Product>;
   private desserts: Array<Product>;
-
   private order = new Order();
   @Output() sendOrder: EventEmitter<Order> = new EventEmitter<Order>();
 
@@ -64,17 +63,13 @@ export class MenuComponent implements OnInit {
       if (quantity) {
         this.order.menu.push({ ...product, quantity: quantity });
         this.order.total += product.price * quantity;
+        
         if (product.managerProfile == Profiles.Chef)
           this.order.statusFood = Status.PendingConfirm;
         if (product.managerProfile == Profiles.Bartender)
           this.order.statusDrink = Status.PendingConfirm;
       }
     });
-    if (product.managerProfile == Profiles.Chef)
-      this.order.statusFood = Status.PendingConfirm;
-    if (product.managerProfile == Profiles.Bartender)
-      this.order.statusDrink = Status.PendingConfirm;
-
   }
 
   createAlert(product: Product) {
@@ -82,20 +77,27 @@ export class MenuComponent implements OnInit {
       `<ion-label>${product.description}</ion-label>`;
     let slides = '<ion-slides [options]="slideOpts">';
     const promise = new Promise(resolve => {
-      product.photos.forEach(async (photo, index, array) => {
-        await this.cameraService.getImageByName('productos', photo).then(url => {
-          slides += '<ion-slide>' +
-            `<img src="${url}" style="bmenu-radius: 2px">` +
-            '</ion-slide>'
+      if(product.photos.length > 0){
+        product.photos.forEach(async (photo, index, array) => {
+          await this.cameraService.getImageByName('productos', photo).then(url => {
+            slides += '<ion-slide>' +
+              `<img src="${url}" style="bmenu-radius: 2px">` +
+              '</ion-slide>'
+          })
+          if (index === array.length - 1) resolve(true);
         })
-        if (index === array.length - 1) resolve();
-      })
+      }
+      else{
+        resolve(false);
+      }
     })
 
-    return promise.then(() => {
-      message += slides +
-        '</ion-slides>' +
-        "</div>";
+    return promise.then(resolved => {
+      if(resolved){
+        message += slides +
+          '</ion-slides>' +
+          "</div>";
+      }
       this.loadingService.closeLoading(undefined, undefined, undefined, 1000);
       return this.showAlert(product, message);
     })
@@ -110,7 +112,8 @@ export class MenuComponent implements OnInit {
         {
           name: 'quantity',
           type: 'number',
-          placeholder: 'Cantidad de unidades'
+          value: 'Cantidad de unidades',
+          min: 1
         }
       ],
       buttons: [

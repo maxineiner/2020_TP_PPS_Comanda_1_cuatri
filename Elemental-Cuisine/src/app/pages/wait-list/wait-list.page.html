@@ -1,12 +1,12 @@
 <app-custom-header [title]="'Lista de Espera'"></app-custom-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list class="transparent">
     <div id="empty" *ngIf="users?.length == 0">
       <ion-icon class="item-ico" name="people"></ion-icon>
       <h3>No hay clientes en la lista de espera</h3>
     </div>
-    <ion-item *ngFor="let user of users" (click)="removeClient(user)">
+    <ion-item *ngFor="let user of users" (click)="removeClient(user)" color="transparent">
       <ion-icon class="icon-right-margin" name="person"></ion-icon>
       <ion-label>{{user.name}}</ion-label>
       <ion-label class="ion-text-right">{{user.date | date:'HH:mm'}}</ion-label>

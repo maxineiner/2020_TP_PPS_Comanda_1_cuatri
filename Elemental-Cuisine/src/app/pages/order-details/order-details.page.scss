@@ -9,6 +9,7 @@
 #scroll {
     overflow: auto;
     height: 94%;
+    padding: 5px;
 }
 
 #payBill {
@@ -17,7 +18,10 @@
 
 .orders {
     padding: 5px;
+    margin-bottom: 5px;
     width: 100%;
+    background-color: transparent;
+    border-style: double;
 }
 
 #empty {

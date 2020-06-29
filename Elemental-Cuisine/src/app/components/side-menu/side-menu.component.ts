@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
-import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 import { Profiles } from 'src/app/classes/enums/profiles';
@@ -16,7 +15,6 @@ export class SideMenuComponent implements OnInit {
 
   private total: number;
   private showOrder = false;
-  private disableMenu = true;
   private currentUser: User;
   Profiles = Profiles;
 
@@ -33,7 +31,6 @@ export class SideMenuComponent implements OnInit {
         this.userService.getUserById(user.uid).then(user => {
           this.currentUser = user.data() as User
         })
-        this.menuCtrl.enable(true);
         this.orderService.getOrder(user.uid).subscribe(orders => {
           if(!orders) {
             this.showOrder = false;
@@ -51,6 +48,7 @@ export class SideMenuComponent implements OnInit {
   ngOnInit() {}
 
   logout(){
+    this.menuCtrl.enable(false);
     this.authService.logOut();
   }
 }

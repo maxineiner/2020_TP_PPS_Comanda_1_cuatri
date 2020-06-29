@@ -7,6 +7,7 @@ import { User } from 'src/app/classes/user';
 import { isNullOrUndefined } from 'util';
 import { Router } from '@angular/router';
 import { FcmService } from 'src/app/services/fcmService';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -22,13 +23,14 @@ export class HomePage {
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
-    private fcmService: FcmService
+    private fcmService: FcmService,
+    public menuCtrl: MenuController
   ) {
       this.fcmService.getToken();
       let user = this.authService.getCurrentUser();
-      if (isNullOrUndefined(user)) {
-        this.router.navigateByUrl("/login");
-      }
+      if (isNullOrUndefined(user))  this.router.navigateByUrl("/login");
+
+      this.menuCtrl.enable(true);
       this.userService.getUserById(user.uid).then(userData => {
         this.currentUser = Object.assign(new User, userData.data());
       });
