@@ -9,7 +9,6 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import { Profiles } from 'src/app/classes/enums/profiles';
 import { FcmService } from 'src/app/services/fcmService';
-import { TypeNotification } from 'src/app/classes/enums/typeNotification';
 
 @Component({
   selector: 'app-user-form',
