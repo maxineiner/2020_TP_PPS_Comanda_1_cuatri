@@ -35,10 +35,10 @@ export class OrderDetailsPage implements OnInit {
     this.attentionService.getAttentionById(this.currentUser.uid).then(currentAttention => {
       let attention = currentAttention.data() as Attention;
       if (attention.billRequested) this.router.navigateByUrl("/pagar");
-      this.orderService.getOrderById(this.currentUser.uid).then(orders => {
+      this.orderService.getOrder(this.currentUser.uid).subscribe(orders => {
         this.total = 0;
-        if(!orders.exists) return;
-        this.orders = Object.values(orders.data());
+        if(!orders) return;
+        this.orders = Object.values(orders);
         const reducer = (accumulator, order) => accumulator + order.total;
         this.total = this.orders.reduce(reducer, 0);
       });

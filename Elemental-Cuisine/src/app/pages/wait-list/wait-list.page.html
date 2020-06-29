@@ -2,12 +2,10 @@
 
 <ion-content>
   <ion-list>
-
-    <ion-item *ngIf="users?.length == 0" disabled>
+    <div id="empty" *ngIf="users?.length == 0">
       <ion-icon class="item-ico" name="people"></ion-icon>
-      <ion-label>No hay clientes en la lista de espera</ion-label>
-    </ion-item>
-
+      <h3>No hay clientes en la lista de espera</h3>
+    </div>
     <ion-item *ngFor="let user of users" (click)="removeClient(user)">
       <ion-icon class="icon-right-margin" name="person"></ion-icon>
       <ion-label>{{user.name}}</ion-label>

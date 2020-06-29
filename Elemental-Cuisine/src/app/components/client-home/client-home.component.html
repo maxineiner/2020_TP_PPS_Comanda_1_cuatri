@@ -48,7 +48,7 @@
           <h2 class="long-name">Ver Pedido</h2>
         </ion-card>
       </ion-col>
-      <ion-col col-6 *ngIf="currentUser?.status == Status.Attended || currentUser?.status == Status.Ordered">
+      <ion-col col-6 *ngIf="currentUser?.status == Status.Attended">
         <ion-card routerLink="/juegos" class="ion-text-center ion-padding" color="danger">
           <ion-icon name="trophy"></ion-icon> 
           <h2 class="long-name">Jugar</h2>

@@ -7,6 +7,8 @@ import { OrderService } from 'src/app/services/order.service';
 import { Status } from 'src/app/classes/enums/Status';
 import { Collections } from 'src/app/classes/enums/collections';
 import { DataService } from 'src/app/services/data.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-close-bills',
@@ -22,9 +24,12 @@ export class CloseBillsPage implements OnInit {
     private dataService: DataService,
     private currentAttentionService: CurrentAttentionService,
     private tableService: TableService,
-    private orderService: OrderService) {
-    this.pendingBills = new Array<any>();
-  }
+    private orderService: OrderService,
+    private notificationService: NotificationService,
+    private router: Router
+  ) {
+      this.pendingBills = new Array<any>();
+    }
 
   ngOnInit() {
     this.currentAttentionService.getAllAttentions().subscribe(attentions => {      
@@ -55,5 +60,7 @@ export class CloseBillsPage implements OnInit {
     this.currentAttentionService.deleteAttention(id);
 
     this.pendingBills = this.pendingBills.filter(x => x.id != id);
+    this.notificationService.presentToast("La cuenta ha sido solicitada", "success", "middle");
+    this.router.navigateByUrl("/inicio");
   }
 }

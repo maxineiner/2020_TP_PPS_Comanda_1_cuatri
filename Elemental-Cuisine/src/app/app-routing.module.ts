@@ -25,7 +25,6 @@ const routes: Routes = [
   { path: 'encuestas', loadChildren: './pages/poll-client-list/poll-client-list.module#PollClientListPageModule' },
   { path: 'encuestas/cliente', loadChildren: './pages/poll-client-form/poll-client-form.module#PollClientFormPageModule' },
   { path: 'cuentas-por-cerrar', loadChildren: './pages/close-bills/close-bills.module#CloseBillsPageModule' }
-
 ]
 
 @NgModule({

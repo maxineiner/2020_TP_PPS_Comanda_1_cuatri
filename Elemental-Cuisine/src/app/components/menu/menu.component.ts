@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
 import { Product } from 'src/app/classes/product';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { CameraService } from 'src/app/services/camera.service';
 import { Status } from 'src/app/classes/enums/Status';
 import { Order } from 'src/app/classes/order';
@@ -29,7 +29,8 @@ export class MenuComponent implements OnInit {
     private productService: ProductService,
     private alertController: AlertController,
     private cameraService: CameraService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    public modalController: ModalController
   ) { 
     this.productService.getAllProducts().subscribe(products => {
       this.products = products.map(productAux => {
@@ -51,13 +52,12 @@ export class MenuComponent implements OnInit {
       if(quantity){
         this.order.menu.push({...product, quantity: quantity});
         this.order.total += product.price * quantity;
+        if(product.managerProfile == Profiles.Chef)
+          this.order.statusFood = Status.PendingConfirm;
+        if(product.managerProfile == Profiles.Bartender)
+          this.order.statusDrink = Status.PendingConfirm;
       }
     });
-    if(product.managerProfile == Profiles.Chef)
-      this.order.statusFood = Status.PendingConfirm;
-    if(product.managerProfile == Profiles.Bartender)
-      this.order.statusDrink = Status.PendingConfirm;
-
   }
 
   createAlert(product: Product) {
@@ -98,16 +98,16 @@ export class MenuComponent implements OnInit {
       ],
       buttons: [
         {
-          text: 'Agregar al pedido',
-          handler: (input) => {
-            alert.dismiss(input);
+          text: 'Cancelar',
+          handler: () => {
+            alert.dismiss(false);
             return false;
           }
         },
         {
-          text: 'Cancelar',
-          handler: () => {
-            alert.dismiss(false);
+          text: 'Agregar al pedido',
+          handler: (input) => {
+            alert.dismiss(input);
             return false;
           }
         }

@@ -19,7 +19,7 @@
           <ion-icon size="medium" name="settings"></ion-icon>
           Configuración
         </ion-item>
-        <ion-item *ngIf="!currentUser?.anonymous" routerLink="/delivery" >
+        <ion-item *ngIf="currentUser?.profile == Profiles.Client" routerLink="/delivery" >
           <ion-icon size="medium" name="timer"></ion-icon>
           Envío a Domicilio
         </ion-item>

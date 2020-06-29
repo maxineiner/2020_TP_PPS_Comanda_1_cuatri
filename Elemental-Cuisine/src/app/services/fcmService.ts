@@ -44,11 +44,6 @@ export class FcmService {
   }
 
   notificationSetup() {
-      //Validar si hace falta
-      /*this.fcm.onTokenRefresh().subscribe((token:string) => {
-        console.log("Actualización de Token: " + token);
-      });*/
-
       this.fcm.onNotification().subscribe(data => {
         this.smartAudioService.play("login")
         if(!data.wasTapped){

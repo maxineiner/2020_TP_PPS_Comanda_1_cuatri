@@ -5,6 +5,7 @@ import { Status } from 'src/app/classes/enums/Status';
 import { DataService } from 'src/app/services/data.service';
 import { User } from 'src/app/classes/user';
 import { FcmService } from 'src/app/services/fcmService';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-wait-list',
@@ -18,7 +19,8 @@ export class WaitListPage implements OnInit {
   constructor(
     private userService: UserService,
     private dataService: DataService,
-    private fcmService: FcmService
+    private fcmService: FcmService,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit() {
@@ -30,6 +32,7 @@ export class WaitListPage implements OnInit {
   }
 
   removeClient(user: User){
+    this.dataService.deleteDocument(Collections.WaitList,user.id);
     this.dataService.setStatus(Collections.Users, user.id, Status.CanTakeTable).then(() => {
       this.fcmService.getTokensById(user.id).then(userDevice => {
         this.fcmService.sendNotification(
@@ -39,5 +42,6 @@ export class WaitListPage implements OnInit {
         )
       })
     });
+    this.notificationService.presentToast("El usuario ya puede escanear una mesa", "success", "middle");
   }
 }
