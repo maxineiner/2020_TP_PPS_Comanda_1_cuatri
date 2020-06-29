@@ -3,7 +3,7 @@
 }
 
 .disabled-item {
-    color:#D3D3D3
+    color: #d3d3d3;
 }
 
 ion-list-header {
@@ -18,5 +18,8 @@ ion-list-header > ion-icon {
     margin-left: 1.03em;
 }
 
-
-
+ion-content {
+    position: relative;
+    height: 100%;
+    --background: none !important;
+}

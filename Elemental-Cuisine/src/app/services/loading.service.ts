@@ -22,7 +22,7 @@ export class LoadingService {
       spinner: null,
       cssClass: 'spinner',
       message:  '<div class="spinner">' +
-                  '<ion-img src="/assets/images/pan.svg""></ion-img>' +
+                  '<ion-img src="/assets/images/brand-4.png""></ion-img>' +
                   '<br><span>' + message + '</span>' +
                 '</div>'
     }).then((overlay) => {

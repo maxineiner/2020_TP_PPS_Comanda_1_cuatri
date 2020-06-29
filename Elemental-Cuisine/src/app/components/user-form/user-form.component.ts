@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { FormGroup, FormBuilder, Validators, FormControl, ValidatorFn } from '@angular/forms';
 import { Profiles } from 'src/app/classes/enums/profiles';
 import { FcmService } from 'src/app/services/fcmService';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-user-form',
@@ -27,6 +28,7 @@ export class UserFormComponent implements OnInit {
   constructor(
     private router: Router,
     private userService: UserService,
+    private loadingService: LoadingService,
     private cameraService: CameraService,
     private qrscannerService: QrscannerService,
     private notificationService: NotificationService,
@@ -40,20 +42,24 @@ export class UserFormComponent implements OnInit {
     if (this.idObject) {
       this.modification = true;
       this.userService.getUserById(this.idObject).then(user => {
-        this.user = user.data() as User;
-        this.form.patchValue({
-          name: this.user.name,
-          surname: this.user.surname,
-          dni: this.user.dni,
-          cuil: this.user.cuil,
-          email: this.user.email,
-          password: this.user.password,
-          confirmPass: this.user.password,
-          profile: this.user.profile
-        });
+        this.loadingService.showLoading().then(() => {
+          this.user = user.data() as User;
+          this.form.patchValue({
+            name: this.user.name,
+            surname: this.user.surname,
+            dni: this.user.dni,
+            cuil: this.user.cuil,
+            email: this.user.email,
+            password: this.user.password,
+            confirmPass: this.user.password,
+            profile: this.user.profile
+          });
 
-        if (this.user.photo)
-          this.loadPhoto(this.user.photo);
+          if (this.user.photo)
+            this.loadPhoto(this.user.photo);
+        }).then(() => {
+          this.loadingService.closeLoading();
+        });
       });
     }
 
@@ -148,7 +154,7 @@ export class UserFormComponent implements OnInit {
     }
 
     if (this.isClient) {
-      this.user.profile = "cliente";
+      this.user.profile = Profiles.Client;
       this.user.status = Status.PendingApproval;
     }
 
@@ -197,7 +203,7 @@ export class UserFormComponent implements OnInit {
   }
 
   scan() {
-    if(this.qrscannerService.device == "mobile"){
+    if (this.qrscannerService.device == "mobile") {
       this.qrscannerService.scanDni().then(data => {
         this.form.controls["surname"].setValue(data[1]);
         this.form.controls["name"].setValue(data[2]);
@@ -218,7 +224,7 @@ export class UserFormComponent implements OnInit {
     this.user.password = formValues.password;
     this.user.dni = formValues.dni;
 
-    if(!this.isClient){
+    if (!this.isClient) {
       this.user.cuil = formValues.cuil;
       this.user.profile = formValues.profile;
     }

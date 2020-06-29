@@ -1,5 +1,5 @@
 export enum Categories {
-    Dessert = 'Postre',
-    Food = 'Comida',
-    Drink = 'Bebida'
+    Dessert = 'dessert',
+    Food = 'food',
+    Drink = 'drink'
 }

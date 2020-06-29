@@ -27,13 +27,13 @@ export class UserListPage implements OnInit {
     });
   }
 
-  modifyEmployee(user) {
+  modifyEmployee(event) {
     event.stopPropagation();
   }
 
-  deleteEmployee(user) {
+  deleteEmployee(event, user) {
     event.stopPropagation();
-    this.dataService.deleteDocument(Collections.Users, user);
+    this.dataService.deleteDocument(Collections.Users, user.id);
   }
 
   routerToLink() {

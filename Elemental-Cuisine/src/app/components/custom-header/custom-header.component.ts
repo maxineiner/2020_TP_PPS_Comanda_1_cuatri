@@ -9,7 +9,9 @@ import { Profiles } from 'src/app/classes/enums/profiles';
 import { Table } from 'src/app/classes/table';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
+import { Status } from 'src/app/classes/enums/Status';
 import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
+
 @Component({
   selector: 'app-custom-header',
   templateUrl: './custom-header.component.html',
@@ -29,6 +31,7 @@ export class CustomHeaderComponent implements OnInit {
   @Input() helpIconColor: string;
 
   @Output() onClick: EventEmitter<any> = new EventEmitter();
+  Status = Status;
 
   constructor(
     private authService: AuthService,
@@ -41,8 +44,9 @@ export class CustomHeaderComponent implements OnInit {
   ) {
     let user = this.authService.getCurrentUser();
     if (!isNullOrUndefined(user)) {
-      this.userService.getUserById(user.uid).then(userData => {
-        this.currentUser = Object.assign(new User, userData.data());
+
+      this.userService.getUser(user.uid).subscribe(userData => {
+        this.currentUser = Object.assign(new User, userData);
       });
     }
   }

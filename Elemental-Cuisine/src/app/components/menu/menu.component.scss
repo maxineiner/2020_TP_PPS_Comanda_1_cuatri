@@ -1,16 +1,39 @@
-ion-item{
+ion-item {
     padding: 10px;
     right: 6px;
 }
 
-#confirm{
+#confirm {
     position: absolute;
     bottom: 0;
     width: 99%;
     height: 10%;
 }
 
-#scroll{
+#scroll {
     overflow: auto;
     height: 89%;
 }
+
+.item-ico {
+    margin-right: 0.3em;
+    stroke: #000;
+}
+
+.disabled-item {
+    color: #d3d3d3;
+    stroke: #d3d3d3 !important;
+}
+
+ion-list-header {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+ion-list-header > ion-icon {
+    font-size: 1.1em;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 1.03em;
+}
+

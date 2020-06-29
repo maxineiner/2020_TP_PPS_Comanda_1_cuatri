@@ -10,6 +10,7 @@ import { CameraService } from 'src/app/services/camera.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
 import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Profiles } from 'src/app/classes/enums/profiles';
 
 @Component({
   selector: 'app-login',
@@ -74,7 +75,7 @@ export class LoginPage implements OnInit {
     this.defaultUsers.push({ "email": "maitre@maitre.com", "password": "123456" });
     this.defaultUsers.push({ "email": "bartender@bartender.com", "password": "123456" });
     this.defaultUsers.push({ "email": "cocinero@cocinero.com", "password": "123456" });
-    this.defaultUsers.push({ "email": "anonimo@anonimo.com", "password": "123456" });
+    // this.defaultUsers.push({ "email": "anonimo@anonimo.com", "password": "123456" });
   }
 
   setDefaultUser() {
@@ -155,7 +156,7 @@ export class LoginPage implements OnInit {
               id: currentUser.uid,
               email: currentUser.email,
               password: null,
-              profile: "cliente",
+              profile: Profiles.Client,
               name: currentUser.displayName.split(" ")[0],
               surname: currentUser.displayName.split(" ")[1],
               photo: currentUser.photoURL,
@@ -185,7 +186,7 @@ export class LoginPage implements OnInit {
                   id: currentUser.uid,
                   email: currentUser.email,
                   password: null,
-                  profile: "cliente",
+                  profile: Profiles.Client,
                   name: currentUser.displayName.split(" ")[0],
                   surname: currentUser.displayName.split(" ")[1],
                   photo: currentUser.photoURL,
@@ -224,9 +225,9 @@ export class LoginPage implements OnInit {
         id: "",
         email: name + "-" + random + "@anonymous.com",
         password: "123456",
-        profile: "cliente",
+        profile: Profiles.Client,
         name: name,
-        surname: name,
+        surname: "(anónimo)",
         photo: this.photoName,
         status: "sinAtender",
         dni: null,

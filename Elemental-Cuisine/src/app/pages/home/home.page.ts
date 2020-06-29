@@ -31,8 +31,7 @@ export class HomePage {
       }
       this.userService.getUserById(user.uid).then(userData => {
         this.currentUser = Object.assign(new User, userData.data());
-        
-      })
+      });
   }
 
   showAlert() {

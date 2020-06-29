@@ -1,48 +1,79 @@
-<ion-button color="medium" (click)="scan()">Escanear QR</ion-button>
-<form class="form">
-  <ion-list lines="full" class="ion-no-margin ion-no-padding">
-    <ion-item class="group">
-      <ion-label for="user" class="label" position="floating">Nombre</ion-label>
-      <ion-input type="text" class="input" [(ngModel)]="product.name" name="name" required></ion-input>
-    </ion-item>
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Descripción</ion-label>
-      <ion-input type="text" class="input" [(ngModel)]="product.description" name="description" required></ion-input>
-    </ion-item>
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Tiempo de Elaboración</ion-label>
-      <ion-input type="number" class="input" [(ngModel)]="product.preparationTime" name="preparationTime" required>
-      </ion-input>
-    </ion-item>
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Precio</ion-label>
-      <ion-input type="number" class="input" [(ngModel)]="product.price" name="price" required></ion-input>
-    </ion-item>
+<form class="form" [formGroup]="form" (ngSubmit)="register(form.value)">
 
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Categoría</ion-label>
-      <ion-select placeholder="Seleccione una categoría" [(ngModel)]="product.category" name="category">
-        <ion-select-option value="Comida">Comida</ion-select-option>
-        <ion-select-option value="Bebida">Bebida</ion-select-option>
-        <ion-select-option value="Postre">Postre</ion-select-option>
-      </ion-select>
-    </ion-item>
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input type="text" formControlName="name"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.name">
+      <small *ngIf="form.get('name').hasError(validation.type) && (form.get('name').dirty || form.get('name').touched)">
+        {{ validation.message }}
+      </small>
+    </ng-container>
+  </div>
 
+  <ion-item>
+    <ion-label position="floating">Descripción</ion-label>
+    <ion-input type="text" formControlName="description"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.description">
+      <small
+        *ngIf="form.get('description').hasError(validation.type) && (form.get('description').dirty || form.get('description').touched)">
+        {{ validation.message }}
+      </small>
+    </ng-container>
+  </div>
 
-  </ion-list>
+  <ion-item>
+    <ion-label position="floating">Tiempo de Elaboración</ion-label>
+    <ion-input type="number" formControlName="preparationTime"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.preparationTime">
+      <small
+        *ngIf="form.get('preparationTime').hasError(validation.type) && (form.get('preparationTime').dirty || form.get('preparationTime').touched)">
+        {{ validation.message }}
+      </small>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label position="floating">Precio</ion-label>
+    <ion-input type="number" formControlName="price"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.price">
+      <small
+        *ngIf="form.get('price').hasError(validation.type) && (form.get('price').dirty || form.get('price').touched)">
+        {{ validation.message }}
+      </small>
+    </ng-container>
+  </div>
+
+  <ion-item [disabled]="this.profile == Profiles.Bartender">
+    <ion-label position="floating">Categoría</ion-label>
+    <ion-select formControlName="category"
+      [placeholder]="this.profile == Profiles.Bartender ? 'Bebida' : 'Seleccione una categoría'">
+      <ion-select-option value="food">Comida</ion-select-option>
+      <ion-select-option *ngIf="this.profile == Profiles.Owner" value="drink">Bebida</ion-select-option>
+      <ion-select-option value="dessert">Postre</ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <br>
-  <ion-button color="medium" (click)="takePhoto()" [disabled]="product.name == undefined || product.name == ''">Sacar
-    Foto</ion-button>
+  <ion-item-group>
+    <ion-button color="primary" (click)="takePhoto()" [disabled]="!form.get('name').valid">Sacar Foto</ion-button>
 
-  <ion-button color="medium" (click)="register()" *ngIf="!modification">Registrar</ion-button>
-  <ion-button color="medium" (click)="register()" *ngIf="modification">Modificar</ion-button>
-
+    <ion-button type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
+    <ion-button color="medium" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
+  </ion-item-group>
   <br>
 
   <ion-card color="dark">
     <ion-slides [options]="slideOpts" #slides [pager]="true">
       <ion-slide *ngFor="let image of images">
-        <ion-card  color="light">
+        <ion-card color="light">
           <ion-card-content>
             <ion-fab vertical="top" horizontal="end">
               <ion-fab-button class="delete-btn" size="small" color="danger" (click)="deletePhoto(image.name)">
