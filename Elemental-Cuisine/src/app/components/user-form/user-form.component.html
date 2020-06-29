@@ -7,7 +7,7 @@
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.name">
-      <small  *ngIf="form.get('name').hasError(validation.type) && (form.get('name').dirty || form.get('name').touched)">
+      <small *ngIf="form.get('name').hasError(validation.type) && (form.get('name').dirty || form.get('name').touched)">
         {{ validation.message }}
       </small>
     </ng-container>
@@ -19,7 +19,8 @@
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.surname">
-      <small  *ngIf="form.get('surname').hasError(validation.type) && (form.get('surname').dirty || form.get('surname').touched)">
+      <small
+        *ngIf="form.get('surname').hasError(validation.type) && (form.get('surname').dirty || form.get('surname').touched)">
         {{ validation.message }}
       </small>
     </ng-container>
@@ -31,7 +32,7 @@
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.dni">
-      <small  *ngIf="form.get('dni').hasError(validation.type) && (form.get('dni').dirty || form.get('dni').touched)">
+      <small *ngIf="form.get('dni').hasError(validation.type) && (form.get('dni').dirty || form.get('dni').touched)">
         {{ validation.message }}
       </small>
     </ng-container>
@@ -43,7 +44,7 @@
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.cuil">
-      <small  *ngIf="form.get('cuil').hasError(validation.type) && (form.get('cuil').dirty || form.get('cuil').touched)">
+      <small *ngIf="form.get('cuil').hasError(validation.type) && (form.get('cuil').dirty || form.get('cuil').touched)">
         {{ validation.message }}
       </small>
     </ng-container>
@@ -55,7 +56,8 @@
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.email">
-      <small *ngIf="form.get('email').hasError(validation.type) && (form.get('email').dirty || form.get('email').touched)">
+      <small
+        *ngIf="form.get('email').hasError(validation.type) && (form.get('email').dirty || form.get('email').touched)">
         {{ validation.message }}
       </small>
     </ng-container>
@@ -67,7 +69,8 @@
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.password">
-      <small *ngIf="form.get('password').hasError(validation.type) && (form.get('password').dirty || form.get('password').touched)">
+      <small
+        *ngIf="form.get('password').hasError(validation.type) && (form.get('password').dirty || form.get('password').touched)">
         {{ validation.message }}
       </small>
     </ng-container>
@@ -79,7 +82,8 @@
   </ion-item>
   <div class="validation-errors">
     <ng-container *ngFor="let validation of validation_messages.confirmPass">
-      <small *ngIf="form.get('confirmPass').hasError(validation.type) && (form.get('confirmPass').dirty || form.get('confirmPass').touched)">
+      <small
+        *ngIf="form.get('confirmPass').hasError(validation.type) && (form.get('confirmPass').dirty || form.get('confirmPass').touched)">
         {{ validation.message }}
       </small>
     </ng-container>
@@ -96,12 +100,14 @@
       <ion-select-option value="supervisor">Supervisor</ion-select-option>
     </ion-select>
   </ion-item>
-  <br>
-  <ion-button color="primary" (click)="takePhoto()" [disabled]="!form.get('name').valid">Sacar Foto</ion-button>
-  
-  <ion-button color="primary" type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
-  <ion-button color="primary" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
 
+  <br>
+  <ion-item-group>
+    <ion-button color="primary" (click)="takePhoto()" [disabled]="!form.get('name').valid">Sacar Foto</ion-button>
+
+    <ion-button color="primary" type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
+    <ion-button color="primary" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
+  </ion-item-group>
   <br>
 
   <ion-card color="light" *ngIf="image != undefined && image != null">

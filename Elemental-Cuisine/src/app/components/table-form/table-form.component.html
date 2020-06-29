@@ -1,24 +1,48 @@
-<form class="form">
-  <ion-list lines="full" class="ion-no-margin ion-no-padding">
-    <ion-item class="group">
-      <ion-label for="user" class="label" position="floating">Número de mesa</ion-label>
-      <ion-input type="number" class="input" [(ngModel)]="table.number" name="number" required></ion-input>
-    </ion-item>
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Cantidad de Comensales</ion-label>
-      <ion-input type="number" class="input" [(ngModel)]="table.capacity" name="capacity" required></ion-input>
-    </ion-item>
-    <ion-item class="group">
-      <ion-label for="pass" class="label" position="floating">Tipo</ion-label>
-      <ion-input type="text" class="input" [(ngModel)]="table.type" name="type" required></ion-input>
-    </ion-item>
-  </ion-list>
-  <br>
-  <ion-button color="medium" (click)="takePhoto()" [disabled]="table.number == undefined || table.number == ''">Sacar Foto</ion-button>
-  
-  <ion-button (click)="register()" *ngIf="!modification">Registrar</ion-button>
-  <ion-button color="medium" (click)="register()" *ngIf="modification">Modificar</ion-button>
+<form class="form" [formGroup]="form" (ngSubmit)="register(form.value)">
 
+  <ion-item>
+    <ion-label position="floating">Número de mesa</ion-label>
+    <ion-input type="number" formControlName="number"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.number">
+      <small *ngIf="form.get('number').hasError(validation.type) && (form.get('number').dirty || form.get('number').touched)">
+        {{ validation.message }}
+      </small>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label position="floating">Cantidad de Comensales</ion-label>
+    <ion-input type="number" formControlName="capacity"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.capacity">
+      <small *ngIf="form.get('capacity').hasError(validation.type) && (form.get('capacity').dirty || form.get('capacity').touched)">
+        {{ validation.message }}
+      </small>
+    </ng-container>
+  </div>
+
+  <ion-item>
+    <ion-label position="floating">Tipo</ion-label>
+    <ion-input type="text" formControlName="type"></ion-input>
+  </ion-item>
+  <div class="validation-errors">
+    <ng-container *ngFor="let validation of validation_messages.type">
+      <small *ngIf="form.get('type').hasError(validation.type) && (form.get('type').dirty || form.get('type').touched)">
+        {{ validation.message }}
+      </small>
+    </ng-container>
+  </div>
+
+  <br>
+  <ion-item-group>
+    <ion-button color="primary" (click)="takePhoto()" [disabled]="!form.get('number').valid">Sacar Foto</ion-button>
+
+    <ion-button type="submit" [disabled]="!form.valid" *ngIf="!modification">Registrar</ion-button>
+    <ion-button color="medium" type="submit" [disabled]="!form.valid" *ngIf="modification">Modificar</ion-button>
+  </ion-item-group>
   <br>
 
   <ion-card color="light" *ngIf="image != undefined && image != null">
