@@ -17,6 +17,7 @@ export class SideMenuComponent implements OnInit {
   private showOrder = false;
   private disableMenu = true;
   private currentUser: User;
+  Profiles = Profiles;
 
   constructor(
     private authService: AuthService,

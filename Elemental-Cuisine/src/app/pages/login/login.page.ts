@@ -52,6 +52,10 @@ export class LoginPage implements OnInit {
     });
   }
 
+  ionViewWillEnter(){
+    delete this.user;
+  }
+
   validation_messages = {
     'email': [
       { type: 'required', message: 'El email es requerido.' },
@@ -74,7 +78,9 @@ export class LoginPage implements OnInit {
   }
 
   setDefaultUser() {
-    this.onSubmitLogin(this.user);
+    if(this.user){
+      this.onSubmitLogin(this.user);
+    }
   }
 
   onSubmitLogin(form) {

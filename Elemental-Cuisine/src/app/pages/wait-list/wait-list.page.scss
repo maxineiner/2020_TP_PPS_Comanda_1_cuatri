@@ -1,7 +1,6 @@
 .item-ico {
-    margin-right: 0.3em;
+    font-size: 90px;
 }
-
 
 ion-list-header {
     font-weight: bold;
@@ -15,5 +14,10 @@ ion-list-header > ion-icon {
     margin-left: 1.03em;
 }
 
-
+#empty{
+    position: relative;
+    text-align: center;
+    margin-top: 80px;
+    padding: 15%;
+}
 
