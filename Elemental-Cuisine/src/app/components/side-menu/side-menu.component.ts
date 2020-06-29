@@ -28,14 +28,12 @@ export class SideMenuComponent implements OnInit {
   ) { 
     this.total = 0;
     this.authService.isUserLoggedIn().subscribe(user => {
-      // this.disableMenu = true;
       this.menuCtrl.enable(false);
       if (user && user.uid) {
         this.userService.getUserById(user.uid).then(user => {
           this.currentUser = user.data() as User
         })
         this.menuCtrl.enable(true);
-        // this.disableMenu = false;
         this.orderService.getOrder(user.uid).subscribe(orders => {
           if(!orders) {
             this.showOrder = false;
