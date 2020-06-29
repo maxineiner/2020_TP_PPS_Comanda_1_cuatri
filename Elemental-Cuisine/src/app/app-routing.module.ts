@@ -15,6 +15,7 @@ const routes: Routes = [
   { path: 'delivery', loadChildren: './pages/delivery/delivery.module#DeliveryPageModule' },
   { path: 'pedido', loadChildren: './pages/order/order.module#OrderPageModule' },
   { path: 'client-list', loadChildren: './pages/client-list/client-list.module#ClientListPageModule' },
+  { path: 'productos', loadChildren: './pages/product-list/product-list.module#ProductListPageModule' },
   { path: 'order-list', loadChildren: './pages/order-list/order-list.module#OrderListPageModule' },
   { path: 'pedido/detalle', loadChildren: './pages/order-details/order-details.module#OrderDetailsPageModule' },
   { path: 'juegos', loadChildren: './pages/games/games.module#GamesPageModule' },

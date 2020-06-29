@@ -8,7 +8,7 @@
       <ion-button *ngIf="icon != undefined" (click)="iconClicked()">
         <ion-icon size="large" slot="icon-only" color="{{iconColor}}" name="{{icon}}"></ion-icon>
       </ion-button>
-      <ion-button *ngIf="currentUser?.profile == 'cliente'" (click)="askWaiter()">
+      <ion-button *ngIf="currentUser?.profile == 'cliente' && currentUser?.status == Status.Attended" (click)="askWaiter()">
         <ion-icon size="large" slot="icon-only" color="{{helpIconColor}}" name="help"></ion-icon>
       </ion-button>
     </ion-buttons>

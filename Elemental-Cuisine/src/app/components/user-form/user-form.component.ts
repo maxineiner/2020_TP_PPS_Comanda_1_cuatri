@@ -149,7 +149,7 @@ export class UserFormComponent implements OnInit {
     }
 
     if (this.isClient) {
-      this.user.profile = "cliente";
+      this.user.profile = Profiles.Client;
       this.user.status = Status.PendingApproval;
     }
 

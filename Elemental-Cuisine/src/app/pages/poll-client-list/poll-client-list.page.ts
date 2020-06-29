@@ -47,26 +47,26 @@ export class PollClientListPage implements OnInit {
     })
 
     this.pollService.getAllPolls().subscribe(polls => {
-      this.loadingService.showLoading();
+      this.loadingService.showLoading().then(() => {
+        this.polls = polls.map(pollAux => {
+          let poll = pollAux.payload.doc.data() as PollClient;
+          this.loadPhotos(poll.photos).then(photos => poll.photos = photos);
+          return poll;
+        });
 
-      this.polls = polls.map(pollAux => {
-        let poll = pollAux.payload.doc.data() as PollClient;
-        this.loadPhotos(poll.photos).then(photos => poll.photos = photos);
-        return poll;
-      });
+        if (this.currentUser.profile != Profiles.Owner) {
+          let userId = this.currentUser.id;
 
-      if (this.currentUser.profile != Profiles.Owner) {
-        let userId = this.currentUser.id;
-
-        if (this.polls.find(x => x.userId == userId)) {
-          this.gotPoll = true;
-          let pollAux = this.polls.find(x => x.userId == userId);
-          this.polls = this.polls.filter(x => x.userId !== userId);
-          this.polls.unshift(pollAux);
+          if (this.polls.find(x => x.userId == userId)) {
+            this.gotPoll = true;
+            let pollAux = this.polls.find(x => x.userId == userId);
+            this.polls = this.polls.filter(x => x.userId !== userId);
+            this.polls.unshift(pollAux);
+          }
         }
-      }
-
-      this.loadingService.closeLoading();
+      }).then(() => {
+        this.loadingService.closeLoading();
+      });
     });
   }
 
