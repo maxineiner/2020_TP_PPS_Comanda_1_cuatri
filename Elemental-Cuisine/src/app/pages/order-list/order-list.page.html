@@ -15,9 +15,9 @@
         <ion-label class="disabled-item">No hay pedidos para confirmar</ion-label>
       </ion-item>
 
-      <ion-item *ngFor="let orderWithUser of pendingConfirmOrders" (click)="showDetails(orderWithUser)">
+      <ion-item *ngFor="let orderWithUser of pendingConfirmOrders">
         <ion-icon class="item-ico" src="assets/icon/pendingConfirm.svg"></ion-icon>
-        <ion-label>Mesa:{{ orderWithUser.currentTable }} | {{ orderWithUser.user?.name }}
+        <ion-label (click)="showDetails(orderWithUser)">Mesa:{{ orderWithUser.currentTable }} | {{ orderWithUser.user?.name }}
           {{ orderWithUser.user?.surname }} </ion-label>
         <ion-button color="success"
           (click)="updateOrderStatus(orderWithUser, Status.PendingPreparation)">
@@ -46,7 +46,7 @@
 
       <ion-item *ngFor="let orderWithUser of pendingPreparationOrders">
         <ion-icon class="item-ico" [src]="orderWithUser.profile === Profiles.Bartender? 'assets/icon/pendingPreparationDrinks.svg' : 'assets/icon/pendingPreparationFoods.svg'"></ion-icon>
-        <ion-label>Mesa:{{ orderWithUser.currentTable }} | {{orderWithUser.user?.name}} {{orderWithUser.user?.surname }}</ion-label>
+        <ion-label (click)="showDetails(orderWithUser)">Mesa:{{ orderWithUser.currentTable }} | {{orderWithUser.user?.name}} {{orderWithUser.user?.surname }}</ion-label>
         <ion-button color="success"
           (click)="updateOrderStatus(orderWithUser, Status.Preparing)" *ngIf="this.currentUser?.profile === Profiles.Bartender || this.currentUser?.profile === Profiles.Chef">
           <ion-icon name="play"></ion-icon>
@@ -72,7 +72,7 @@
 
       <ion-item *ngFor="let orderWithUser of preparingOrders">
         <ion-icon class="item-ico" [src]="orderWithUser.profile === Profiles.Bartender? 'assets/icon/preparingDrinks.svg' : 'assets/icon/preparingFoods.svg'"></ion-icon>
-        <ion-label>Mesa:{{ orderWithUser.currentTable }} | {{ orderWithUser.user?.name}} {{orderWithUser.user?.surname }}</ion-label>
+        <ion-label (click)="showDetails(orderWithUser)">Mesa:{{ orderWithUser.currentTable }} | {{ orderWithUser.user?.name}} {{orderWithUser.user?.surname }}</ion-label>
         <ion-button color="primary"
         (click)="updateOrderStatus(orderWithUser, Status.Prepared)" *ngIf="this.currentUser?.profile === Profiles.Bartender || this.currentUser?.profile === Profiles.Chef">
         <ion-icon src="assets/icon/preparedButton.svg"></ion-icon>
@@ -98,7 +98,7 @@
 
       <ion-item *ngFor="let orderWithUser of preparedOrders">
         <ion-icon class="item-ico" [src]="orderWithUser.profile === Profiles.Bartender? 'assets/icon/preparedDrinks.svg' : 'assets/icon/preparedFoods.svg'"></ion-icon>
-        <ion-label>Mesa:{{ orderWithUser.user.currentTable }} | {{ orderWithUser.user.name }} {{ orderWithUser.user.surname }}</ion-label>
+        <ion-label (click)="showDetails(orderWithUser)">Mesa:{{ orderWithUser.user.currentTable }} | {{ orderWithUser.user.name }} {{ orderWithUser.user.surname }}</ion-label>
         <ion-button color="primary"
           (click)="updateOrderStatus(orderWithUser, Status.Delivered)">
           <ion-icon src="assets/icon/double-check.svg"></ion-icon>

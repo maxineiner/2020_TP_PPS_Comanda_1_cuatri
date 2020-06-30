@@ -131,6 +131,7 @@ export class OrderListPage implements OnInit {
             orderWithUser.profile = Profiles.Chef;
             orderWithUser.order = Object.assign({}, miniOrder);
             orderWithUser.order.menu = foods;
+            this.getCurrentTableNumberById(orderWithUser.id).then(tableNumber => orderWithUser.currentTable = tableNumber);
             this.userService.getUserById(orderWithUser.id).then(user => orderWithUser.user = user.data() as User);
             this.allOrdersDividedByProfile.push(orderWithUser);
           }
@@ -270,6 +271,52 @@ export class OrderListPage implements OnInit {
     return auxReturn;
   }
 
+
+  showDetails(selectedOrder: OrderWithUser) {
+    this.loadingService.showLoading();
+    this.createAlert(selectedOrder);
+  }
+
+  createAlert(selectedOrder: OrderWithUser) {
+    let productList = '';
+    let products = selectedOrder.order.menu;
+    products.forEach(product => {
+      productList += 
+      `<ion-item>
+          <ion-label class="ion-text-wrap">
+            <ion-text><h3>${product.name} ${product.description}</h3></ion-text>
+            <ion-text><p>x${product.quantity}</p></ion-text>
+          </ion-label>
+        </ion-item>`
+    });
+    
+    let message = `<div>${productList}</div>`;
+
+    this.loadingService.closeLoading(undefined, undefined, undefined, 1000);
+    return this.showAlert(selectedOrder, message);
+  }
+
+  async showAlert(selectedOrder: OrderWithUser, message: string) {
+    const alert = await this.alertController.create({
+      
+      header: `Mesa Nro. ${selectedOrder.currentTable}`,
+      subHeader: `${selectedOrder.user.name} ${selectedOrder.user.surname}`,
+      message: message,
+      buttons: [
+        {
+          text: 'Aceptar',
+          handler: () => {
+            alert.dismiss(false);
+            return false;
+          }
+        }
+      ]
+    });
+    alert.present();
+    return alert.onDidDismiss().then((data) => {
+      return data;
+    })
+  }
 
 
 
