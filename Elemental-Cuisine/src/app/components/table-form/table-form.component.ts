@@ -6,6 +6,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingService } from 'src/app/services/loading.service';
+import { Status } from 'src/app/classes/enums/Status';
 
 @Component({
   selector: 'app-table-form',
@@ -96,6 +97,7 @@ export class TableFormComponent implements OnInit {
       });
     }
     else {
+      this.table.status = Status.Available;
       this.tableService.saveTable(this.table).then(() => {
         this.notificationService.presentToast("Mesa creada", "success", "bottom", false);
         this.router.navigateByUrl('/listado/mesas');
