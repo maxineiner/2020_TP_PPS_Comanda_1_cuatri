@@ -1,8 +1,6 @@
 <app-custom-header [title]="'Pedidos'"></app-custom-header>
 
 <ion-content>
-
-  <ion-button (click)="prueba()"></ion-button>
   <!-- #region Listado Pendientes de confirmacion -->
 
   <section *ngIf="this.currentUser?.profile === Profiles.Waiter">
@@ -24,7 +22,7 @@
           <ion-icon name="checkmark"></ion-icon>
         </ion-button>
         <ion-button color="danger"
-          (click)="prueba(orderWithUser)">
+          (click)="cancelOrder(orderWithUser)">
           <ion-icon name="close"></ion-icon>
         </ion-button>
       </ion-item>

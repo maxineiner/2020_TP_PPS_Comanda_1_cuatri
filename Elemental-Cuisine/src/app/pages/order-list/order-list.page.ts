@@ -250,9 +250,16 @@ export class OrderListPage implements OnInit {
     });
   }
 
-  prueba(ads) {
-    console.log(asd);
+
+  cancelOrder(orderWithUser: OrderWithUser): void {
+    this.orderService.getOrderById(orderWithUser.id).then(orderData => {
+      let orders = orderData.data() as Order[]
+      console.log('antes de borrar', orders);
+      delete orders[orderWithUser.index];
+      this.orderService.saveOrder(orderWithUser.id, orders);
+    });
   }
+
 
 
   private getOrderType(products: Product[]): OrderType {
@@ -281,15 +288,15 @@ export class OrderListPage implements OnInit {
     let productList = '';
     let products = selectedOrder.order.menu as Product[];
     products.forEach(product => {
-      productList += 
-      `<ion-item>
+      productList +=
+        `<ion-item>
           <ion-label class="ion-text-wrap">
             <ion-text><h3><b>${product.name} ${product.description}</b></h3></ion-text>
             <ion-text><p>x${product['quantity']}</p></ion-text>
           </ion-label>
         </ion-item>`
     });
-    
+
     let message = `<div>${productList}</div>`;
 
     this.loadingService.closeLoading(undefined, undefined, undefined, 1000);
@@ -298,7 +305,7 @@ export class OrderListPage implements OnInit {
 
   async showAlert(selectedOrder: OrderWithUser, message: string) {
     const alert = await this.alertController.create({
-      
+
       header: `Mesa Nro. ${selectedOrder.currentTable}`,
       subHeader: `${selectedOrder.user.name} ${selectedOrder.user.surname}`,
       message: message,
