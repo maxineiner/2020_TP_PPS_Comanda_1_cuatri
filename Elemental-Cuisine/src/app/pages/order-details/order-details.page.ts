@@ -90,4 +90,9 @@ export class OrderDetailsPage implements OnInit {
 
     this.orderService.saveOrder(this.currentUser.uid, this.orders.map((obj) => { return Object.assign({}, obj) }));
   }
+
+  validateOrder(order){
+    return ((order.statusFood != Status.Confirmed && order.statusFood != Status.Delivered) ||
+      (order.statusDrink != Status.Confirmed && order.statusDrink != Status.Delivered))
+  }
 }
