@@ -1,14 +1,14 @@
 <div id="scroll">
-  <ion-list>
+  <ion-list class="transparent">
     <ion-list-header>Comidas</ion-list-header>
 
-    <ion-item *ngIf="foods?.length == 0">
+    <ion-item *ngIf="foods?.length == 0" color="transparent">
       <ion-icon class="disabled-item item-ico" [src]="'assets/icon/food.svg'">
       </ion-icon>
       <ion-label class="disabled-item">No hay comidas</ion-label>
     </ion-item>
 
-    <ion-item *ngFor="let food of foods" (click)="showDetails(food)">
+    <ion-item *ngFor="let food of foods" (click)="showDetails(food)" color="transparent">
       <ion-icon class="item-ico" [src]="'assets/icon/food.svg'">
       </ion-icon>
       <ion-label>{{food.name}}</ion-label>
@@ -16,16 +16,16 @@
     </ion-item>
   </ion-list>
 
-  <ion-list>
+  <ion-list class="transparent">
     <ion-list-header>Bebidas</ion-list-header>
 
-    <ion-item *ngIf="drinks?.length == 0">
+    <ion-item *ngIf="drinks?.length == 0" color="transparent">
       <ion-icon class="disabled-item item-ico" [src]="'assets/icon/drink.svg'">
       </ion-icon>
       <ion-label class="disabled-item">No hay bebidas</ion-label>
     </ion-item>
 
-    <ion-item *ngFor="let drink of drinks" (click)="showDetails(drink)">
+    <ion-item *ngFor="let drink of drinks" (click)="showDetails(drink)" color="transparent">
       <ion-icon class="item-ico" [src]="'assets/icon/drink.svg'">
       </ion-icon>
       <ion-label>{{drink.name}}</ion-label>
@@ -33,16 +33,16 @@
     </ion-item>
   </ion-list>
 
-  <ion-list>
+  <ion-list class="transparent">
     <ion-list-header>Postres</ion-list-header>
 
-    <ion-item *ngIf="desserts?.length == 0">
-      <ion-icon class="disabled-item item-ico" [src]="'assets/icon/dessert.svg'">
+    <ion-item *ngIf="desserts?.length == 0" color="transparent">
+      <ion-icon class="disabled-item item-ico" [src]="'assets/icon/dessert.svg'" color="transparent">
       </ion-icon>
       <ion-label class="disabled-item">No hay postres</ion-label>
     </ion-item>
 
-    <ion-item *ngFor="let dessert of desserts" (click)="showDetails(dessert)">
+    <ion-item *ngFor="let dessert of desserts" (click)="showDetails(dessert)" color="transparent">
       <ion-icon class="item-ico" [src]="'assets/icon/dessert.svg'">
       </ion-icon>
       <ion-label>{{dessert.name}}</ion-label>
