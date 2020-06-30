@@ -112,7 +112,7 @@ export class MenuComponent implements OnInit {
         {
           name: 'quantity',
           type: 'number',
-          value: 'Cantidad de unidades',
+          placeholder: 'Cantidad de unidades',
           min: 1
         }
       ],

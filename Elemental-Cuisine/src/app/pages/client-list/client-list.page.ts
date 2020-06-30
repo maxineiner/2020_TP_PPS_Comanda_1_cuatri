@@ -7,7 +7,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Collections } from 'src/app/classes/enums/collections';
 import { Status } from 'src/app/classes/enums/Status';
 import { NotificationService } from 'src/app/services/notification.service';
-import { TypeNotification } from 'src/app/classes/enums/TypeNotification';
+import { TypeNotification } from 'src/app/classes/enums/typeNotification';
 
 @Component({
   selector: 'app-client-list',

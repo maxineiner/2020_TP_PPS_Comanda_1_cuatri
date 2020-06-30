@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Status } from 'src/app/classes/enums/Status';
-import { TypeNotification } from 'src/app/classes/enums/TypeNotification';
+import { TypeNotification } from 'src/app/classes/enums/typeNotification';
 import { Order } from 'src/app/classes/order';
 import { User } from 'src/app/classes/user';
 import { Profiles } from 'src/app/classes/enums/profiles';
@@ -223,10 +223,6 @@ export class OrderListPage implements OnInit {
 
         case Status.Delivered:
           this.notificationService.presentToast('El pedido fue entregado con éxito!', TypeNotification.Info, "bottom", false);
-          break;
-
-        case Status.Cancelled:
-          this.notificationService.presentToast('La orden fue cancelada', TypeNotification.Error, "bottom", false);
           break;
       }
 

@@ -3,7 +3,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { User } from 'src/app/classes/user';
 import { Table } from 'src/app/classes/table';
-import { TypeNotification } from 'src/app/classes/enums/TypeNotification';
 import { Status } from 'src/app/classes/enums/Status';
 import { Collections } from 'src/app/classes/enums/collections';
 import { Profiles } from 'src/app/classes/enums/profiles';
@@ -16,6 +15,7 @@ import { DataService } from 'src/app/services/data.service';
 import { TableService } from 'src/app/services/table.service';
 import { CurrentAttentionService } from 'src/app/services/currentAttention.service';
 import { Attention } from 'src/app/classes/attention';
+import { TypeNotification } from 'src/app/classes/enums/typeNotification';
 
 @Component({
   selector: 'app-client-home',
@@ -82,7 +82,7 @@ export class ClientHomeComponent implements OnInit {
   addToWaitList() {
     this.userService.setDocument(Collections.WaitList, this.currentUser.id.toString(), { 'id': this.currentUser.id, 'date': Date.now(), 'name': this.currentUser.name + " " + this.currentUser.surname, 'dni': this.currentUser.dni });
     this.dataService.setStatus(Collections.Users, this.currentUser.id, Status.OnHold).then(() => {
-      this.notificationService.presentToast("Agregado a lista de espera", TypeNotification.Warning, "top");
+      this.notificationService.presentToast("Agregado a lista de espera", TypeNotification.Success, "top");
       this.fcmService.getTokensByProfile(Profiles.Maitre).then(waiterDevices => {
         this.fcmService.sendNotification(
           "Nuevo cliente en lista de espera",
@@ -109,7 +109,7 @@ export class ClientHomeComponent implements OnInit {
     this.tableService.getTableById(tableId).then(table => {
       let currentTable = Object.assign(new Table, table.data());
       if (currentTable.status != Status.Available) {
-        this.notificationService.presentToast(`Mesa N.° ${currentTable.number} ${currentTable.status}`, "danger", "top");
+        this.notificationService.presentToast(`Mesa N.° ${currentTable.number} ${currentTable.status}`, TypeNotification.Error, "top");
       }
       else {
         this.dataService.setStatus(Collections.Tables, tableId, Status.Busy);
@@ -119,7 +119,7 @@ export class ClientHomeComponent implements OnInit {
         var attention = new Attention(tableId);
         this.currentAttentionService.saveAttention(userId, attention);
 
-        this.notificationService.presentToast(`Mesa N.° ${currentTable.number} asignada`, "success", "top");
+        this.notificationService.presentToast(`Mesa N.° ${currentTable.number} asignada`, TypeNotification.Success, "top");
       }
     });
   }

@@ -101,7 +101,7 @@ export class CustomHeaderComponent implements OnInit {
             "Los comenzales en la mesa N.° " + currentTable.number + " tienen la siguiente consulta: " + query,
             waiterDevices);
         }).then(() => {
-          this.notificationService.presentToast("Se envió su consulta correctamente", "success", "bottom");
+          this.notificationService.presentToast("Se envió su consulta correctamente", "success", "top");
         });
       });
     });

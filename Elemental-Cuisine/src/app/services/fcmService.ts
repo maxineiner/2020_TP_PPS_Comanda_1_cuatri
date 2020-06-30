@@ -48,7 +48,6 @@ export class FcmService {
         this.smartAudioService.play("login")
         if(!data.wasTapped){
           //Aplicación en primer plano
-          console.log("Primer plano: " + JSON.stringify(data))
           this.notificationService.presentToast(data.body,"primary","top", true);
         }
       }, error => {
