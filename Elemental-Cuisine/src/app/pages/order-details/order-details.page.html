@@ -10,10 +10,7 @@
         <ion-button *ngIf="(order.statusFood == Status.Delivered || order.statusFood == undefined) && (order.statusDrink == Status.Delivered || order.statusDrink == undefined)" color="success" (click)="confirm(i)">
           <ion-icon name="checkmark"></ion-icon>
         </ion-button>
-        <ion-button *ngIf="order.statusFood != Status.Confirmed &&
-        order.statusFood != Status.Delivered &&
-        order.statusDrink != Status.Confirmed && 
-        order.statusDrink != Status.Delivered" color="primary" (click)="showDetails(i)">
+        <ion-button *ngIf="validateOrder(order)" color="primary" (click)="showDetails(i)">
           <ion-icon name="timer"></ion-icon>
         </ion-button>
       </ion-list-header>

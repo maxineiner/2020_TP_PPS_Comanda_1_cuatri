@@ -8,6 +8,9 @@ import { CurrentAttentionService } from 'src/app/services/currentAttention.servi
 import { Categories } from 'src/app/classes/enums/categories';
 import { Attention } from 'src/app/classes/attention';
 import { QrscannerService } from 'src/app/services/qrscanner.service';
+import { NotificationService } from 'src/app/services/notification.service';
+import { FcmService } from 'src/app/services/fcmService';
+import { Profiles } from 'src/app/classes/enums/profiles';
 
 @Component({
   selector: 'app-payment',
@@ -30,7 +33,9 @@ export class PaymentPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private attentionService: CurrentAttentionService,
-    private qrScannerService: QrscannerService
+    private qrScannerService: QrscannerService,
+    private notificationService: NotificationService,
+    private fcmService: FcmService
   ) { 
     this.currentUser = this.authService.getCurrentUser();
     if (isNullOrUndefined(this.currentUser)) this.router.navigateByUrl("/login");
@@ -46,10 +51,10 @@ export class PaymentPage implements OnInit {
       this.freeDrink = (drinks.length > 0) ? drinks.reduce(discountReducer) : undefined
       const desserts = this.menus.filter(menu => menu.category == Categories.Dessert)
       this.freeDessert = (desserts.length > 0) ? desserts.reduce(discountReducer) : undefined
-
       this.attentionService.getAttentionById(userId).then(currentAttention => {
         this.attention = currentAttention.data() as Attention;
       })
+
     });
 
   }
@@ -60,6 +65,15 @@ export class PaymentPage implements OnInit {
   payBill(){
     this.attention.billRequested = true;
     this.attentionService.modifyAttention(this.currentUser.uid, this.attention);
+    this.notificationService.presentToast("La cuenta ha sido solicitada", "success", "top");
+    this.router.navigateByUrl("/inicio");
+    this.fcmService.getTokensByProfile(Profiles.Waiter).then(waiterDevices => {
+      // Agregar numero de mesa
+      this.fcmService.sendNotification(
+        "Nuevo cuenta solicitada",
+        `El cliente ${this.currentUser.name} ${this.currentUser.surname} ha solicitado su cuenta`,
+        waiterDevices);
+    })
   }
 
   getTotal(){

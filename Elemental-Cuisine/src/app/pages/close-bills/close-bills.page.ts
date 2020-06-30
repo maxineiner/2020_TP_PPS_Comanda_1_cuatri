@@ -60,7 +60,5 @@ export class CloseBillsPage implements OnInit {
     this.currentAttentionService.deleteAttention(id);
 
     this.pendingBills = this.pendingBills.filter(x => x.id != id);
-    this.notificationService.presentToast("La cuenta ha sido solicitada", "success", "middle");
-    this.router.navigateByUrl("/inicio");
   }
 }
