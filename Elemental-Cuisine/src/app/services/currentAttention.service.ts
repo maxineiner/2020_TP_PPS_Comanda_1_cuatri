@@ -1,3 +1,4 @@
+import { Attention } from './../classes/attention';
 import { Injectable } from '@angular/core';
 import { DataService } from './data.service';
 import { Collections } from '../classes/enums/collections';
@@ -32,4 +33,7 @@ export class CurrentAttentionService {
   modifyAttention(id, attention) {
     return this.dataService.update(this.currentAttentionCollection, id, attention);
   }
+
+
+
 }

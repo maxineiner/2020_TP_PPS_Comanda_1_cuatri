@@ -1,3 +1,7 @@
+import { AlertController } from '@ionic/angular';
+import { Table } from './../../classes/table';
+import { TableService } from './../../services/table.service';
+import { CurrentAttentionService } from './../../services/currentAttention.service';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
@@ -13,6 +17,7 @@ import { Order } from 'src/app/classes/order';
 import { User } from 'src/app/classes/user';
 import { Profiles } from 'src/app/classes/enums/profiles';
 import { isNullOrUndefined } from 'util';
+import { Attention } from 'src/app/classes/attention';
 
 @Component({
   selector: 'app-order-list',
@@ -43,7 +48,10 @@ export class OrderListPage implements OnInit {
     private fcmService: FcmService,
     private authService: AuthService,
     private router: Router,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private currentAttentionService: CurrentAttentionService,
+    private tableService: TableService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -77,6 +85,8 @@ export class OrderListPage implements OnInit {
           let orderWithUser: OrderWithUser = new OrderWithUser();
           orderWithUser.id = ordersData.payload.doc.id
           orderWithUser.order = order;
+          orderWithUser.type = this.getOrderType(order.menu as Product[]);
+          this.getCurrentTableNumberById(orderWithUser.id).then(tableNumber => orderWithUser.currentTable = tableNumber);
           orderWithUser.index = orders.indexOf(order);
           this.userService.getUserById(orderWithUser.id).then(user => orderWithUser.user = user.data() as User);
           this.allOrders.push(orderWithUser);
@@ -109,6 +119,7 @@ export class OrderListPage implements OnInit {
             orderWithUser.profile = Profiles.Bartender;
             orderWithUser.order = Object.assign({}, miniOrder);
             orderWithUser.order.menu = drinks;
+            this.getCurrentTableNumberById(orderWithUser.id).then(tableNumber => orderWithUser.currentTable = tableNumber);
             this.userService.getUserById(orderWithUser.id).then(user => orderWithUser.user = user.data() as User);
             this.allOrdersDividedByProfile.push(orderWithUser);
           }
@@ -154,21 +165,18 @@ export class OrderListPage implements OnInit {
     this.orderService.getOrderById(selectedOrder.id).then(orderData => {
       let orders = orderData.data() as Order[];
 
-      // Para la confirmación del Mozo cambiamos los dos estados al mismo tiempo
       if (status == Status.PendingPreparation) {
 
-        let products = orders[selectedOrder.index].menu as Product[];
-        let hasDrinks: boolean = products.filter(product => product.managerProfile == Profiles.Bartender).length > 0;
-        let hasFoods: boolean = products.filter(product => product.managerProfile == Profiles.Chef).length > 0;
+        if (selectedOrder.type == OrderType.TheTwo) {
+          orders[selectedOrder.index].statusDrink = status;
+          orders[selectedOrder.index].statusFood = status;
 
-        if (hasDrinks) {
+        } else if (selectedOrder.type == OrderType.OnlyDrinks) {
+          orders[selectedOrder.index].statusDrink = status;
+
+        } else if (selectedOrder.type == OrderType.OnlyFood) {
           orders[selectedOrder.index].statusFood = status;
         }
-
-        if (hasFoods) {
-          orders[selectedOrder.index].statusDrink = status;
-        }
-        
       } else {
         switch (selectedOrder.profile) {
           case Profiles.Bartender:
@@ -231,17 +239,62 @@ export class OrderListPage implements OnInit {
     });
   }
 
+  private getCurrentTableNumberById(attentionId): Promise<number> {
+    return this.currentAttentionService.getAttentionById(attentionId).then(attentionData => {
+      let attention = attentionData.data() as Attention;
+      return this.tableService.getTableById(attention.tableId).then(tableData => {
+        let table = tableData.data() as Table;
+        return table.number;
+      });
+    });
+  }
+
+  prueba() {
+    console.log(this.allOrders);
+  }
+
+
+  private getOrderType(products: Product[]): OrderType {
+    let auxReturn: OrderType;
+
+    let hasDrinks: boolean = products.filter(product => product.managerProfile == Profiles.Bartender).length > 0;
+    let hasFoods: boolean = products.filter(product => product.managerProfile == Profiles.Chef).length > 0;
+
+    if (hasDrinks && hasFoods) {
+      auxReturn = OrderType.TheTwo;
+    } else if (hasDrinks) {
+      auxReturn = OrderType.OnlyDrinks;
+    } else if (hasFoods) {
+      auxReturn = OrderType.OnlyFood
+    }
+    return auxReturn;
+  }
+
+
+
+
+
+
+
+
+
 }
 
 /* #endregion */
 
 // Es una clase auxiliar para relacionar el pedido con un usuario
 class OrderWithUser {
-
   id: string;
   index: number;
   order: Order = new Order();
   user: User = new User();
   profile: string;
+  currentTable: number;
+  type: OrderType
+}
 
+enum OrderType {
+  OnlyFood = "Solo comidas",
+  OnlyDrinks = "Solo bebidas",
+  TheTwo = "Comidas y Bebidas"
 }
