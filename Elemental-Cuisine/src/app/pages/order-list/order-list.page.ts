@@ -250,8 +250,8 @@ export class OrderListPage implements OnInit {
     });
   }
 
-  prueba() {
-    console.log(this.allOrders);
+  prueba(ads) {
+    console.log(asd);
   }
 
 
@@ -279,13 +279,13 @@ export class OrderListPage implements OnInit {
 
   createAlert(selectedOrder: OrderWithUser) {
     let productList = '';
-    let products = selectedOrder.order.menu;
+    let products = selectedOrder.order.menu as Product[];
     products.forEach(product => {
       productList += 
       `<ion-item>
           <ion-label class="ion-text-wrap">
-            <ion-text><h3>${product.name} ${product.description}</h3></ion-text>
-            <ion-text><p>x${product.quantity}</p></ion-text>
+            <ion-text><h3><b>${product.name} ${product.description}</b></h3></ion-text>
+            <ion-text><p>x${product['quantity']}</p></ion-text>
           </ion-label>
         </ion-item>`
     });
