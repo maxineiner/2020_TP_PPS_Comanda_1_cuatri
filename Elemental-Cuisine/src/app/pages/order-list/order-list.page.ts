@@ -218,7 +218,7 @@ export class OrderListPage implements OnInit {
 
         case Status.Prepared:
           this.notificationService.presentToast('Finalización de la preparación del pedido', TypeNotification.Info, "bottom", false);
-          this.sendNotificationByProfile(Profiles.Chef, 'Se finalizó la preparación del pedido!', `El pedido de la mesa ${selectedOrder.user.currentTable} se encuentra listo`);
+          this.sendNotificationByProfile(Profiles.Waiter, 'Se finalizó la preparación del pedido!', `El pedido de la mesa ${selectedOrder.user.currentTable} se encuentra listo`);
           break;
 
         case Status.Delivered:
@@ -317,12 +317,6 @@ export class OrderListPage implements OnInit {
       return data;
     })
   }
-
-
-
-
-
-
 
 
 }
