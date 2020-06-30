@@ -70,7 +70,7 @@ export class ClientHomeComponent implements OnInit {
         });
       }
       else {
-        this.assignTableToUser("QMqIs9JNoN9USBYq4a2F", this.currentUser.id); // HARDCODED
+        this.assignTableToUser("4LqjxvRh8GNCiJ9Xwq9S", this.currentUser.id); // HARDCODED
       }
     }
     else {

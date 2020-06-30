@@ -1,27 +1,43 @@
 <app-custom-header [title]="'Pedido'"></app-custom-header>
 
 <ion-content>
+  <!-- <div id="scroll"> -->
+  <ion-button color="primary" [disabled]="orders.length == 0" expand="block" size="small" (click)="payBill()">
+    <ion-icon slot="start" name="clipboard"></ion-icon>
+    Solicitar Cuenta
+  </ion-button>
+  <h3 id="empty" *ngIf="!orders.length">Aún no ha realizado ningún pedido</h3>
+  
   <div id="scroll">
-    <ion-button id="payBill" color="primary" (click)="payBill()" [disabled]="orders.length == 0">Solicitar Cuenta</ion-button>
-    <h3 id="empty" *ngIf="!orders.length">Aún no ha realizado ningún pedido</h3>
-    <ion-list class="orders" *ngFor="let order of orders; index as i">
-      <ion-list-header>
+    <ion-card *ngFor="let order of orders; index as i">
+
+      <ion-item>
         <h2>Pedido {{i + 1}}</h2>
-        <ion-button *ngIf="(order.statusFood == Status.Delivered || order.statusFood == undefined) && (order.statusDrink == Status.Delivered || order.statusDrink == undefined)" color="success" (click)="confirm(i)">
+
+        <ion-button slot="end" color="primary"
+          *ngIf="(order.statusFood == Status.Delivered || order.statusFood == undefined) && (order.statusDrink == Status.Delivered || order.statusDrink == undefined)"
+          color="success" (click)="confirm(i)">
           <ion-icon name="checkmark"></ion-icon>
         </ion-button>
-        <ion-button *ngIf="order.statusFood != Status.Confirmed &&
+
+        <ion-button slot="end" *ngIf="order.statusFood != Status.Confirmed &&
         order.statusFood != Status.Delivered &&
         order.statusDrink != Status.Confirmed && 
-        order.statusDrink != Status.Delivered" color="primary" (click)="showDetails(i)">
+        order.statusDrink != Status.Delivered" (click)="showDetails(i)">
           <ion-icon name="timer"></ion-icon>
         </ion-button>
-      </ion-list-header>
-      <ion-item *ngFor="let menu of order.menu" [disabled]="order.statusFood == Status.Confirmed && order.statusDrink == Status.Confirmed" color="transparent">
-        <span>x{{menu.quantity}} {{menu.name}}</span>
-        <span slot="end">${{menu.price * menu.quantity}}</span>
+
       </ion-item>
-    </ion-list>
+      <ion-card-content>
+        <ion-item *ngFor="let menu of order.menu"
+          [disabled]="order.statusFood == Status.Confirmed && order.statusDrink == Status.Confirmed"
+          color="transparent">
+          <span>x{{menu.quantity}} {{menu.name}}</span>
+          <span slot="end">${{menu.price * menu.quantity}}</span>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
   </div>
   <ion-item id="total">
     <span>Total:</span>
