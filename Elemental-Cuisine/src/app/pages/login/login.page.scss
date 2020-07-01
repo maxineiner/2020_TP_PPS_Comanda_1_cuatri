@@ -9,8 +9,6 @@
     height: 100%;
     position: absolute;
     padding: 60px;
-    // background: rgba(199, 214, 255, 0.9);
-    // color     : #fff;
 }
 
 .login-html .tab {
@@ -46,9 +44,9 @@
 }
 
 .hr {
-    height: 2px;
+    height: 2.2px;
     margin: 60px 0 50px 0;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--ion-color-primary);
 }
 
 ion-button {
