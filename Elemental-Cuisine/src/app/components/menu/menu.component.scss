@@ -12,7 +12,7 @@ ion-item {
 
 #scroll {
     overflow: auto;
-    height: 89%;
+    height: 89.5%;
 }
 
 .item-ico {
@@ -37,3 +37,6 @@ ion-list-header > ion-icon {
     margin-left: 1.03em;
 }
 
+ion-card {
+    background-color: white;
+}
