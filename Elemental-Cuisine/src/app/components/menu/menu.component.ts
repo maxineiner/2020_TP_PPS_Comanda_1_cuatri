@@ -51,13 +51,13 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  async displayAccountList(product: Product): Promise<void> {
+  async showDetails(product: Product): Promise<void> {
     this.loadingService.showLoading();
-    const accountListModal = await this.modalController.create({
+    const detailsModal = await this.modalController.create({
       component: ProductDetailsComponent,
       componentProps: { product: product}
     });
-    accountListModal.onDidDismiss().then((response) => {
+    detailsModal.onDidDismiss().then((response) => {
       var quantity = (response.data) ? parseInt(response.data) : null;
       if (quantity) {
         this.order.menu.push({ ...product, quantity: quantity });
@@ -69,7 +69,7 @@ export class MenuComponent implements OnInit {
           this.order.statusDrink = Status.PendingConfirm;
       }
     });
-    return await accountListModal.present();
+    return await detailsModal.present();
   }
 
   sendMenu() {
