@@ -8,6 +8,7 @@ import { Order } from 'src/app/classes/order';
 import { LoadingService } from 'src/app/services/loading.service';
 import { Profiles } from 'src/app/classes/enums/profiles';
 import { Categories } from 'src/app/classes/enums/categories';
+import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({
   selector: 'app-menu',
@@ -22,12 +23,6 @@ export class MenuComponent implements OnInit {
   private desserts: Array<Product>;
   private order = new Order();
   @Output() sendOrder: EventEmitter<Order> = new EventEmitter<Order>();
-
-  slideOpts = {
-    slidesPerView: 1,
-    centeredSlides: true,
-    spaceBetween: 15
-  };
 
   constructor(
     private productService: ProductService,
@@ -56,87 +51,25 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
   }
 
-  showDetails(product: Product) {
+  async showDetails(product: Product): Promise<void> {
     this.loadingService.showLoading();
-    this.createAlert(product).then(response => {
-      var quantity = (response.data) ? parseInt(response.data.quantity) : null;
+    const detailsModal = await this.modalController.create({
+      component: ProductDetailsComponent,
+      componentProps: { product: product}
+    });
+    detailsModal.onDidDismiss().then((response) => {
+      var quantity = (response.data) ? parseInt(response.data) : null;
       if (quantity) {
         this.order.menu.push({ ...product, quantity: quantity });
         this.order.total += product.price * quantity;
-        
+
         if (product.managerProfile == Profiles.Chef)
           this.order.statusFood = Status.PendingConfirm;
         if (product.managerProfile == Profiles.Bartender)
           this.order.statusDrink = Status.PendingConfirm;
       }
     });
-  }
-
-  createAlert(product: Product) {
-    let message = "<div>" +
-      `<ion-label>${product.description}</ion-label>`;
-    let slides = '<ion-slides [options]="slideOpts">';
-    const promise = new Promise(resolve => {
-      if(product.photos.length > 0){
-        product.photos.forEach(async (photo, index, array) => {
-          await this.cameraService.getImageByName('productos', photo).then(url => {
-            slides += '<ion-slide>' +
-              `<img src="${url}" style="bmenu-radius: 2px">` +
-              '</ion-slide>'
-          })
-          if (index === array.length - 1) resolve(true);
-        })
-      }
-      else{
-        resolve(false);
-      }
-    })
-
-    return promise.then(resolved => {
-      if(resolved){
-        message += slides +
-          '</ion-slides>' +
-          "</div>";
-      }
-      this.loadingService.closeLoading(undefined, undefined, undefined, 1000);
-      return this.showAlert(product, message);
-    })
-  }
-
-  async showAlert(product, message) {
-    const alert = await this.alertController.create({
-      header: product.name,
-      subHeader: `$${product.price}`,
-      message: message,
-      inputs: [
-        {
-          name: 'quantity',
-          type: 'number',
-          placeholder: 'Cantidad de unidades',
-          min: 1
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancelar',
-          handler: () => {
-            alert.dismiss(false);
-            return false;
-          }
-        },
-        {
-          text: 'Agregar al pedido',
-          handler: (input) => {
-            alert.dismiss(input);
-            return false;
-          }
-        }
-      ]
-    });
-    alert.present();
-    return alert.onDidDismiss().then((data) => {
-      return data;
-    })
+    return await detailsModal.present();
   }
 
   sendMenu() {

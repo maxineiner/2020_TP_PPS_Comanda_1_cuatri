@@ -1,0 +1,35 @@
+<ion-content class="ion-padding">
+  <ion-icon size="large" (click)="dismiss(true)" name="close" color="danger" id="dismiss"></ion-icon>
+  <ion-slides [options]="slideOpts">
+    <ion-slide *ngFor="let photo of photos">
+      <img src="{{photo}}">
+    </ion-slide>
+  </ion-slides>
+
+  <ion-item lines="none" color="transparent">
+    <h3><b>{{ product.name }}</b></h3>
+  </ion-item>
+
+  <ion-item lines="none" color="transparent">
+    <span><b>${{ product.price }}</b></span>
+  </ion-item>
+
+  <ion-item color="transparent">
+    <h3><b>Descripción</b></h3>
+  </ion-item>
+
+  <ion-item lines="none" color="transparent">
+    {{ product.description }}
+  </ion-item>
+
+  <ion-item color="transparent">
+    <h4><b>Cantidad de unidades</b></h4>
+  </ion-item>
+  
+  <div class="ion-text-center quantityDiv">
+    <ion-icon class="ion-float-left quantity" name="remove" (click)="decrement()"></ion-icon>
+      <span class="quantity">{{quantity}}</span>
+    <ion-icon class="ion-float-right quantity" name="add" (click)="increment()"></ion-icon>
+  </div>
+  <ion-button id="confirm" (click)="dismiss(false)">Agregar al pedido</ion-button>
+</ion-content>
