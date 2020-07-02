@@ -1,0 +1,33 @@
+img {
+    width: 100%;
+    height: 250px;
+    object-fit: unset;
+}
+
+#confirm {
+    position: fixed;
+    bottom: 0;
+    width: 99%;
+    left: 0;
+    height: 8%;
+}
+
+.quantity{
+    font-size: 25px;
+}
+
+.quantityDiv{
+    border: solid;
+    border-radius: 50px;
+    border-width: 2px;
+    width: 100px;
+    color: #ed5564;
+    height: 31px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+#dismiss{
+    z-index: 9999;
+    position: absolute;
+}
